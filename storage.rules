@@ -1,0 +1,14 @@
+rules_version = '2';
+
+// ======== IMPORTANT ========
+//
+// DO NOT change the rules in the Firebase UI!
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /cvs/{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
