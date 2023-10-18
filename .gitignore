@@ -205,3 +205,6 @@ build/
 
 # Sentry Auth Token
 .sentryclirc
+
+
+.content
