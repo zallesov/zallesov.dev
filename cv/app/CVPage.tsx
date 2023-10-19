@@ -15,7 +15,7 @@ export default async function CVPage({ cv }: Props) {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-12 bg-gray-900`}
+      className={`flex min-h-screen flex-col items-center justify-between py-12 lg:px-12 sm:px-2 bg-gray-900`}
     >
       <section className="py-1">
 
@@ -23,7 +23,7 @@ export default async function CVPage({ cv }: Props) {
 
       </section>
 
-      <section className="py-1 w-1/2">
+      <section className="py-1 w-full">
 
         <Actions cv={cv} />
 

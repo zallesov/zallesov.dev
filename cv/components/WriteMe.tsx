@@ -1,5 +1,7 @@
 "use client"
 
+import { ActionButton } from "./ActionButton"
+
 type Props = {
   phone?: string, email?: string, linkedin?: string
 }
@@ -14,7 +16,7 @@ export const WriteMe = ({ phone, email, linkedin }: Props) => {
   }
 
   return <>
-    <button onClick={showModal} className="px-7 py-3 md:px-9 md:py-4 bg-gray-400 font-medium md:font-semibold text-white-700 text-md rounded-md hover:bg-gray-700 hover:text-white transition ease-linear duration-500">Hire Me</button>
+    <ActionButton onClick={showModal} text="Hire Me" />
     <dialog id={id} className="modal">
       <div className="modal-box">
         <h3 className="font-bold text-lg py-4">Please use the folloing contacts to reach out to me</h3>

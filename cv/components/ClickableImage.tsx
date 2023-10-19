@@ -9,22 +9,23 @@ type Props = {
 
 export default function ClickableImage({ src, id }: Props) {
 
+  const modalId = `modal-${id}`
+  const btnId = id
   const showModal = () => {
     if (!document) return;
-    console.log("showModel", id)
     // @ts-ignore
-    document.getElementById(id)?.showModal()
+    document.getElementById(modalId)?.showModal()
   }
 
   return (
     <>
-      <button id={`btn-${id}`} className="carousel-item" onClick={showModal}>
-        <FirebaseImage src={src} alt={""} className="object-scale-down max-h-[230px]" />
+      <button id={btnId} className="carousel-item" onClick={showModal}>
+        <FirebaseImage src={src} alt={""} className="object-scale-down max-h-[230px] p-0" />
       </button>
-      <dialog id={id} className="modal">
+      <dialog id={modalId} className="modal">
         <div className="modal-box max-h-full max-w-full">
           <FirebaseImage src={src} alt={""} className="object-fill" />
-          <div className="modal-action">
+          <div className="modal-action justify-center">
             <form method="dialog">
               <button className="btn">Close</button>
             </form>
