@@ -13,24 +13,14 @@
     "admin"
   ],
   "scripts": {
-    "build:types": "yarn workspace @zallesov/types build",
-    "build:backend": "yarn workspace @zallesov/backend build",
-    "build:cv": "yarn workspace @zallesov/cv build",
-    "build:admin": "yarn workspace @zallesov/admin build",
-    "clean": "yarn workspaces run clean",
-    "emulator:export": "yarn workspace @zallesov/backend emulator:export",
-    "start:backend": "yarn workspace @zallesov/backend start",
-    "start:cv": "yarn workspace @zallesov/cv start",
-    "start:admin": "yarn workspace @zallesov/admin start",
+    "build:cv": "bun workspace @zallesov/cv build",
+    "clean": "bun workspaces run clean",
+    "emulator:export": "bun workspace @zallesov/backend emulator:export",
+    "start:cv": "bun workspace @zallesov/cv start",
     "start": "concurrently npm:start:*",
-    "deploy:backend": "yarn workspace @zallesov/backend deploy",
-    "deploy:cv": "yarn workspace @zallesov/cv deploy",
-    "deploy:admin": "yarn workspace @zallesov/admin deploy",
-    "deploy": "concurrently npm:deploy:*",
+    "deploy:cv": "bun workspace @zallesov/cv deploy",
     "lint": "eslint .",
-    "reinstall": "rm -rf */node_modules node_modules yarn.lock && yarn",
-    "test:backend": "yarn workspace @zallesov/backend test",
-    "test": "jest"
+    "test": "bun test"
   },
   "devDependencies": {
     "@types/eslint": "8.37.0",

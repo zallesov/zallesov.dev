@@ -110,7 +110,7 @@ export default {
   "employments": [
     {
       "startDate": "March 2020",
-      "endDate": "present",
+      "endDate": "present (part-time)",
       "city": "Berlin",
       "company": "2Meters",
       "projects": [
@@ -160,7 +160,7 @@ My team and I were `,
           "name": "Snubes",
           "title": "Principal Software Engineer",
           "preambule": `Snubes provides services to assess and track the performance of call centers' individual agents and projects overall using AI.
-I've inherited the team with no coding standards or principles. I had to let go most of the people keeping only the motivated ones. After setting up the essential agile processes and best practices (CI/CD, code review, git-flow, monitoring) we could deliver noticeable results
+I've inherited the team with no coding standards or principles. We had to let go most of the people keeping only the motivated ones. After setting up the essential agile processes and best practices (CI/CD, code review, git-flow, monitoring) we could deliver noticeable results
 Together with my team, we've`,
           "highlights": [
             "Set up a phone call transcription pipeline using a modified version of OpenAI’s Whisper model (WhisperX)",
