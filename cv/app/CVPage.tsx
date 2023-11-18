@@ -1,6 +1,8 @@
 import { Actions } from "@/components/Actions";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { PortfoliosSection } from "@/components/PortfolioSection";
+import { SideProjectsSection } from "@/components/SideProjectsSection";
 import { SkillsSection } from "@/components/SkillsSection";
 import { CV } from "@/types/CV";
 import { EducationSection } from "../components/EductionSection";
@@ -48,6 +50,21 @@ export default async function CVPage({ cv }: Props) {
           <EmploymentSection employments={cv.employments} quote={cv.employmentQuote} />
 
         </section>)}
+      
+      {cv.sideProjects && (
+        <section className="py-10 md:py-16 w-full">
+
+          <SideProjectsSection projects={cv.sideProjects} quote={cv.sideProjectsQuote} />
+
+        </section>)}
+      
+      {cv.portfolios &&
+        <section className="py-10 md:py-16">
+
+          <PortfoliosSection portfolios={cv.portfolios} portfolioQuote={cv.portfolioQuote} />
+
+        </section>
+      }
 
       {cv.educations && (
         <section className="py-10 md:py-16 w-full">

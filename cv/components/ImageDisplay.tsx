@@ -7,7 +7,7 @@ type Props = {
   id: string
 }
 
-export default function ClickableImage({ src, id }: Props) {
+export default function ImageDisplay({ src, id }: Props) {
 
   const modalId = `modal-${id}`
   const btnId = id
@@ -18,10 +18,6 @@ export default function ClickableImage({ src, id }: Props) {
   }
 
   return (
-    <>
-      <button id={btnId} className="carousel-item p=0 m-0" onClick={showModal}>
-        <FirebaseImage src={`thumbnails/${src}`} alt={""} className="object-scale-down max-h-[150px] px-1" />
-      </button>
       <dialog id={modalId} className="modal">
         <div className="modal-box max-w-max max-h-full justify-center">
           <div className="modal-action justify-center">
@@ -34,6 +30,5 @@ export default function ClickableImage({ src, id }: Props) {
           </div>
         </div>
       </dialog>
-    </>
   )
 }

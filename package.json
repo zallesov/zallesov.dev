@@ -7,20 +7,17 @@
     "node": ">=18"
   },
   "workspaces": [
-    "types",
-    "backend",
-    "cv",
-    "admin"
+    "cv"
   ],
   "scripts": {
-    "build:cv": "bun workspace @zallesov/cv build",
-    "clean": "bun workspaces run clean",
-    "emulator:export": "bun workspace @zallesov/backend emulator:export",
-    "start:cv": "bun workspace @zallesov/cv start",
+    "build:cv": "yarn workspace @zallesov/cv build",
+    "clean": "yarn workspaces run clean",
+    "emulator:export": "yarn workspace @zallesov/backend emulator:export",
+    "start:cv": "yarn workspace @zallesov/cv start",
     "start": "concurrently npm:start:*",
-    "deploy:cv": "bun workspace @zallesov/cv deploy",
+    "deploy:cv": "yarn workspace @zallesov/cv deploy",
     "lint": "eslint .",
-    "test": "bun test"
+    "test": "yarn test"
   },
   "devDependencies": {
     "@types/eslint": "8.37.0",

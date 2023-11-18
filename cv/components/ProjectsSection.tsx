@@ -1,11 +1,11 @@
 import { Employment } from "@/types/Employment"
 
 type Props = {
-  employments: Employment[]
+  projects: Employment[]
   quote?: string
 }
 
-export const EmploymentSection = ({ employments, quote }: Props) => {
+export const ProjectsSection = ({ projects: employments, quote }: Props) => {
 
   return <div className="container max-w-screen-xl mx-auto px-4">
 

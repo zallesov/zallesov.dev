@@ -2,7 +2,7 @@ export default {
   "educations": [
     {
       "endYear": "2008",
-      "specialisation": "Math and Computer Science",
+      "specialisation": "Masters in Math and Computer Science",
       "startYear": "2003",
       "univarsity": "Novosibirsk State Technical University"
     }
@@ -19,7 +19,7 @@ export default {
     },
     {
       "text": "Beyond my technical expertise, I take pride in nurturing the next generation of software engineers. Throughout my career, I've served as a mentor and leader, guiding teams toward achieving their full potential. My commitment to fostering talent and cultivating a collaborative, high-performance culture has not only resulted in successful projects but has also empowered individuals to excel in their careers.",
-      "title": " Mentorship and Leadership"
+      "title": "Mentorship and Leadership"
     }
   ],
   "id": "zallesov.dev",
@@ -29,11 +29,11 @@ export default {
   "portfolios": [
     {
       "images": [
-        "screenshots/zappboard1.png",
-        "screenshots/zappboard2.png",
-        "screenshots/zappboard3.png",
-        "screenshots/zappboard4.png",
-        "screenshots/zappboard5.png"
+        "zappboard1.png",
+        "zappboard2.png",
+        "zappboard3.png",
+        "zappboard4.png",
+        "zappboard5.png"
       ],
       "index": 3,
       "text": "Zappboard is a primary tool for every warehouse manager in Zapp. It aggregates the current state of the order and delivery flow and some most relevant business metrics. My team developed this app end to end.",
@@ -41,16 +41,16 @@ export default {
     },
     {
       "images": [
-        "screenshots/zephyr_web1.png",
-        "screenshots/zephyr_web2.png",
-        "screenshots/zephyr_web3.png",
-        "screenshots/zephyr_web4.png",
-        "screenshots/zephyr_web5.png",
-        "screenshots/zephyr_web6.png",
-        "screenshots/zephyr_web7.png",
-        "screenshots/zephyr_web8.png",
-        "screenshots/zephyr_web10.png",
-        "screenshots/zephyr_web11.png"
+        "zephyr_web1.png",
+        "zephyr_web2.png",
+        "zephyr_web3.png",
+        "zephyr_web4.png",
+        "zephyr_web5.png",
+        "zephyr_web6.png",
+        "zephyr_web7.png",
+        "zephyr_web8.png",
+        "zephyr_web10.png",
+        "zephyr_web11.png"
       ],
       "index": 4,
       "text": "Zephyr is an internal software in Zapp used to track the status of order delivery. This was a cross-team effort. My team was responsible for backend and integration with other services like Zappboard and Zone.",
@@ -58,11 +58,11 @@ export default {
     },
     {
       "images": [
-        "screenshots/zone1.png",
-        "screenshots/zone2.png",
-        "screenshots/zone3.png",
-        "screenshots/zone4.png",
-        "screenshots/zone5.png"
+        "zone1.png",
+        "zone2.png",
+        "zone3.png",
+        "zone4.png",
+        "zone5.png"
       ],
       "index": 5,
       "text": "Zone is an app to manage warehouses, ads, and user-facing announcements. Even thou we did not own this service our team has significantly contributed to this codebase.\nWe have built a system that automatically closes warehouses when demand reaches the warehouse's capacity. The same system was used to manually intervene in warehouse availability due to weather conditions for example or other emergencies (like robbery, yes that did happen). ",
@@ -70,28 +70,49 @@ export default {
     },
     {
       "images": [
-        "screenshots/snubes1.png",
-        "screenshots/snubes2.png",
-        "screenshots/snubes3.png",
-        "screenshots/snubes4.png",
-        "screenshots/snubes5.png",
-        "screenshots/snubes6.png",
-        "screenshots/snubes7.png"
+        "snubes1.png",
+        "snubes2.png",
+        "snubes3.png",
+        "snubes4.png",
+        "snubes5.png",
+        "snubes6.png",
+        "snubes7.png"
       ],
-      "index": 1,
+      "index": 2,
       "text": "Snubes specializes in quality assurance for call centers. It utilizes the recent advancements in natural language processing (aka chatGPT) to analyze the contents of phone calls.\nI've built the whole pipeline to transcribe, diarize (identify speakers), categorize, flag, and answer questions about the call's content. This enables tracking the performance of call campaigns as well as individual agents.",
       "title": "Snubes"
     },
     {
       "images": [
-        "screenshots/super-real4.png",
-        "screenshots/super-real3.png",
-        "screenshots/super-real2.png",
-        "screenshots/super-real1.png"
+        "super-real4.png",
+        "super-real3.png",
+        "super-real2.png",
+        "super-real1.png"
       ],
-      "index": 0,
+      "index": 1,
       "text": "Super-real is an AI chat-bot. The bot impersonates a real person (or sometimes a virtual one). Its customers are different celebrities, influencers, and well.... only-fans stars. Bot talks to their audience.<br/>I've developed the whole chatting backend. I've done lots of prompt engineering so that the bot behaves like a mocked person. I've also injected relative facts about the person when needed (embeddings). The bot can identify when to send pictures or respond with an audio message (chatGPT functions). I've also developed a pipeline to train the model to match the written style of the person better. (chatGPT fine tuning). The bot is also aware of the time and the location. Try chatting with my own version of.... me. <a href=\"https:\/\/super-real.co/zall\">https:\/\/super-real.co/zall</a>",
       "title": "Super-real"
+    },
+    {
+      "images": [
+        "2meters_1.png",
+        "2meters_2.png",
+        "2meters_3.png",
+        "2meters_4.png",
+        "2meters_5.png",
+        "2meters_6.png",
+        "2meters_7.png",
+        "2meters_8.png",
+        "2meters_9.png",
+        "2meters_10.png",
+        "2meters_11.png",
+        "2meters_12.png",
+        "2meters_13.png",
+        "2meters_14.png"
+      ],
+      "index": 0,
+      "text": "2Meters is a solution to manage customer flow on site. <a href=\"https:\/\/manage.2meters.app\">https:\/\/manage.2meters.app</a>",
+      "title": "2Meters"
     }
   ],
   "quotes": [
@@ -107,15 +128,11 @@ export default {
   "title": "Senior Software Engineer",
   "photoPath": "photos/ava2.png",
   "employmentQuote": "Below is a summary of the companies and projects I worked for.",
-  "employments": [
+  "sideProjectsQuote": "Besides a permanent day job I've been involved in a few other projects. For some of them as a consultant and for some as a founder.",
+  "sideProjects": [
     {
-      "startDate": "March 2020",
-      "endDate": "present (part-time)",
-      "city": "Berlin",
-      "company": "2Meters",
-      "projects": [
-        {
-          "title": "CTO",
+          "name": "2Meters",
+          "title": "Partime CTO",
           "preambule": "2meters is a SaS solution to manage customer queues and appointments on-site. In meters, I am a founding CTO. Together with a team of friends, we've built a service that is now used on 5 continents. We have raised a seed investment round that allowed us to hire a team of engineers to build the product. Even being involved in the project part-time I ",
           "postambule": "As a result, the service is used by thousands of users daily and generates stable revenue.",
           "highlights": [
@@ -128,35 +145,8 @@ export default {
           ],
           "stack": "Stack: Firebase and Google Cloud Services, React, TypeScript, NextJS",
           "urls": ["https://2meters.app", 'https://app.2meters.app']
-        }]
     },
     {
-      "startDate": "Sep 2021",
-      "endDate": "Sep 2023",
-      "city": "Berlin / London",
-      "company": "Quickcommerce LTD / Orchist GMBH",
-      "text": "During my time with this team we have worked on multiple projects. The employer company has changed too. But the core team stuck together.",
-      "projects": [
-        {
-          "name": "Zapp",
-          "title": "Software Developer Manager",
-          "preambule": `Zapp is a groceries delivery service at that time operating in UK, Netherlands and France.
-I was managing a team of varying size up to 6 people. We had our fingerprints in every codebase in the company. Starting from the consumer app ending with ops infrastructure terraform code.
-My team and I were `,
-          "highlights": [
-            "Developed an internal tool for warehouse and city managers called Zappboard. It aggregated data from every other system and presented it in an actionable way",
-            "Contributed to the last mile delivery app Zephyr.It showed the state of the order and rider's fleet on the map. And it was also deeply integrated with the Zappboard",
-            "Built tools for scanning and picking orders in the warehouse",
-            "Trained an ML model to predict the delivery time based on over 40 parameters and integrate it into the ordering process",
-            "Integrating with other storefronts like Uber Eats and Deliveroo",
-            "Contributed to the development of company- wide monitoring tools and ops infrastructure",
-            "I was the responsible person for organizing knowledge sharing in the company.I’ve organized and facilitated tech- talks and demos",
-            "Planned on - call rotations",
-          ],
-          "stack": "Stack: Firebase and Google Cloud Services, React, TypeScript, Tensorflow, Python, Terraform",
-          "urls": ["https://tryzapp.co.uk"]
-        },
-        {
           "name": "Snubes",
           "title": "Principal Software Engineer",
           "preambule": `Snubes provides services to assess and track the performance of call centers' individual agents and projects overall using AI.
@@ -187,6 +177,34 @@ Together with my team, we've`,
           ],
           "stack": "Stack: Lang-Chain, ChatGPT, LLAMA2, TypeScript, Google Cloud Services, NextJS",
           "urls": ["https://super-real.co", "https://super-real.co/zall"]
+        }
+  ],
+  "employments": [
+    {
+      "startDate": "Sep 2021",
+      "endDate": "Sep 2023",
+      "city": "Berlin / London",
+      "company": "Quickcommerce LTD / Orcrist GmbH",
+      "text": "Quickcommerce is a company behind Zapp. Part of the team including me later separated to Orcrist GmbH but continues to work with Zapp as well as other projects.",
+      "projects": [
+        {
+          "name": "Zapp",
+          "title": "Software Developer Manager",
+          "preambule": `Zapp is a grocery delivery service at that time operating in UK, Netherlands and France.
+I was managing a team of varying size up to 6 people. We had our fingerprints in every codebase in the company. Starting from the consumer app ending with ops infrastructure terraform code.
+My team and I were `,
+          "highlights": [
+            "Developed an internal tool for warehouse and city managers called Zappboard. It aggregated data from every other system and presented it in an actionable way",
+            "Contributed to the last mile delivery app Zephyr. It showed the state of the order and rider's fleet on the map. And it was also deeply integrated with the Zappboard",
+            "Built tools for scanning and picking orders in the warehouse",
+            "Trained an ML model to predict the delivery time based on over 40 parameters and integrate it into the ordering process",
+            "Integrating with other storefronts like Uber Eats and Deliveroo",
+            "Contributed to the development of company- wide monitoring tools and ops infrastructure",
+            "I was the responsible person for organizing knowledge sharing in the company.I’ve organized and facilitated tech- talks and demos",
+            "Planned on - call rotations",
+          ],
+          "stack": "Stack: Firebase and Google Cloud Services, React, TypeScript, Tensorflow, Python, Terraform",
+          "urls": ["https://tryzapp.co.uk"]
         }]
     },
     {
@@ -262,7 +280,7 @@ Together with my team, we've`,
         }]
     },
   ],
-  "footerNote": "To get a glimpse of my code check out the code for this site. I've created it to play around with the latest NextJS SSR features and Firebase NextJS Hosting (in beta)",
+  "footerNote": "This web page is an experiment. It is a Next.js app hosted on Firebase. Find the source code here:",
   "footerUrl": "https://github.com/zallesov/zallesov.dev",
   "chatLink": "https://super-real.co/zall",
   "phone": "+49 15 73 76543 95",
@@ -277,7 +295,7 @@ Together with my team, we've`,
     "DevOps: Docker, Kubernetes, AWS Lambdas, GCS cloud functions, Terraform",
     "Databases: Postgresql, Cassandra, Firestore, Redis, etc.",
     "Messaging systems: Kafka, rabbitMQ, PubSub, etc.",
-    "Frameworks: React, NextJS, AkkA, ZIO, LangChain, Zustand",
+    "Frameworks: React, NextJS, NestJS, AkkA, ZIO, LangChain, Zustand",
     "CI / CD: CircleCI, Google Cloud Build, GitHub Actions"
   ]
 }
