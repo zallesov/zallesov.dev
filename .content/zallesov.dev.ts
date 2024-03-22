@@ -1,4 +1,11 @@
 export default {
+  "articles": [
+    {
+      "title": "Types in 3-layer application",
+      "description": "Article gives some practical advice on how to implement a 3 layer application design pattern",
+      "url": "https://medium.com/@zallesov/types-in-3-layer-application-ddc03ec5cbf7"
+    }
+  ],
   "educations": [
     {
       "endYear": "2008",
@@ -7,7 +14,7 @@ export default {
       "univarsity": "Novosibirsk State Technical University"
     }
   ],
-  "firstName": "Alexander",
+  "firstName": "Alex",
   "highlights": [
     {
       "text": "Possessing a rich history of contributing to renowned organizations such as SoundCloud, Zalando, and Volkswagen, I've gained invaluable experience in navigating complex corporate landscapes, delivering high-impact software solutions, and collaborating with cross-functional teams to drive innovation.",
@@ -23,17 +30,29 @@ export default {
     }
   ],
   "id": "zallesov.dev",
-  "pdf": "Aleksandr Zalesov CV 2023.pdf",
-  "lastName": "Zalesov",
+  "pdf": "Alex Zall CV 2023 Dec.pdf",
+  "lastName": "Zall",
   "portfolioQuote": "I brought togetehr some highlight from the most recent project I participated in. Of course I can not take full credit. It goes to my team.",
   "portfolios": [
+  {
+      "images": [
+        "beeboard/beeboard1.png",
+        "beeboard/beeboard2.png",
+        "beeboard/beeboard3.png",
+        "beeboard/beeboard4.png",
+        "beeboard/beeboard5.png"
+      ],
+      "index": 3,
+      "text": "Beeboard Process management software. It is used to manage large projects that spans across multiple years.",
+      "title": "Beeboard"
+    },
     {
       "images": [
-        "zappboard1.png",
-        "zappboard2.png",
-        "zappboard3.png",
-        "zappboard4.png",
-        "zappboard5.png"
+        "zappboard/zappboard1.png",
+        "zappboard/zappboard2.png",
+        "zappboard/zappboard3.png",
+        "zappboard/zappboard4.png",
+        "zappboard/zappboard5.png"
       ],
       "index": 3,
       "text": "Zappboard is a primary tool for every warehouse manager in Zapp. It aggregates the current state of the order and delivery flow and some most relevant business metrics. My team developed this app end to end.",
@@ -41,16 +60,16 @@ export default {
     },
     {
       "images": [
-        "zephyr_web1.png",
-        "zephyr_web2.png",
-        "zephyr_web3.png",
-        "zephyr_web4.png",
-        "zephyr_web5.png",
-        "zephyr_web6.png",
-        "zephyr_web7.png",
-        "zephyr_web8.png",
-        "zephyr_web10.png",
-        "zephyr_web11.png"
+        "zephyr_web/zephyr_web1.png",
+        "zephyr_web/zephyr_web2.png",
+        "zephyr_web/zephyr_web3.png",
+        "zephyr_web/zephyr_web4.png",
+        "zephyr_web/zephyr_web5.png",
+        "zephyr_web/zephyr_web6.png",
+        "zephyr_web/zephyr_web7.png",
+        "zephyr_web/zephyr_web8.png",
+        "zephyr_web/zephyr_web10.png",
+        "zephyr_web/zephyr_web11.png"
       ],
       "index": 4,
       "text": "Zephyr is an internal software in Zapp used to track the status of order delivery. This was a cross-team effort. My team was responsible for backend and integration with other services like Zappboard and Zone.",
@@ -58,11 +77,11 @@ export default {
     },
     {
       "images": [
-        "zone1.png",
-        "zone2.png",
-        "zone3.png",
-        "zone4.png",
-        "zone5.png"
+        "zone/zone1.png",
+        "zone/zone2.png",
+        "zone/zone3.png",
+        "zone/zone4.png",
+        "zone/zone5.png"
       ],
       "index": 5,
       "text": "Zone is an app to manage warehouses, ads, and user-facing announcements. Even thou we did not own this service our team has significantly contributed to this codebase.\nWe have built a system that automatically closes warehouses when demand reaches the warehouse's capacity. The same system was used to manually intervene in warehouse availability due to weather conditions for example or other emergencies (like robbery, yes that did happen). ",
@@ -70,13 +89,13 @@ export default {
     },
     {
       "images": [
-        "snubes1.png",
-        "snubes2.png",
-        "snubes3.png",
-        "snubes4.png",
-        "snubes5.png",
-        "snubes6.png",
-        "snubes7.png"
+        "snubes/snubes1.png",
+        "snubes/snubes2.png",
+        "snubes/snubes3.png",
+        "snubes/snubes4.png",
+        "snubes/snubes5.png",
+        "snubes/snubes6.png",
+        "snubes/snubes7.png"
       ],
       "index": 2,
       "text": "Snubes specializes in quality assurance for call centers. It utilizes the recent advancements in natural language processing (aka chatGPT) to analyze the contents of phone calls.\nI've built the whole pipeline to transcribe, diarize (identify speakers), categorize, flag, and answer questions about the call's content. This enables tracking the performance of call campaigns as well as individual agents.",
@@ -84,31 +103,31 @@ export default {
     },
     {
       "images": [
-        "super-real4.png",
-        "super-real3.png",
-        "super-real2.png",
-        "super-real1.png"
+        "super-real/super-real4.png",
+        "super-real/super-real3.png",
+        "super-real/super-real2.png",
+        "super-real/super-real1.png"
       ],
       "index": 1,
-      "text": "Super-real is an AI chat-bot. The bot impersonates a real person (or sometimes a virtual one). Its customers are different celebrities, influencers, and well.... only-fans stars. Bot talks to their audience.<br/>I've developed the whole chatting backend. I've done lots of prompt engineering so that the bot behaves like a mocked person. I've also injected relative facts about the person when needed (embeddings). The bot can identify when to send pictures or respond with an audio message (chatGPT functions). I've also developed a pipeline to train the model to match the written style of the person better. (chatGPT fine tuning). The bot is also aware of the time and the location. Try chatting with my own version of.... me. <a href=\"https:\/\/super-real.co/zall\">https:\/\/super-real.co/zall</a>",
+      "text": "Super-real is an AI chat-bot. The bot impersonates a real person (or sometimes a virtual one). Its customers are different celebrities, influencers, and well.... only-fans stars. Bot talks to their audience.",
       "title": "Super-real"
     },
     {
       "images": [
-        "2meters_1.png",
-        "2meters_2.png",
-        "2meters_3.png",
-        "2meters_4.png",
-        "2meters_5.png",
-        "2meters_6.png",
-        "2meters_7.png",
-        "2meters_8.png",
-        "2meters_9.png",
-        "2meters_10.png",
-        "2meters_11.png",
-        "2meters_12.png",
-        "2meters_13.png",
-        "2meters_14.png"
+        "2meters/2meters_1.png",
+        "2meters/2meters_2.png",
+        "2meters/2meters_3.png",
+        "2meters/2meters_4.png",
+        "2meters/2meters_5.png",
+        "2meters/2meters_6.png",
+        "2meters/2meters_7.png",
+        "2meters/2meters_8.png",
+        "2meters/2meters_9.png",
+        "2meters/2meters_10.png",
+        "2meters/2meters_11.png",
+        "2meters/2meters_12.png",
+        "2meters/2meters_13.png",
+        "2meters/2meters_14.png"
       ],
       "index": 0,
       "text": "2Meters is a solution to manage customer flow on site. <a href=\"https:\/\/manage.2meters.app\">https:\/\/manage.2meters.app</a>",
@@ -161,7 +180,7 @@ Together with my team, we've`,
             "Set up monitoring solutions and CI/CD pipelines for the whole company",
           ],
           "stack": "Stack: Google Cloud Services, React, Typescript, Python, ChatGPT, Whisper, VertexAI",
-          "urls": ["https://tryzapp.co.uk"]
+          "urls": ["https://snubes.com"]
         },
         {
           "name": "Super-real",
@@ -180,6 +199,30 @@ Together with my team, we've`,
         }
   ],
   "employments": [
+  {
+      "startDate": "Dec 2023",
+      "endDate": "Present",
+      "city": "Berlin",
+      "company": "Beeboard",
+      "text": "Beeboard is saas project and process management solution",
+      "projects": [
+        {
+          "name": "Beeboard",
+          "title": "Head of Engineering",
+          "preambule": `Beeboard is project management software product specializing on Lean Development methodology (aka PEP). I inherited an functioning team but with no clear technical vision. I've `,
+          "highlights": [
+            "Ajusted team adjile processed",
+            "Developped a technical vision and roadmap",
+            "Established codding standards and guidelines",
+            "Set up a CI/CD pipeline and deployment processes",
+            "Promote learning culture within the team",
+            "Introduced monitoring and alerting systems",
+            "Improve database performace",
+          ],
+          "stack": "Stack: Azure Cloud, Typescript, Terraform and Hashicorp Stack, Vue3",
+          "urls": ["https://beeboard.eu/"]
+        }]
+    },
     {
       "startDate": "Sep 2021",
       "endDate": "Sep 2023",
@@ -192,7 +235,7 @@ Together with my team, we've`,
           "title": "Software Developer Manager",
           "preambule": `Zapp is a grocery delivery service at that time operating in UK, Netherlands and France.
 I was managing a team of varying size up to 6 people. We had our fingerprints in every codebase in the company. Starting from the consumer app ending with ops infrastructure terraform code.
-My team and I were `,
+My team and I `,
           "highlights": [
             "Developed an internal tool for warehouse and city managers called Zappboard. It aggregated data from every other system and presented it in an actionable way",
             "Contributed to the last mile delivery app Zephyr. It showed the state of the order and rider's fleet on the map. And it was also deeply integrated with the Zappboard",

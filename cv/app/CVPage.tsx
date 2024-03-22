@@ -8,6 +8,7 @@ import { CV } from "@/types/CV";
 import { EducationSection } from "../components/EductionSection";
 import { EmploymentSection } from "../components/EmploymentSection";
 import { HighlightsSection } from "../components/HighlightsSection";
+import { ArticlesSection } from "@/components/ArticlesSection";
 
 type Props = {
   cv: CV
@@ -55,6 +56,13 @@ export default async function CVPage({ cv }: Props) {
         <section className="py-10 md:py-16 w-full">
 
           <SideProjectsSection projects={cv.sideProjects} quote={cv.sideProjectsQuote} />
+
+        </section>)}
+      
+      {cv.articles && (
+      <section className="py-10 md:py-16 w-full">
+
+          <ArticlesSection articles={cv.articles}/>
 
         </section>)}
       

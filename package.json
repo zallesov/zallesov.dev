@@ -14,8 +14,8 @@
     "clean": "yarn workspaces run clean",
     "emulator:export": "yarn workspace @zallesov/backend emulator:export",
     "start:cv": "yarn workspace @zallesov/cv start",
-    "start": "concurrently npm:start:*",
     "deploy:cv": "yarn workspace @zallesov/cv deploy",
+    "update:cv": "ts-node .content/updateCV.ts zallesov.dev",
     "lint": "eslint .",
     "test": "yarn test"
   },

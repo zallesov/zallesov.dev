@@ -1,4 +1,4 @@
-import FirebaseImage from "./FirebaseImage";
+import Img from "./Img";
 
 type Props = { quotes?: string[], title: string, firstName: string, lastName: string, photoPath: string }
 
@@ -10,7 +10,7 @@ export const Header = ({ quotes, title, firstName, lastName, photoPath }: Props)
 
     <div className="text-center">
       <div className="flex justify-center mb-16">
-        <FirebaseImage src={photoPath} alt={""} className="object-scale-down max-h-[230px]" />
+        <Img src={photoPath} alt={""} className="object-scale-down max-h-[230px]" />
         {/* <img src={photoPath} alt="Image" width="250px" height="250px" /> */}
       </div>
 
