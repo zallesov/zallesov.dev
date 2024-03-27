@@ -23,13 +23,13 @@ export default function ClickableImage({ src, id }: Props) {
         <Img src={`thumbnails/${src}`} alt={""} className="object-scale-down max-h-[150px] px-1" />
       </button>
       <dialog id={modalId} className="modal">
-        <div className="modal-box max-w-max max-h-full justify-center">
+        <div className="modal-box rounded-none bg-black border border-white max-w-max max-h-full justify-center">
           <div className="modal-action justify-center">
             <Img src={`screenshots/${src}`} alt={""} className="object-fill max-w-full max-h-full" />
           </div>
           <div className="modal-action justify-center">
             <form method="dialog">
-              <button className="btn">Close</button>
+              <button className="btn bg-white">Close</button>
             </form>
           </div>
         </div>

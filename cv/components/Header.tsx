@@ -11,7 +11,7 @@ export const Header = ({ quotes, title, firstName, lastName, photoPath }: Props)
 
     <div className="text-center">
       <div className="flex justify-center mb-16">
-        <Img src={photoPath} alt={""} className="object-scale-down max-h-[230px] border-4 rounded-full" />
+        <Img src={photoPath} alt={""} className="object-scale-down max-h-[230px] border-4 border-white rounded-full" />
         {/* <img src={photoPath} alt="Image" width="250px" height="250px" /> */}
       </div>
 
@@ -19,7 +19,7 @@ export const Header = ({ quotes, title, firstName, lastName, photoPath }: Props)
 
       <h6 className="font-sm text-white text-4xl md:text-2xl leading-none mb-8">{title}</h6>
 
-      {quote && <p className="font-normal text-gray-400 text-md md:text-xl mb-16">{quote}</p>}
+      {quote && <p className="font-normal text-white text-md md:text-xl mb-16">{quote}</p>}
 
     </div>
 

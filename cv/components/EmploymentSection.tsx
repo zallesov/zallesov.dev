@@ -15,27 +15,27 @@ export const EmploymentSection = ({ employments, quote }: Props) => {
 
     <div className="grid grid-cols-1 gap-6">
       {employments?.map((employment: Employment) => (
-        <div className="bg-gray-50 px-8 py-10 rounded-md">
-          <h4 className="font-medium text-gray-700 text-xl mb-1">{employment.company}</h4>
+        <div className="bg-white border px-8 py-10">
+          <h4 className="font-medium text-black text-xl mb-1">{employment.company}</h4>
 
-          <p className="font-medium text-gray-500 text-sx mb-1">{employment.startDate} – {employment.endDate}</p>
+          <p className="font-medium text-black text-sx mb-1">{employment.startDate} – {employment.endDate}</p>
 
-          <p className="font-medium text-gray-500 text-sx mb-1">{employment.text}</p>
+          <p className="font-medium text-black text-sx mb-1">{employment.text}</p>
 
           {employment.projects.map(project => (
             <>
               <div className="my-2">
-                {project.name && <div className="font-large text-xl md:text-2xl text-gray-900 text-lg py-1">{project.name}</div>}
+                {project.name && <div className="font-large text-xl md:text-2xl text-black text-lg py-1">{project.name}</div>}
                 {<p className="font-sm text-xs md:text-sm py-1">{project.urls.map(url => (
                   <><a className="text-blue-600 visited:text-purple-600" href={url}>{url}</a>&nbsp;</>
                   ))}</p>}
-                {project.title && <div className="font-medium md:text-xl text-gray-600 py-1">{project.title}</div>}
-                {project.preambule && <p className="text-gray-500 text-md relative">{project.preambule}</p>}
-                {project.highlights && <ul className="list-disc text-gray-500 text-md list-inside my-2 pl-5">{project.highlights.map(hl => (
+                {project.title && <div className="font-medium md:text-xl text-blck py-1">{project.title}</div>}
+                {project.preambule && <p className="text-back text-md relative">{project.preambule}</p>}
+                {project.highlights && <ul className="list-disc text-back text-md list-inside my-2 pl-5">{project.highlights.map(hl => (
                   <li>{hl}</li>
                 ))}</ul>}
-                {project.postambule && <p className="font-sm text-gray-500 text-md relative">{project.postambule}</p>}
-                {project.stack && <p className="font-italic text-gray-500 text-sm relative mt-7">{project.stack}</p>}
+                {project.postambule && <p className="font-sm text-back text-md relative">{project.postambule}</p>}
+                {project.stack && <p className="font-italic text-back text-sm relative mt-7">{project.stack}</p>}
               </div>
             </>))}
         </div>

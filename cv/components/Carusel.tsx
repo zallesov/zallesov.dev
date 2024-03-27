@@ -10,13 +10,13 @@ export const Carusel = ({ images }: Props) => {
   const lastBtnId = `${caruselId}-btn-${(images?.length || 2) - 1}`
 
   return  <div className="items-center flex flex-auto flex-row">
-    <a href={`#${firstBtnId}`} className="hidden lg:visible lg:btn lg:btn-circle bg-gray-400 border-none">❮</a>
-    <div className="container carousel carousel-center lg:space-x-4 lg:p-4 lg:mx-4 w-full bg-neutral items-center">
+    <a href={`#${firstBtnId}`} className="hidden lg:visible lg:btn lg:btn-circle bg-white border-none">❮</a>
+    <div className="container carousel carousel-center lg:space-x-4 lg:p-4 lg:mx-4 w-full bg-none items-center">
       {images?.map((image, i) => {
         const btnId = `${caruselId}-btn-${i}`
         return <ClickableImage src={image} id={btnId} />
       })}
     </div>
-    <a href={`#${lastBtnId}`} className="hidden lg:visible lg:btn lg:btn-circle bg-gray-400 border-none" >❯</a>
+    <a href={`#${lastBtnId}`} className="hidden lg:visible lg:btn lg:btn-circle bg-white border-none" >❯</a>
   </div >
 }

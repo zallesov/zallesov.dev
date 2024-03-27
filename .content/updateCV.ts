@@ -14,15 +14,14 @@ export const adminDb = getFirestore(adminApp);
 
 const args = process.argv 
 
-const file = args[2]
-const id = args[3]
+const id = args[2]
 
-if (!file || !id) {
+if (!id) {
   console.error("Run command with id of CV to update. `ts-node updateCV.ts <id>`")
   process.exit(1) 
 }
 
-const cv = require(`./${file}`).default
+const cv = require(`./${id}`).default
 
 console.log("read CV", cv)
 

@@ -1,4 +1,5 @@
 import { Actions } from "@/components/Actions";
+import { ArticlesSection } from "@/components/ArticlesSection";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { PortfoliosSection } from "@/components/PortfolioSection";
@@ -8,7 +9,6 @@ import { CV } from "@/types/CV";
 import { EducationSection } from "../components/EductionSection";
 import { EmploymentSection } from "../components/EmploymentSection";
 import { HighlightsSection } from "../components/HighlightsSection";
-import { ArticlesSection } from "@/components/ArticlesSection";
 
 type Props = {
   cv: CV
@@ -18,7 +18,7 @@ export default async function CVPage({ cv }: Props) {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between py-12 lg:px-12 sm:px-2 bg-gray-900`}
+      className={`flex min-h-screen flex-col items-center justify-between py-12 lg:px-12 sm:px-2 bg-gradient-custom bg-fixed`}
     >
       <section className="py-1">
 

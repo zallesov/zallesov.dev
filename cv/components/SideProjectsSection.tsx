@@ -15,19 +15,19 @@ export const SideProjectsSection = ({ projects, quote }: Props) => {
 
     <div className="grid grid-cols-1 gap-6">
       {projects?.map((project) => (
-        <div className="bg-gray-50 px-8 py-5 rounded-md">
+        <div className="bg-black border border-white px-8 py-5">
               <div className="my-3">
-                {project.name && <div className="font-large text-xl md:text-2xl text-gray-900 text-lg py-1">{project.name}</div>}
+                {project.name && <div className="font-large text-xl md:text-2xl text-white text-lg py-1">{project.name}</div>}
                 {<p className="font-sm text-xs md:text-sm py-1">{project.urls.map(url => (
-                  <><a className="text-blue-600 visited:text-purple-600" href={url}>{url}</a>&nbsp;</>
+                  <><a className="text-purple-600 visited:text-purple-600" href={url}>{url}</a>&nbsp;</>
                   ))}</p>}
-                {project.title && <div className="font-medium md:text-xl text-gray-600 py-1">{project.title}</div>}
-                {project.preambule && <p className="text-gray-500 text-md relative">{project.preambule}</p>}
-                {project.highlights && <ul className="list-disc text-gray-500 text-md list-inside my-2 pl-5">{project.highlights.map(hl => (
+                {project.title && <div className="font-medium md:text-xl text-white py-1">{project.title}</div>}
+                {project.preambule && <p className="text-white text-md relative">{project.preambule}</p>}
+                {project.highlights && <ul className="list-disc text-white text-md list-inside my-2 pl-5">{project.highlights.map(hl => (
                   <li>{hl}</li>
                 ))}</ul>}
-                {project.postambule && <p className="font-sm text-gray-500 text-md relative">{project.postambule}</p>}
-                {project.stack && <p className="font-italic text-gray-500 text-sm relative mt-7">{project.stack}</p>}
+                {project.postambule && <p className="font-sm text-white text-md relative">{project.postambule}</p>}
+                {project.stack && <p className="font-italic text-white text-sm relative mt-7">{project.stack}</p>}
               </div>
         </div>
       ))}

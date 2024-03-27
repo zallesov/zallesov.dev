@@ -10,9 +10,9 @@ export const HighlightsSection = ({ highlights }: Props) => {
 
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {highlights?.map((highlight) => (
-        <div className="bg-gray-50 px-8 py-10 rounded-md">
-          <h4 className="font-medium text-gray-700 text-lg mb-4">{highlight.title}</h4>
-          <p className="font-normal text-gray-500 text-md">{highlight.text}</p>
+        <div className="bg-white px-8 py-10">
+          <h4 className="font-medium text-gray-700 text-lg mb-4 text-black">{highlight.title}</h4>
+          <p className="font-normal text-gray-500 text-md text-black">{highlight.text}</p>
         </div>
 
       ))}
