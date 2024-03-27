@@ -30,7 +30,7 @@ export default {
     }
   ],
   "id": "zallesov.dev",
-  "pdf": "Alex Zall CV 2023 Dec.pdf",
+  "pdf": "Aleksandr Zalesov CV 2024.pdf",
   "lastName": "Zall",
   "portfolioQuote": "I brought togetehr some highlight from the most recent project I participated in. Of course I can not take full credit. It goes to my team.",
   "portfolios": [
@@ -145,7 +145,7 @@ export default {
     "\"Code is the language of progress.\""
   ],
   "title": "Senior Software Engineer",
-  "photoPath": "photos/ava2.png",
+  "photoPath": "photos/ava5.png",
   "employmentQuote": "Below is a summary of the companies and projects I worked for.",
   "sideProjectsQuote": "Besides a permanent day job I've been involved in a few other projects. For some of them as a consultant and for some as a founder.",
   "sideProjects": [

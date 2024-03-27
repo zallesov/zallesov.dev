@@ -1,12 +1,13 @@
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 
 // These styles apply to every route in the application
-import './globals.css'
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Zall.DEV',
   description: 'Zall\'s personal website',
 }
+
 
 export default function RootLayout({
   children,
@@ -22,6 +23,7 @@ export default function RootLayout({
         <title>{metadata.title?.toString()}</title>
         <link rel="icon" type="image/png" sizes="16x16" href="/favico_16x16.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favico_32x32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favico_48x48.png" />
         <link rel="icon" type="image/png" sizes="64x64" href="/favico_64x64.png" />
       </head>
       <body>{children}</body>

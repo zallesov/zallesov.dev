@@ -10,12 +10,14 @@
     "cv"
   ],
   "scripts": {
-    "build:cv": "yarn workspace @zallesov/cv build",
+    "build": "yarn workspace @zallesov/cv build",
     "clean": "yarn workspaces run clean",
-    "emulator:export": "yarn workspace @zallesov/backend emulator:export",
-    "start:cv": "yarn workspace @zallesov/cv start",
-    "deploy:cv": "yarn workspace @zallesov/cv deploy",
-    "update:cv": "ts-node .content/updateCV.ts zallesov.dev",
+    "emulators": "firebase emulators:start --only firestore,hosting,storage",
+    "start:emulators": "NODE_ENV=development FIRESTORE_EMULATOR_HOST=localhost:8080 GCLOUD_PROJECT=local yarn workspace @zallesov/cv start",
+    "start:remote": "NODE_ENV=production GCLOUD_PROJECT=local yarn workspace @zallesov/cv start",
+    "deploy": "yarn workspace @zallesov/cv deploy",
+    "update:emulators": "FIRESTORE_EMULATOR_HOST=localhost:8080 GCLOUD_PROJECT=local ts-node .content/updateCV.ts zallesov.dev zallesov.dev",
+    "update:remote": "GCLOUD_PROJECT=zallesov-dev ts-node .content/updateCV.ts zallesov.dev",
     "lint": "eslint .",
     "test": "yarn test"
   },
