@@ -16,6 +16,12 @@ env:
     availability:
       - BUILD
       - RUNTIME
+  - variable: GOOGLE_NODE_RUN_SCRIPTS
+    value: "echo GOOGLE_NODE_RUN_SCRIPTS && npm run build && npm run start"
+    availability:
+      - BUILD
+      - RUNTIME
+
 
   # Configure secrets
   # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
