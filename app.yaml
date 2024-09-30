@@ -1,3 +1,13 @@
 runtime: nodejs20
-health_check:
-  timeout: 15s
+# Health checks
+readiness_check:
+  path: "/"
+  check_interval: 10s       # Time between health checks
+  timeout: 300s             # Timeout to wait for app to be ready
+  failure_threshold: 5      # Number of failed health checks before marking as unhealthy
+
+liveness_check:
+  path: "/"
+  check_interval: 10s       # Time between health checks
+  timeout: 300s             # Timeout to wait for app to respond
+  failure_threshold: 5      # Number of failed checks before restarting container
