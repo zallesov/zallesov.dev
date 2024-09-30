@@ -1,0 +1,3 @@
+runtime: nodejs20
+health_check:
+  timeout: 15s
