@@ -1,0 +1,23 @@
+{
+  "projects": {
+    "local": "local",
+    "prd": "zallesov-dev",
+    "default": "zallesov-dev"
+  },
+  "targets": {
+    "local": {
+      "hosting": {
+        "cv": [
+          "local"
+        ]
+      }
+    },
+    "zallesov-dev": {
+      "hosting": {
+        "cv": [
+          "zallesov-dev"
+        ]
+      }
+    }
+  }
+}

@@ -1,14 +1,30 @@
-# Zall's Personal CV Page
+# Next.js on Firebase App Hosting
 
-Source code for my personal CV page.
+This is an example [Next.js](https://nextjs.org/) project to demonstrate SSG,
+SSR, and ISR on [Firebase App Hosting](https://firebase.google.com/docs/app-hosting).
 
-- The page is a Next.js app. 
-- It uses React and Tailwind.
-- The app is purely rendered on the server side. 
-- As an experiment it is deployed as Firebase functions.
-- All the assets are stored in Firebase storage.
+## Getting Started
 
-## Links
+Run the development server:
 
-https://zallesov.dev
-https://zall.dev
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Deploy to Firebase App Hosting
+
+### 1. Get your project set up on GitHub
+
+[Create a new GitHub repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) and push the newly-initialized sample code to it:
+
+<pre>
+git remote add origin https://github.com/<b>$YOUR_NEW_REPOSITORY</b>.git
+git branch -M main
+git push -u origin main
+</pre>
+
+### 2. Set up Firebase App Hosting
+
+Continue to [Get started with Firebase App Hosting](https://firebase.google.com/docs/app-hosting/get-started#step-1:).

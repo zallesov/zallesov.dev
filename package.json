@@ -1,55 +1,24 @@
 {
-  "name": "@zallesov/monorepo",
-  "version": "0.0.0",
+  "name": "firebase-app-hosting-nextjs",
+  "version": "1.0.0",
   "private": true,
-  "description": "Monorepo root package.",
-  "engines": {
-    "node": ">=18"
-  },
-  "workspaces": [
-    "cv"
-  ],
   "scripts": {
-    "build": "yarn workspace @zallesov/cv build",
-    "clean": "yarn workspaces run clean",
-    "emulators": "firebase emulators:start --only firestore,hosting,storage",
-    "start:emulators": "NODE_ENV=development FIRESTORE_EMULATOR_HOST=localhost:8080 GCLOUD_PROJECT=local yarn workspace @zallesov/cv start",
-    "start:remote": "NODE_ENV=production GCLOUD_PROJECT=local yarn workspace @zallesov/cv start",
-    "deploy": "yarn workspace @zallesov/cv deploy",
-    "update:emulators": "FIRESTORE_EMULATOR_HOST=localhost:8080 GCLOUD_PROJECT=local ts-node .content/updateCV.ts zallesov.dev",
-    "update:remote": "GCLOUD_PROJECT=zallesov-dev ts-node .content/updateCV.ts zallesov.dev",
-    "lint": "eslint .",
-    "test": "yarn test"
-  },
-  "devDependencies": {
-    "@types/eslint": "8.37.0",
-    "@typescript-eslint/eslint-plugin": "5.59.5",
-    "@typescript-eslint/parser": "5.59.5",
-    "concurrently": "7.6.0",
-    "eslint": "8.40.0",
-    "eslint-config-prettier": "8.8.0",
-    "eslint-plugin-jest": "27.2.3",
-    "eslint-plugin-jsx-a11y": "6.7.1",
-    "eslint-plugin-next": "^0.0.0",
-    "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-react": "7.32.2",
-    "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-simple-import-sort": "10.0.0",
-    "eslint-plugin-testing-library": "5.10.3",
-    "eslint-plugin-unicorn": "47.0.0",
-    "eslint-plugin-unused-imports": "2.0.0",
-    "firebase-tools": "12.7.0",
-    "jest-environment-jsdom": "^29.6.4",
-    "lint-staged": "13.2.2",
-    "prettier": "2.8.8"
-  },
-  "resolutions": {
-    "@types/react": "18.2.17",
-    "@types/react-dom": "18.2.7"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "@types/jest": "^29.5.4",
-    "jest": "^29.6.4",
-    "ts-jest": "^29.1.1"
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "14.1.4"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.4"
   }
 }

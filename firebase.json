@@ -1,7 +1,7 @@
 {
   "hosting": {
     "target": "cv",
-    "source": "cv",
+    "source": "src",
     "ignore": [
       "firebase.json",
       "**/.*",
