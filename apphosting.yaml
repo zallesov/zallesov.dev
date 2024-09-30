@@ -11,8 +11,8 @@ runConfig:
 env:
   # Configure environment variables.
   # See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment.
-  - variable: MESSAGE
-    value: Hello world!
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: zallesov-dev
     availability:
       - BUILD
       - RUNTIME
