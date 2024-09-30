@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "target": "cv",
+    "target": "zallesov-dev",
     "source": "src",
     "ignore": [
       "firebase.json",
