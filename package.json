@@ -8,8 +8,9 @@
   "scripts": {
     "dev": "next dev -p 8080",
     "build": "next build",
-    "start": "next start -p 8080",
-    "lint": "next lint"
+    "start": "echo STARTING NODE && next start -p 8080",
+    "lint": "next lint",
+    "update:remote": "GCLOUD_PROJECT=zallesov-dev ts-node .content/updateCV.ts zallesov.dev"
   },
   "dependencies": {
     "firebase": "^10.5.0",
