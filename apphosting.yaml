@@ -21,3 +21,17 @@ env:
   # See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
   # - variable: API_KEY
   #   secret: myApiKeySecret
+
+readiness_check:
+  path: "/readiness_check"
+  check_interval_sec: 5
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+  app_start_timeout_sec: 300
+
+liveness_check:
+  path: "/"
+  check_interval: 10s       # Time between health checks
+  timeout: 300s             # Timeout to wait for app to respond
+  failure_threshold: 5      # Number of failed checks before restarting container
