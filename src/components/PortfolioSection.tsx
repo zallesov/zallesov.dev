@@ -16,7 +16,7 @@ export const PortfoliosSection = ({ portfolios, portfolioQuote }: Props) => {
       </div>
 
       {portfolios?.sort((a, b) => a.index - b.index)?.map((portfolio) => (
-        <div className="my-10 p-4 space-y-12 bg-black border border-solid border-1 border-white" >
+        <div key={portfolio.title} className="my-10 p-4 space-y-12 bg-black border border-solid border-1 border-white" >
           <div className="flex lg:space-x-6 flex-col lg:flex-row">
             <h1 className="font-normal text-white text-3xl md:text-4xl break-words min-w-fit">{parse(portfolio.title)}</h1>
 

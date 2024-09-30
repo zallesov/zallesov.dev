@@ -12,7 +12,7 @@ export const ArticlesSection = ({ articles }: Props) => {
 
     <div className="gap-6">
       {articles?.map((article: Article) => (
-        <div className="bg-black border border-white px-8 py-8 my-6">
+        <div key={article.title} className="bg-black border border-white px-8 py-8 my-6">
           <h4 className="font-medium text-white text-lg mb-4">{article.title}</h4>
 
           <div className="relative">

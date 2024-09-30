@@ -15,7 +15,7 @@ export const EducationSection = ({ educations, quote }: Props) => {
 
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {educations?.map((education: Education) => (
-        <div className="bg-white px-8 py-10">
+        <div key={education.startYear} className="bg-white px-8 py-10">
           <h4 className="font-medium text-black text-lg mb-4">{education.startYear} – {education.endYear}</h4>
 
           <p className="font-normal text-black text-md mb-4">{education.univarsity}</p>

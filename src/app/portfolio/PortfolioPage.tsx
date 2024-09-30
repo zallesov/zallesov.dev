@@ -11,7 +11,7 @@ export default async function PortfolioPage({ cv }: Props) {
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-12 lg:px-12 px-2 bg-gray-900`}
+      className={"flex min-h-screen flex-col items-center justify-between p-12 lg:px-12 px-2 bg-gray-900"}
     >
       <section className="py-1">
 
@@ -26,10 +26,8 @@ export default async function PortfolioPage({ cv }: Props) {
       </section>
 
       {cv.portfolios &&
-        <section className="py-10 md:py-16">
-
+        <section className={"py-10 md:py-16"}>
           <PortfoliosSection portfolios={cv.portfolios} portfolioQuote={cv.portfolioQuote} />
-
         </section>
       }
 

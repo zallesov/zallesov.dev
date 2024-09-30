@@ -12,7 +12,7 @@ export const SkillsSection = ({ skills }: Props) => {
     <div className="bg-gray-800 border-solid border border-white">
       <ul className="px-8 py-10 w-full rounded-md list-disc list-inside">
         {skills?.map((skill) => (
-          <li className="font-normal text-white text-md mb-4">{skill}</li>
+          <li key={skill} className="font-normal text-white text-md mb-4">{skill}</li>
         ))}
       </ul>
     </div>
