@@ -22,7 +22,7 @@ const config: Config = {
       },
       colors: {
         white: '#FFDDFF',
-        gray: '#DD33DD',
+        gray: '#1C0E21',
         black: '#1C0E21',
       },
     },

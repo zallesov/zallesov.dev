@@ -4,14 +4,19 @@ export default {
       "title": "Types in 3-layer application",
       "description": "Article gives some practical advice on how to implement a 3 layer application design pattern",
       "url": "https://medium.com/@zallesov/types-in-3-layer-application-ddc03ec5cbf7"
-    }
+    },
+    {
+      "title": "Stateful routing with LangGraph",
+      "description": "An article describes a concept of an agentic routing system of a chat bot that can route a user from one agent to another like in a call center",
+      "url": "https://medium.com/@zallesov/stateful-routing-with-langgraph-6dc8edc798bd"
+    },
   ],
   "educations": [
     {
       "endYear": "2008",
       "specialisation": "Masters in Math and Computer Science",
       "startYear": "2003",
-      "univarsity": "Novosibirsk State Technical University"
+      "university": "Novosibirsk State Technical University"
     }
   ],
   "firstName": "Alex",
@@ -32,9 +37,9 @@ export default {
   "id": "zallesov.dev",
   "pdf": "Aleksandr Zalesov CV 2024.pdf",
   "lastName": "Zall",
-  "portfolioQuote": "I brought togetehr some highlight from the most recent project I participated in. Of course I can not take full credit. It goes to my team.",
+  "portfolioQuote": "I brought together some highlights from the most recent project I participated in. Of course, I cannot take full credit. It goes to my team.",
   "portfolios": [
-  {
+    {
       "images": [
         "beeboard/beeboard1.png",
         "beeboard/beeboard2.png",
@@ -84,7 +89,7 @@ export default {
         "zone/zone5.png"
       ],
       "index": 5,
-      "text": "Zone is an app to manage warehouses, ads, and user-facing announcements. Even thou we did not own this service our team has significantly contributed to this codebase.\nWe have built a system that automatically closes warehouses when demand reaches the warehouse's capacity. The same system was used to manually intervene in warehouse availability due to weather conditions for example or other emergencies (like robbery, yes that did happen). ",
+      "text": "Zone is an app to manage warehouses, ads, and user-facing announcements. Even though we did not own this service, our team has significantly contributed to this codebase.\nWe have built a system that automatically closes warehouses when demand reaches the warehouse's capacity. The same system was used to manually intervene in warehouse availability due to weather conditions, for example, or other emergencies (like robbery, yes that did happen). ",
       "title": "Zone"
     },
     {
@@ -144,62 +149,73 @@ export default {
     "\"Building digital bridges to the future.\"",
     "\"Code is the language of progress.\""
   ],
-  "title": "Senior Software Engineer",
+  "title": "Senior / Cloud / AI Engineer",
   "photoPath": "photos/ava5.png",
   "employmentQuote": "Below is a summary of the companies and projects I worked for.",
   "sideProjectsQuote": "Besides a permanent day job I've been involved in a few other projects. For some of them as a consultant and for some as a founder.",
   "sideProjects": [
     {
-          "name": "2Meters",
-          "title": "Partime CTO",
-          "preambule": "2meters is a SaS solution to manage customer queues and appointments on-site. In meters, I am a founding CTO. Together with a team of friends, we've built a service that is now used on 5 continents. We have raised a seed investment round that allowed us to hire a team of engineers to build the product. Even being involved in the project part-time I ",
-          "postambule": "As a result, the service is used by thousands of users daily and generates stable revenue.",
-          "highlights": [
-            "Built an independent team of developers who can act without micromanagement.",
-            "Organized the work process in a manageable and predictable manner applying agile practices",
-            "Mentored software developers",
-            "Facilitated company-wide meetings for knowledge transfer and planning",
-            "Communicated with leads and clients identifying their requirements",
-            "Defined requirements for the subcontractors ",
-          ],
-          "stack": "Stack: Firebase and Google Cloud Services, React, TypeScript, NextJS",
-          "urls": ["https://2meters.app", 'https://app.2meters.app']
+      "name": "Mult.dev",
+      "title": "Partime CTO",
+      "preambule": "Mult.dev is a video rendering platform. It specifically targets travel bloggers and just travelers providing them with tools to visualize their trips to post on social media.",
+      "postambule": "The product is truly used around the world with an audience of more than a 3 million active users",
+      "highlights": [
+        "Set up a GPU-based, auto-scaling video rendering cluster",
+        "Created an AI chatbot to facilitate the video creation process via chat interface",
+        "Improved company monitoring and reporting frameworks",
+        "Established customer management frameworks",
+      ],
+      "stack": "Stack: Firebase and Google Cloud Services, React, TypeScript, NextJS",
+      "urls": ["https://2meters.app", 'https://app.2meters.app']
     },
     {
-          "name": "Snubes",
-          "title": "Principal Software Engineer",
-          "preambule": `Snubes provides services to assess and track the performance of call centers' individual agents and projects overall using AI.
-I've inherited the team with no coding standards or principles. We had to let go most of the people keeping only the motivated ones. After setting up the essential agile processes and best practices (CI/CD, code review, git-flow, monitoring) we could deliver noticeable results
-Together with my team, we've`,
-          "highlights": [
-            "Set up a phone call transcription pipeline using a modified version of OpenAI’s Whisper model (WhisperX)",
-            "Developed another pipeline to analyze transcription produced by Whisper to categorize, flag, and act on them",
-            "Built tools for scanning and picking orders in the warehouse",
-            "Deployed a hub that received call data from various call center vendors using various techniques. (SFTP, webhooks, pull APIs)",
-            "Built an internal leaderboard for the sales team to track the performance of individual sales managers",
-            "Set up monitoring solutions and CI/CD pipelines for the whole company",
-          ],
-          "stack": "Stack: Google Cloud Services, React, Typescript, Python, ChatGPT, Whisper, VertexAI",
-          "urls": ["https://snubes.com"]
-        },
-        {
-          "name": "Super-real",
-          "title": "Principal Software Engineer/Software Developer Manager",
-          "preambule": `Super-real is a web-based chat where anyone can chat with celebrities or influencers backed by an AI.
-      With a team of only 3 devs part-time, we have achieved an incredible outcome in just two months leading the project to production worldwide and generating revenue. My responsibilities were everything LLM-related`,
-          "highlights": [
-            "Prompt engineering for variouse LLMs to better mock a persona",
-            "Provide LLM with the relevant facts about the person. (Embeddings)",
-            "Experimenting with different LLMs to achieve a better performance",
-            "Fine tuning the model to mimic the spoken style better",
-            "Identify when to provide additional paid content (images, voice messages)"
-          ],
-          "stack": "Stack: Lang-Chain, ChatGPT, LLAMA2, TypeScript, Google Cloud Services, NextJS",
-          "urls": ["https://super-real.co", "https://super-real.co/zall"]
-        }
+      "name": "2Meters",
+      "title": "Partime CTO",
+      "preambule": "2meters is a SaaS solution to manage customer queues and appointments on-site. In meters, I am a founding CTO. Together with a team of friends, we've built a service that is now used on 5 continents. We have raised a seed investment round that allowed us to hire a team of engineers to build the product. Even being involved in the project part-time, I ",
+      "postambule": "As a result, the service is used by thousands of users daily and generates stable revenue.",
+      "highlights": [
+        "Built an independent team of developers who can act without micromanagement.",
+        "Organized the work process in a manageable and predictable manner applying agile practices",
+        "Mentored software developers",
+        "Facilitated company-wide meetings for knowledge transfer and planning",
+        "Communicated with leads and clients identifying their requirements",
+        "Defined requirements for the subcontractors ",
+      ],
+      "stack": "Stack: Firebase and Google Cloud Services, React, TypeScript, NextJS",
+      "urls": ["https://2meters.app", 'https://app.2meters.app']
+    },
+    {
+      "name": "Snubes",
+      "title": "Principal Software Engineer",
+      "preambule": `Snubes provides services to assess and track the performance of call centers' individual agents and projects overall using AI. I've inherited the team with no coding standards or principles. We had to let go of most of the people, keeping only the motivated ones. After setting up the essential agile processes and best practices (CI/CD, code review, git-flow, monitoring), we could deliver noticeable results. Together with my team, we've`,
+      "highlights": [
+        "Set up a phone call transcription pipeline using a modified version of OpenAI’s Whisper model (WhisperX)",
+        "Developed another pipeline to analyze transcription produced by Whisper to categorize, flag, and act on them",
+        "Built tools for scanning and picking orders in the warehouse",
+        "Deployed a hub that received call data from various call center vendors using various techniques. (SFTP, webhooks, pull APIs)",
+        "Built an internal leaderboard for the sales team to track the performance of individual sales managers",
+        "Set up monitoring solutions and CI/CD pipelines for the whole company",
+      ],
+      "stack": "Stack: Google Cloud Services, React, Typescript, Python, ChatGPT, Whisper, VertexAI",
+      "urls": ["https://snubes.com"]
+    },
+    {
+      "name": "Super-real",
+      "title": "Principal Software Engineer/Software Developer Manager",
+      "preambule": `Super-real is a web-based chat where anyone can chat with celebrities or influencers backed by an AI. With a team of only 3 devs part-time, we have achieved an incredible outcome in just two months, leading the project to production worldwide and generating revenue. My responsibilities were everything LLM-related`,
+      "highlights": [
+        "Prompt engineering for various LLMs to better mock a persona",
+        "Provide LLM with the relevant facts about the person. (Embeddings)",
+        "Experimenting with different LLMs to achieve better performance",
+        "Fine-tuning the model to mimic the spoken style better",
+        "Identify when to provide additional paid content (images, voice messages)."
+      ],
+      "stack": "Stack: Lang-Chain, ChatGPT, LLAMA2, TypeScript, Google Cloud Services, NextJS",
+      "urls": ["https://super-real.co", "https://super-real.co/zall"]
+    }
   ],
   "employments": [
-  {
+    {
       "startDate": "Dec 2023",
       "endDate": "Present",
       "city": "Berlin",
@@ -233,18 +249,16 @@ Together with my team, we've`,
         {
           "name": "Zapp",
           "title": "Software Developer Manager",
-          "preambule": `Zapp is a grocery delivery service at that time operating in UK, Netherlands and France.
-I was managing a team of varying size up to 6 people. We had our fingerprints in every codebase in the company. Starting from the consumer app ending with ops infrastructure terraform code.
-My team and I `,
+          "preambule": `Zapp is a grocery delivery service at that time operating in UK, Netherlands and France. I was managing a team of varying size up to 6 people. We had our fingerprints in every codebase in the company. Starting from the consumer app ending with ops infrastructure terraform code. My team and I `,
           "highlights": [
             "Developed an internal tool for warehouse and city managers called Zappboard. It aggregated data from every other system and presented it in an actionable way",
             "Contributed to the last mile delivery app Zephyr. It showed the state of the order and rider's fleet on the map. And it was also deeply integrated with the Zappboard",
             "Built tools for scanning and picking orders in the warehouse",
             "Trained an ML model to predict the delivery time based on over 40 parameters and integrate it into the ordering process",
             "Integrating with other storefronts like Uber Eats and Deliveroo",
-            "Contributed to the development of company- wide monitoring tools and ops infrastructure",
-            "I was the responsible person for organizing knowledge sharing in the company.I’ve organized and facilitated tech- talks and demos",
-            "Planned on - call rotations",
+            "Contributed to the development of company-wide monitoring tools and ops infrastructure",
+            "I was the responsible person for organizing knowledge sharing in the company. I've organized and facilitated tech-talks and demos",
+            "Planned on-call rotations",
           ],
           "stack": "Stack: Firebase and Google Cloud Services, React, TypeScript, Tensorflow, Python, Terraform",
           "urls": ["https://tryzapp.co.uk"]
@@ -252,35 +266,17 @@ My team and I `,
     },
     {
       "startDate": "Mar 2019",
-      "endDate": "Aug 2020",
+      "endDate": "Aug 2021",
       "city": "Berlin / Hamburg",
       "company": "MOIA (Volkswagen)",
       "projects": [
         {
           "title": "Senior Software Engineer",
-          "preambule": "MOIA is a company under the Volkswagen umbrella.The main challenge there was to optimize supply for the demand to match a particular van to a particular order and also re - distribute vans across the city to decrease waiting time. I have",
+          "preambule": "MOIA is a company under the Volkswagen umbrella. The main challenge there was to optimize supply for the demand to match a particular van to a particular order and also re-distribute vans across the city to decrease waiting time. I have",
           "highlights": [
-            "Built a real - time simulation service that simulated the vans behavior based on real - life demand data",
-            "Contributed to a step by step simulation service.This service could simulate a week of real - life fleet behavior which allowed to  assess different ride - sharing algorithms",
-            "Contributed to a “dispatching” service that aggregated the state of the fleet in real - time showing the vans, their routes, and customers on the map.This service was the backbone that connected vans, customers, ride - optimization services, and fleet managers.",
-          ],
-          "stack": "Stack: AWS, Scala, ZIO, AKKA, Reddis, Amazon IOT",
-          "urls": ["https://www.moia.io/en"]
-        }]
-    },
-    {
-      "startDate": "Mar 2019",
-      "endDate": "Aug 2020",
-      "city": "Berlin / Hamburg",
-      "company": "MOIA (Volkswagen)",
-      "projects": [
-        {
-          "title": "Senior Software Engineer",
-          "preambule": "MOIA is a company under the Volkswagen umbrella.The main challenge there was to optimize supply for the demand to match a particular van to a particular order and also re - distribute vans across the city to decrease waiting time. I have",
-          "highlights": [
-            "Built a real - time simulation service that simulated the vans behavior based on real - life demand data",
-            "Contributed to a step by step simulation service.This service could simulate a week of real - life fleet behavior which allowed to  assess different ride - sharing algorithms",
-            "Contributed to a “dispatching” service that aggregated the state of the fleet in real - time showing the vans, their routes, and customers on the map.This service was the backbone that connected vans, customers, ride - optimization services, and fleet managers.",
+            "Built a real-time simulation service that simulated the vans' behavior based on real-life demand data",
+            "Contributed to a step-by-step simulation service. This service could simulate a week of real-life fleet behavior which allowed us to assess different ride-sharing algorithms",
+            "Contributed to a dispatching service that aggregated the state of the fleet in real-time showing the vans, their routes, and customers on the map. This service was the backbone that connected vans, customers, ride-optimization services, and fleet managers.",
           ],
           "stack": "Stack: AWS, Scala, ZIO, AKKA, Reddis, Amazon IOT",
           "urls": ["https://www.moia.io/en"]
@@ -294,10 +290,10 @@ My team and I `,
       "projects": [
         {
           "title": "Senior Software Engineer",
-          "preambule": "Zalando is Fashion e - commerce service. In my short time in Zalando, I’ve contributed to a few internal projects.",
+          "preambule": "Zalando is Fashion e-commerce service. In my short time in Zalando, I've contributed to a few internal projects.",
           "highlights": [
-            "Product image labeling with AI.Service described the item by “looking” at its pictures",
-            "Product image verification.Service checked that the item has all of the required images and that the images are in the right format.White background, shoes facing right and taking 75 % of space, etc.",
+            "Product image labeling with AI. Service described the item by “looking” at its pictures.",
+            "Product image verification. Service checked that the item has all of the required images and that the images are in the right format. White background, shoes facing right and taking 75% of space, etc.",
           ],
           "stack": "Stack: AWS, Scala, ZIO, Kafka",
           "urls": ["https://zalando.de "]
@@ -311,10 +307,10 @@ My team and I `,
       "projects": [
         {
           "title": "Software Engineer",
-          "preambule": "In my almost 5 years in soundcloud I probably got the biggest skill boost in my career as I was working shoulder to shoulder with the most talented people from around the world.I’ve also learned how a healthy and pleasant work environment can look like. Some highlights from those years are",
+          "preambule": "In my almost 5 years in soundcloud I probably got the biggest skill boost in my career as I was working shoulder to shoulder with the most talented people from around the world. I've also learned how a healthy and pleasant work environment can look like. Some highlights from those years are",
           "highlights": [
             "I am the man behind the canonical soundcloud audio player on the web",
-            "I’ve also contributed to mobile audio players",
+            "I've also contributed to mobile audio players",
             "In the copyright protection team, I developed a pipeline that identified and automatically took down any upload that infringed someone's copyright",
             "I've learned scala Functional Programming techniques",
           ],
@@ -322,11 +318,29 @@ My team and I `,
           "urls": ["https://soundcloud.com"]
         }]
     },
+    {
+      "startDate": "Feb 2011",
+      "endDate": "Dec 2012",
+      "city": "Moscow",
+      "company": "YaTV",
+      "projects": [
+        {
+          "title": "Software Engineer",
+          "preambule": "YaTV is a pioneer TV streaming platform in Russia. I was responsible for the development of everything streaming related.",
+          "highlights": [
+            "I've developped a video player",
+            "Streaming studio for content creators",
+            "Streaming backend to work with multiple CDNs",
+          ],
+          "stack": "Stack: Flash, Wowza Media Server, JavaScript",
+          "urls": [""]
+        }]
+    },
   ],
   "footerNote": "This web page is an experiment. It is a Next.js app hosted on Firebase. Find the source code here:",
   "footerUrl": "https://github.com/zallesov/zallesov.dev",
   "chatLink": "https://chat.zall.dev/zall",
-  "calendly": "https://calendly.com/aleksandr-zalesov/",
+  "calendly": "https://calendly.com/zallesov",
   "email": "zallesov@gmail.com",
   "linkedin": "https://www.linkedin.com/in/zallesov",
   "github": "https://github.com/zallesov",

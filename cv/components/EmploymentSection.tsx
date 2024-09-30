@@ -29,13 +29,13 @@ export const EmploymentSection = ({ employments, quote }: Props) => {
                 {<p className="font-sm text-xs md:text-sm py-1">{project.urls.map(url => (
                   <><a className="text-blue-600 visited:text-purple-600" href={url}>{url}</a>&nbsp;</>
                   ))}</p>}
-                {project.title && <div className="font-medium md:text-xl text-blck py-1">{project.title}</div>}
-                {project.preambule && <p className="text-back text-md relative">{project.preambule}</p>}
-                {project.highlights && <ul className="list-disc text-back text-md list-inside my-2 pl-5">{project.highlights.map(hl => (
+                {project.title && <div className="font-medium md:text-xl text-black py-1">{project.title}</div>}
+                {project.preambule && <p className="text-black text-md relative">{project.preambule}</p>}
+                {project.highlights && <ul className="list-disc text-black text-md list-inside my-2 pl-5">{project.highlights.map(hl => (
                   <li>{hl}</li>
                 ))}</ul>}
-                {project.postambule && <p className="font-sm text-back text-md relative">{project.postambule}</p>}
-                {project.stack && <p className="font-italic text-back text-sm relative mt-7">{project.stack}</p>}
+                {project.postambule && <p className="font-sm text-black text-md relative">{project.postambule}</p>}
+                {project.stack && <p className="font-italic text-black text-sm relative mt-7">{project.stack}</p>}
               </div>
             </>))}
         </div>
