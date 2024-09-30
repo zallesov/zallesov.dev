@@ -73,8 +73,6 @@ export default {
         "zephyr_web/zephyr_web6.png",
         "zephyr_web/zephyr_web7.png",
         "zephyr_web/zephyr_web8.png",
-        "zephyr_web/zephyr_web10.png",
-        "zephyr_web/zephyr_web11.png"
       ],
       "index": 4,
       "text": "Zephyr is an internal software in Zapp used to track the status of order delivery. This was a cross-team effort. My team was responsible for backend and integration with other services like Zappboard and Zone.",

@@ -26,7 +26,7 @@ export const EmploymentSection = ({ employments, quote }: Props) => {
               <div key={project.name} className="my-2">
                 {project.name && <div className="font-large text-xl md:text-2xl text-black text-lg py-1">{project.name}</div>}
                 {<p className="font-sm text-xs md:text-sm py-1">{project.urls.map(url => (
-                  <span key={url}><a className="text-blue-600 visited:text-purple-600" href={url}>{url}</a>&nbsp;</span>
+                  url ? <span key={url}><a className="text-blue-600 visited:text-purple-600" href={url}>{url}</a>&nbsp;</span> : null
                   ))}</p>}
                 {project.title && <div className="font-medium md:text-xl text-black py-1">{project.title}</div>}
                 {project.preambule && <p className="text-black text-md relative">{project.preambule}</p>}
