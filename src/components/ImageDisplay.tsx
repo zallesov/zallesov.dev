@@ -10,7 +10,6 @@ type Props = {
 export default function ImageDisplay({ src, id }: Props) {
 
   const modalId = `modal-${id}`
-  const btnId = id
   const showModal = () => {
     if (!document) return;
     // @ts-ignore

@@ -12,9 +12,9 @@ const adminApp =
     credential: credential.applicationDefault(),
   }, APP_NAME);
 
-if (process.env.NODE_ENV === "development") {
-  // Assuming the Firestore emulator is running on localhost:8080
-  process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080';
-}
+// if (process.env.NODE_ENV === "development") {
+//   // Assuming the Firestore emulator is running on localhost:8080
+//   process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080';
+// }
 
 export const adminDb = getFirestore(adminApp);

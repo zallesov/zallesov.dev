@@ -5,8 +5,9 @@ import { parseDataFromDoc } from "./utils/parseDataFromDoc";
 
 export const getCV = async (id: string) => {
   const ref = getDocRef("cvs", id);
-  
+
   logger.log(`Getting CV with id ${id}`);
-  const doc = await ref.get();
-  return parseDataFromDoc(isCV, doc);
+  const doc = await ref.get()
+
+  return parseDataFromDoc(isCV, doc!);
 };

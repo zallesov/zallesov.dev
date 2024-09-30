@@ -14,12 +14,12 @@ export const Footer = ({ note, url }: Props) => {
       
       {url && <div className="text-sx flex flex-col items-center justify-center ">
         
-        <a href="https://github.com/zallesov/zallesov.dev" className="flex items-center justify-center rounded-full text-white hover:bg-gray-400 transition ease-in-out duration-500">
+        {/* <a href="https://github.com/zallesov/zallesov.dev" className="flex items-center justify-center rounded-full text-white hover:bg-gray-400 transition ease-in-out duration-500">
           <GithubLogo />
         </a>
         <a href="https://github.com/zallesov/zallesov.dev" className="flex m-5  text-white ">
           @zallesov
-        </a>
+        </a> */}
       </div>}
     </div>
   </div >
