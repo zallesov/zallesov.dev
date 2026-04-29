@@ -17,7 +17,7 @@ export const Header = ({ quotes, title, firstName, lastName, photoPath }: Props)
 
       <h1 className={`${honk_font.variable} font-honk text-white text-9xl uppercase mb-8`}>{firstName} {lastName}</h1>
 
-      <h6 className="font-sm text-white text-4xl md:text-2xl leading-none mb-8">{title}</h6>
+      <h6 className="font-sm text-white text-2xl md:text-3xl leading-tight mb-8">{title}</h6>
 
       {quote && <p className="font-normal text-white text-md md:text-xl mb-16">{quote}</p>}
 

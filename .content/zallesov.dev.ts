@@ -21,21 +21,15 @@ export default {
   ],
   "firstName": "Alex",
   "highlights": [
-    {
-      "text": "Possessing a rich history of contributing to renowned organizations such as SoundCloud, Zalando, and Volkswagen, I've gained invaluable experience in navigating complex corporate landscapes, delivering high-impact software solutions, and collaborating with cross-functional teams to drive innovation.",
-      "title": "Proven Expertise in Established Enterprises:"
-    },
-    {
-      "text": "With over two decades of hands-on engineering experience, I've honed my skills to perfection, consistently delivering robust and scalable software solutions. My deep technical knowledge, coupled with a relentless pursuit of best practices, positions me as a seasoned professional in the software engineering domain.",
-      "title": "Two Decades of Engineering Excellence"
-    },
-    {
-      "text": "Beyond my technical expertise, I take pride in nurturing the next generation of software engineers. Throughout my career, I've served as a mentor and leader, guiding teams toward achieving their full potential. My commitment to fostering talent and cultivating a collaborative, high-performance culture has not only resulted in successful projects but has also empowered individuals to excel in their careers.",
-      "title": "Mentorship and Leadership"
-    }
+    { "title": "AI-first development", "text": "Custom AI software development harness for high quality and fast results." },
+    { "title": "Agentic systems", "text": "Track record building and deploying agentic systems." },
+    { "title": "SaaS ownership", "text": "Experience running a SaaS product end-to-end." },
+    { "title": "Architecture", "text": "Deep understanding of software architecture principles." },
+    { "title": "Scale & reliability", "text": "Experience running distributed and high-load systems at scale." },
+    { "title": "Tech leadership", "text": "Led engineering teams at startups and scale-ups, driving technical strategy and delivering complex systems from concept to production." }
   ],
   "id": "zallesov.dev",
-  "pdf": "Aleksandr Zalesov CV 2024.pdf",
+  "pdf": "ALEKSANDR_ZALESOV CV 05.2026.pdf",
   "lastName": "Zall",
   "portfolioQuote": "I brought together some highlights from the most recent project I participated in. Of course, I cannot take full credit. It goes to my team.",
   "portfolios": [
@@ -199,6 +193,48 @@ export default {
     }
   ],
   "employments": [
+    {
+      "startDate": "Aug 2024",
+      "endDate": "present",
+      "city": "Remote",
+      "company": "Mult.dev",
+      "text": "Chief Everything Officer",
+      "projects": [
+        {
+          "name": "Mult.dev",
+          "title": "AI-first fullstack product + infra",
+          "urls": ["https://mult.dev"],
+          "highlights": [
+            "Engineered an autoscaling GPU cluster on GCP for high-performance video rendering, reducing processing costs by ~40%.",
+            "Architected and deployed an AI-powered user feedback management system using LangGraph, automating categorization and sentiment analysis.",
+            "Implemented AI-driven SEO/GEO optimization strategies, increasing organic visibility.",
+            "Led a non-technical team of customer success and marketing specialists."
+          ],
+          "stack": "GCP, GPUs, autoscaling, video rendering pipeline, LangGraph, TypeScript, DevOps"
+        }
+      ]
+    },
+    {
+      "startDate": "Jan 2025",
+      "endDate": "Aug 2025",
+      "city": "Berlin",
+      "company": "Peec.ai",
+      "text": "Principal AI Engineer",
+      "projects": [
+        {
+          "name": "Peec.ai",
+          "title": "LLM analytics infrastructure",
+          "urls": ["https://peec.ai"],
+          "highlights": [
+            "Developed core AI infrastructure including a high-performance system to intercept and analyze ChatGPT response streams in real-time.",
+            "Built an automated AI response categorization engine for deep analytics into LLM behavior.",
+            "Designed and managed a distributed network of parser bots using Playwright to extract data from non-API LLM interfaces.",
+            "Integrated AI analytics with Looker Studio for stakeholder dashboards."
+          ],
+          "stack": "TypeScript, Playwright, distributed workers, Looker Studio"
+        }
+      ]
+    },
     {
       "startDate": "Dec 2023",
       "endDate": "Present",

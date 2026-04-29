@@ -29,8 +29,8 @@ const adminApp =
   }, APP_NAME);
 
 // if (process.env.NODE_ENV === "development") {
-//   // Assuming the Firestore emulator is running on localhost:8080
-//   process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080';
+//   // Match firebase.json emulators.firestore.port (avoid clashing with Next on 8080)
+//   process.env.FIRESTORE_EMULATOR_HOST = "localhost:8090";
 // }
 
 export const adminDb = getFirestore(adminApp);

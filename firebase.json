@@ -19,7 +19,7 @@
       "port": 6001
     },
     "firestore": {
-      "port": 8080
+      "port": 8090
     },
     "auth": {
       "port": 9099
