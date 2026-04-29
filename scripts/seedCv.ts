@@ -2,6 +2,8 @@ import { credential } from "firebase-admin";
 import { getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { CV as CVSchema, type CV } from "../src/types/CV";
+import type { Employment } from "../src/types/Employment";
+import type { Highlight } from "../src/types/Highlight";
 import baseCv from "../.content/zallesov.dev";
 
 const APP_NAME = "zallesov-dev-seed-cv";
@@ -13,7 +15,7 @@ function requiredEnv(name: string): string {
 }
 
 function buildDefaultCv(id: string): CV {
-  const updatedHighlights: CV["highlights"] = [
+  const updatedHighlights: Highlight[] = [
     { title: "AI-first development", text: "Custom AI software development harness for high quality and fast results." },
     { title: "Agentic systems", text: "Track record building and deploying agentic systems." },
     { title: "SaaS ownership", text: "Experience running a SaaS product end-to-end." },
@@ -22,7 +24,7 @@ function buildDefaultCv(id: string): CV {
     { title: "Tech leadership", text: "Led engineering teams at startups and scale-ups, driving technical strategy and delivering complex systems from concept to production." },
   ];
 
-  const multDevEmployment: CV["employments"][number] = {
+  const multDevEmployment: Employment = {
     company: "Mult.dev",
     startDate: "Aug 2024",
     endDate: "present",
@@ -43,7 +45,7 @@ function buildDefaultCv(id: string): CV {
     ],
   };
 
-  const peecEmployment: CV["employments"][number] = {
+  const peecEmployment: Employment = {
     company: "Peec.ai",
     startDate: "Jan 2025",
     endDate: "Aug 2025",
