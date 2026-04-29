@@ -3,22 +3,23 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "20"
+    "node": "22"
   },
   "scripts": {
     "dev": "next dev -p 8080",
     "build": "next build",
     "start": "echo STARTING NODE && next start -p 8080",
     "lint": "next lint",
-    "update:remote": "GCLOUD_PROJECT=zallesov-dev ts-node .content/updateCV.ts zallesov.dev"
+    "seed:cv": "tsx scripts/seedCv.ts zallesov.dev"
   },
   "dependencies": {
     "firebase": "^10.5.0",
-    "firebase-function": "^1.4.73",
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^5.1.1",
     "html-react-parser": "^4.2.5",
     "next": "14.2.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -32,6 +33,7 @@
     "eslint-config-next": "13.5.4",
     "postcss": "^8",
     "tailwindcss": "^3",
+    "tsx": "^4.20.5",
     "typescript": "^5"
   }
 }

@@ -99,6 +99,29 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.dotted-overlay {
+  position: relative;
+}
+
+.dotted-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 221, 255, 0.16) 1px,
+    transparent 0
+  );
+  background-size: 22px 22px;
+  opacity: 1;
+}
+
+.dotted-overlay > * {
+  position: relative;
+  z-index: 1;
+}
+
 a {
   color: inherit;
   text-decoration: none;

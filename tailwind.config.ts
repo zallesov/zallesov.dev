@@ -10,7 +10,8 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-custom': 'linear-gradient(180deg, #202030 0%, #1C0E21 100%)' // Add your custom gradient here
+        'gradient-custom':
+          'linear-gradient(180deg, #202030 0%, #1C0E21 100%)',
       },
       fontFamily: {
         honk: ['var(--font-honk)'],

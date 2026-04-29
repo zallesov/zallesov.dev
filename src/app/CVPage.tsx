@@ -18,11 +18,11 @@ export default async function CVPage({ cv }: Props) {
 
   return (
     <main
-      className="flex min-h-screen flex-col items-center justify-between py-12 lg:px-12 sm:px-2 bg-gradient-custom bg-fixed"
+      className="dotted-overlay flex min-h-screen flex-col items-center justify-between py-12 lg:px-12 sm:px-2 bg-gradient-custom bg-fixed"
     >
       <section className="py-1">
 
-        <Header photoPath={cv.photoPath} title={cv.title} firstName={cv.firstName} lastName={cv.lastName} quotes={cv.quotes} />"
+        <Header photoPath={cv.photoPath} title={cv.title} firstName={cv.firstName} lastName={cv.lastName} quotes={cv.quotes} />
 
       </section>
 
@@ -38,12 +38,6 @@ export default async function CVPage({ cv }: Props) {
           <HighlightsSection highlights={cv.highlights} />
 
         </section>)}
-
-      <section className="py-10 md:py-16 w-full">
-
-        <SkillsSection skills={cv.skills} />
-
-      </section>
 
       {cv.employments && (
         <section className="py-10 md:py-16 w-full">
@@ -80,6 +74,12 @@ export default async function CVPage({ cv }: Props) {
           <EducationSection educations={cv.educations} />
 
         </section>)}
+
+      <section className="py-10 md:py-16 w-full">
+
+        <SkillsSection skills={cv.skills} />
+
+      </section>
 
       <footer className="py-10 md:py-16 mb-20 md:mb-40 lg::mb-52">
 

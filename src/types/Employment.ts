@@ -4,6 +4,7 @@ import { Project } from "./Project";
 export const Employment = z.object({
   startDate: z.string(),
   endDate: z.string(),
+  city: z.string().optional(),
   company: z.string(),
   text: z.string().optional(),
   projects: z.array(Project),

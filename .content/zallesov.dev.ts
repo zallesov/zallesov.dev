@@ -153,20 +153,6 @@ export default {
   "sideProjectsQuote": "Besides a permanent day job I've been involved in a few other projects. For some of them as a consultant and for some as a founder.",
   "sideProjects": [
     {
-      "name": "Mult.dev",
-      "title": "Partime CTO",
-      "preambule": "Mult.dev is a video rendering platform. It specifically targets travel bloggers and just travelers providing them with tools to visualize their trips to post on social media.",
-      "postambule": "The product is truly used around the world with an audience of more than a 3 million active users",
-      "highlights": [
-        "Set up a GPU-based, auto-scaling video rendering cluster",
-        "Created an AI chatbot to facilitate the video creation process via chat interface",
-        "Improved company monitoring and reporting frameworks",
-        "Established customer management frameworks",
-      ],
-      "stack": "Stack: Firebase and Google Cloud Services, React, TypeScript, NextJS",
-      "urls": ["https://2meters.app", 'https://app.2meters.app']
-    },
-    {
       "name": "2Meters",
       "title": "Partime CTO",
       "preambule": "2meters is a SaaS solution to manage customer queues and appointments on-site. In meters, I am a founding CTO. Together with a team of friends, we've built a service that is now used on 5 continents. We have raised a seed investment round that allowed us to hire a team of engineers to build the product. Even being involved in the project part-time, I ",
@@ -335,7 +321,7 @@ export default {
         }]
     },
   ],
-  "footerNote": "This web page is an experiment. It is a Next.js app hosted on Firebase. Find the source code here:",
+  "footerNote": "Malaga, Spain / Berlin, Germany · Remote",
   "footerUrl": "https://github.com/zallesov/zallesov.dev",
   "chatLink": "https://chat.zall.dev/zall",
   "calendly": "https://calendly.com/zallesov",
