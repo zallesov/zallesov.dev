@@ -16,6 +16,17 @@ env:
     availability:
       - BUILD
       - RUNTIME
+  # Firestore doc path is cvs/<id>; production domain is zall.dev but the seeded doc id stays zallesov.dev.
+  - variable: NEXT_PUBLIC_CV_ID
+    value: zallesov.dev
+    availability:
+      - BUILD
+      - RUNTIME
+  # firebase-admin uses projectId; omitting this breaks Firestore in some Cloud Run setups.
+  - variable: GCLOUD_PROJECT
+    value: zallesov-dev
+    availability:
+      - RUNTIME
   - variable: GOOGLE_NODE_RUN_SCRIPTS
     value: "echo GOOGLE_NODE_RUN_SCRIPTS && npm run build && npm run start"
     availability:
