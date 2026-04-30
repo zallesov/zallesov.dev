@@ -24,6 +24,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+firepit-log.txt
+pnpm-lock.yaml
 
 # local env files
 .env*.local
@@ -36,5 +38,3 @@ service-account.json
 next-env.d.ts
 
 .firebase
-
-service-account.json
