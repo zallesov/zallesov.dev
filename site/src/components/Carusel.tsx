@@ -1,9 +1,18 @@
 "use client";
 
-import { useId } from "react";
+import { useCallback, useId, type MouseEvent } from "react";
 import ClickableImage from "./ClickableImage";
 
 type Props = { images?: string[] };
+
+function scrollSlideIntoView(btnId: string) {
+  const el = document.getElementById(btnId);
+  el?.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest",
+    inline: "center",
+  });
+}
 
 export const Carusel = ({ images }: Props) => {
   const rid = useId().replace(/:/g, "");
@@ -12,26 +21,46 @@ export const Carusel = ({ images }: Props) => {
   const firstBtnId = `${caruselId}-btn-0`;
   const lastBtnId = `${caruselId}-btn-${n - 1}`;
 
+  const goFirst = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      scrollSlideIntoView(firstBtnId);
+    },
+    [firstBtnId],
+  );
+
+  const goLast = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      scrollSlideIntoView(lastBtnId);
+    },
+    [lastBtnId],
+  );
+
   return (
     <div className="items-center flex flex-auto flex-row">
-      <a
-        href={`#${firstBtnId}`}
-        className="hidden lg:visible lg:btn lg:btn-circle bg-white border-none"
+      <button
+        type="button"
+        className="hidden lg:inline-flex lg:btn lg:btn-circle bg-white border-none"
+        onClick={goFirst}
+        aria-label="First slide"
       >
         ❮
-      </a>
-      <div className="container carousel carousel-center lg:space-x-4 lg:p-4 lg:mx-4 w-full bg-none items-center">
+      </button>
+      <div className="container carousel carousel-center lg:space-x-4 lg:p-4 lg:mx-4 w-full bg-none items-center overflow-x-auto scroll-smooth">
         {images?.map((image, i) => {
           const btnId = `${caruselId}-btn-${i}`;
           return <ClickableImage key={image} src={image} id={btnId} />;
         })}
       </div>
-      <a
-        href={`#${lastBtnId}`}
-        className="hidden lg:visible lg:btn lg:btn-circle bg-white border-none"
+      <button
+        type="button"
+        className="hidden lg:inline-flex lg:btn lg:btn-circle bg-white border-none"
+        onClick={goLast}
+        aria-label="Last slide"
       >
         ❯
-      </a>
+      </button>
     </div>
   );
 };
