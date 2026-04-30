@@ -1,0 +1,30 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Zall.DEV",
+  description = "Zall's personal website",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="/favico_16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favico_32x32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favico_48x48.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favico_64x64.png" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

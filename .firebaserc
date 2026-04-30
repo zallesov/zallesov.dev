@@ -7,14 +7,14 @@
   "targets": {
     "local": {
       "hosting": {
-        "cv": [
+        "zallesov-dev": [
           "local"
         ]
       }
     },
     "zallesov-dev": {
       "hosting": {
-        "cv": [
+        "zallesov-dev": [
           "zallesov-dev"
         ]
       }

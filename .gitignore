@@ -1,7 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# one-off font tooling
+.venv-font/
+
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -9,7 +12,11 @@
 # testing
 /coverage
 
-# next.js
+# astro (site)
+site/dist/
+site/.astro/
+
+# Next.js (legacy build artefacts)
 /.next/
 /out/
 
@@ -35,6 +42,5 @@ service-account.json
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 .firebase

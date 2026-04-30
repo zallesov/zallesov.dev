@@ -1,30 +1,44 @@
-# Next.js on Firebase App Hosting
+# zall.dev
 
-This is an example [Next.js](https://nextjs.org/) project to demonstrate SSG,
-SSR, and ISR on [Firebase App Hosting](https://firebase.google.com/docs/app-hosting).
+Статический личный сайт (CV): **Astro** + **React** (острова для модалок), **Tailwind** и **DaisyUI**. Данные страницы — [`site/src/zall.dev.json`](site/src/zall.dev.json) (схема проверяется через Zod на сборке).
 
-## Getting Started
+Корень репозитория держит **Firebase** (Firestore / Storage rules, hosting). Исходники сайта — в каталоге [`site/`](site/).
 
-Run the development server:
+## Требования
+
+- Node.js 22
+- [Yarn classic](https://classic.yarnpkg.com/) (v1)
+
+## Команды
+
+Из корня репозитория (workspace):
 
 ```bash
-npm run dev
+yarn install
+yarn dev      # http://localhost:8080
+yarn build    # выход: site/dist/
+yarn preview  # локальный просмотр сборки
+yarn typecheck
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Контент
 
-## Deploy to Firebase App Hosting
+- Редактируйте **`site/src/zall.dev.json`**: имя, опыт, портфолио, ссылки и т.д.
+- Аватар и PDF задаются URL в JSON (например, публичные объекты в Firebase Storage).
+- Картинки портфолио в карусели: относительные ключи в JSON и статические файлы в **`site/public/thumbnails/…`** и **`site/public/screenshots/…`** (те же пути, что в JSON).
 
-### 1. Get your project set up on GitHub
+## Деплой (Firebase Hosting)
 
-[Create a new GitHub repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) and push the newly-initialized sample code to it:
+Сборка должна попасть в каталог, который смотрит Hosting:
 
-<pre>
-git remote add origin https://github.com/<b>$YOUR_NEW_REPOSITORY</b>.git
-git branch -M main
-git push -u origin main
-</pre>
+```bash
+yarn build
+firebase deploy --only hosting
+```
 
-### 2. Set up Firebase App Hosting
+В [`firebase.json`](firebase.json) для сайта указано `"public": "site/dist"`.
 
-Continue to [Get started with Firebase App Hosting](https://firebase.google.com/docs/app-hosting/get-started#step-1:).
+## Прочее в корне
+
+- **`storage.rules`** — правила Storage (например, доступ к объектам под префиксом `cvs/`).
+- **`thumbnails.sh`** — вспомогательный скрипт для генерации превью из изображений (ffmpeg).
