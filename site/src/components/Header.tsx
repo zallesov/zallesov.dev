@@ -29,6 +29,9 @@ export const Header = ({
               src={photoPath}
               alt=""
               className="h-full w-full object-cover object-center"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
             />
           </div>
         </div>

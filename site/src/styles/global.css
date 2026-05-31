@@ -1,7 +1,7 @@
 /* Honk (OFL): same face as before, but COLR/CPAL stripped so `color` / `text-white` fill glyphs like next/font/local. */
 @font-face {
   font-family: "Honk";
-  src: url("/fonts/Honk-Regular.ttf") format("truetype");
+  src: url("/fonts/Honk-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;

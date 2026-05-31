@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Img from "./Img";
 
 type Props = {
@@ -16,9 +17,11 @@ function imageSrc(src: string, variant: "thumb" | "full"): string {
 }
 
 export default function ClickableImage({ src, id }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
   const modalId = `modal-${id}`;
   const btnId = id;
   const showModal = () => {
+    setIsOpen(true);
     (document.getElementById(modalId) as HTMLDialogElement | null)?.showModal();
   };
 
@@ -36,14 +39,22 @@ export default function ClickableImage({ src, id }: Props) {
           className="object-scale-down max-h-[150px] px-1"
         />
       </button>
-      <dialog id={modalId} className="modal">
+      <dialog
+        id={modalId}
+        className="modal"
+        onClose={() => setIsOpen(false)}
+      >
         <div className="modal-box rounded-none bg-black border border-white max-w-max max-h-full justify-center">
           <div className="modal-action justify-center">
-            <Img
-              src={imageSrc(src, "full")}
-              alt=""
-              className="object-fill max-w-full max-h-full"
-            />
+            {isOpen && (
+              <Img
+                src={imageSrc(src, "full")}
+                alt=""
+                className="object-fill max-w-full max-h-full"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
           </div>
           <div className="modal-action justify-center">
             <form method="dialog">
