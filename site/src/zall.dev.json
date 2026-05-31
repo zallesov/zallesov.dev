@@ -1,6 +1,11 @@
 {
   "articles": [
     {
+      "title": "A Practical Memo on Building LLM Agents",
+      "description": "A practical memo on shipping agentic systems: pipelines, loops, tools, context, retrieval, observability, and testing.",
+      "url": "https://medium.com/@zallesov/a-practical-memo-on-building-llm-agents-cc5179cb2e50"
+    },
+    {
       "title": "Types in 3-layer application",
       "description": "Article gives some practical advice on how to implement a 3 layer application design pattern",
       "url": "https://medium.com/@zallesov/types-in-3-layer-application-ddc03ec5cbf7"
@@ -409,7 +414,6 @@
   "footerUrl": "https://github.com/zallesov/zallesov.dev",
   "chatLink": "https://chat.zall.dev/zall",
   "calendly": "https://calendly.com/zallesov",
-  "email": "zallesov@gmail.com",
   "linkedin": "https://www.linkedin.com/in/zallesov",
   "github": "https://github.com/zallesov",
   "skills": [

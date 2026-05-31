@@ -3,10 +3,11 @@
 import { ActionButton } from "./ActionButton"
 
 type Props = {
-  calendly?: string, linkedin?: string, email?: string
-}
+  calendly?: string;
+  linkedin?: string;
+};
 
-export const WriteMe = ({ calendly, linkedin, email }: Props) => {
+export const WriteMe = ({ calendly, linkedin }: Props) => {
 
   const id = "write_me_modal_1"
   const showModal = () => {
@@ -23,7 +24,6 @@ export const WriteMe = ({ calendly, linkedin, email }: Props) => {
         <h3 className="font-bold text-lg py-4 text-white">Please use the following contacts to reach out to me</h3>
         {calendly && <p className="py-4 text-white"><b>Calendly:</b> <a className="underline text-purple-300" href={calendly}>schedule a meeting</a></p>}
         {linkedin && <p className="py-4 text-white"><b>Linkedin:</b> <a className="underline text-purple-300" href={linkedin}>go to profile</a></p>}
-        {email && <p className="py-4 text-white"><b>Email:</b> <a className="underline text-purple-300" href={`mailto:${email}`}>write me</a></p>}
         <div className="modal-action">
           <form method="dialog">
             <button className="btn bg-white">Close</button>

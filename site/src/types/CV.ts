@@ -29,7 +29,6 @@ export const CV = z.object({
   footerNote: z.string().optional(),
   footerUrl: z.string().optional(),
   calendly: z.string().optional(),
-  email: z.string().optional(),
   linkedin: z.string().optional(),
   github: z.string().optional(),
   skills: z.array(z.string()).optional(),

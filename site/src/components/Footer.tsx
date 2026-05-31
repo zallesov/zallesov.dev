@@ -1,5 +1,4 @@
 import parse from 'html-react-parser';
-import GithubLogo from '../assets/github-mark-white.svg';
 
 
 type Props = { note?: string, url?: string }

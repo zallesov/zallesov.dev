@@ -25,7 +25,6 @@ export const Actions = ({ cv }: Props) => {
 
         <WriteMe
           calendly={cv.calendly}
-          email={cv.email}
           linkedin={cv.linkedin}
         />
       </nav>

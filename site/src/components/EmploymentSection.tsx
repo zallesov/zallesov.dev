@@ -30,7 +30,7 @@ export const EmploymentSection = ({ employments, quote }: Props) => {
                   ))}</p>}
                 {project.title && <div className="font-medium md:text-xl text-black py-1">{project.title}</div>}
                 {project.preambule && <p className="text-black text-md relative">{project.preambule}</p>}
-                {project.highlights && <ul className="list-disc text-black text-md list-inside my-2 pl-5">{project.highlights.map((hl, index) => (
+                {project.highlights && <ul className="list-disc text-black text-md list-inside my-2 pl-5">{project.highlights.map((hl) => (
                   <li key={hl}>{hl}</li>
                 ))}</ul>}
                 {project.postambule && <p className="font-sm text-black text-md relative">{project.postambule}</p>}
