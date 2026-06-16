@@ -1,0 +1,30 @@
+# Alex Zalesov (Alex Zall)
+
+> Senior AI/Cloud Engineer and technical consultant based in Malaga, Spain.
+> 15+ years experience building distributed systems, AI/LLM infrastructure,
+> and leading engineering teams. Available for consulting and contract work.
+
+## Services
+- AI-first development and LLM system architecture (LangGraph, LangChain, VertexAI)
+- Agentic pipeline design and deployment
+- Cloud infrastructure (GCP, AWS, Azure, Kubernetes, Terraform)
+- SaaS product ownership end-to-end
+- Technical leadership and fractional CTO engagements
+
+## Notable employers
+SoundCloud (2013–2017), Zalando (2017–2018), MOIA/Volkswagen (2019–2021), Zapp/Quickcommerce (2021–2023)
+
+## Current work
+- Mult.dev — Chief Everything Officer (Aug 2024–present)
+- Beeboard — Head of Engineering (Dec 2023–present)
+
+## Articles
+- [A Practical Memo on Building LLM Agents](https://medium.com/@zallesov/a-practical-memo-on-building-llm-agents-cc5179cb2e50)
+- [Types in 3-layer application](https://medium.com/@zallesov/types-in-3-layer-application-ddc03ec5cbf7)
+- [Stateful routing with LangGraph](https://medium.com/@zallesov/stateful-routing-with-langgraph-6dc8edc798bd)
+
+## Contact
+- Website: https://zall.dev
+- LinkedIn: https://www.linkedin.com/in/zallesov
+- Schedule: https://calendly.com/zallesov
+- Location: Malaga, Spain / Berlin, Germany (remote available)

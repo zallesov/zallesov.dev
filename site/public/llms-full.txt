@@ -1,0 +1,62 @@
+# Alex Zalesov (Alex Zall) — Full Profile
+
+> Senior AI/Cloud Engineer and technical consultant. 15+ years experience.
+> Available for consulting, fractional CTO, and senior engineering engagements.
+
+## About
+Alex Zalesov (also known as Alex Zall) is a senior software engineer and technical leader
+specialising in AI-first product development, LLM systems, agentic workflows, and cloud-native
+architecture. He has led engineering teams and held principal/CTO-level roles at both startups
+and scale-ups across Europe. Based in Malaga, Spain. Available remote.
+
+## Services
+- AI-first development: custom LLM integration, agent pipelines, RAG systems
+- Agentic systems: multi-agent orchestration with LangGraph, LangChain, VertexAI
+- Cloud infrastructure: GCP, AWS, Azure, Kubernetes, Terraform, autoscaling
+- SaaS ownership: full product lifecycle from MVP to production
+- Technical leadership: engineering team scaling, technical strategy, fractional CTO
+- Architecture: distributed systems, microservices, event-driven, real-time systems
+
+## Work History
+
+### Mult.dev — Chief Everything Officer (Aug 2024–present)
+AI-powered video generation platform. GCP-based autoscaling GPU cluster reducing processing
+costs by ~40%. TypeScript + Python stack.
+
+### Peec.ai — Principal AI Engineer (Jan 2025–Aug 2025)
+AI influencer analytics platform. Berlin.
+
+### Beeboard — Head of Engineering (Dec 2023–present)
+SaaS project management (Lean/PEP methodology). Berlin.
+
+### Quickcommerce / Orcrist (Zapp) — Senior Engineer (Sep 2021–Sep 2023)
+Quick-commerce delivery platform. Full stack from consumer app to ops infrastructure.
+ML model predicting delivery time across 40+ parameters. Berlin/London.
+
+### MOIA / Volkswagen — Senior Engineer (2019–2021)
+On-demand ride-hailing. Real-time simulation service using live demand data. Berlin.
+
+### Zalando — Senior Engineer (2017–2018)
+AI image labelling for fashion e-commerce. Berlin.
+
+### SoundCloud — Senior Engineer (2013–2017)
+Built the canonical SoundCloud audio player on the web. Scala/functional programming. Berlin.
+
+## Technical Skills
+Languages: TypeScript, Python, Scala, Java
+AI/ML: LLMs, LangGraph, LangChain, WhisperX, TensorFlow, VertexAI, ChatGPT API
+Cloud: GCP, AWS, Azure, Kubernetes, Docker, Terraform
+Databases: PostgreSQL, Redis, Kafka, various NoSQL
+Frontend: React, Astro, Next.js, Tailwind
+
+## Education
+Masters in Mathematics and Computer Science
+Novosibirsk State Technical University, 2003–2008
+
+## Contact
+- Website: https://zall.dev
+- LinkedIn: https://www.linkedin.com/in/zallesov
+- GitHub: https://github.com/zallesov
+- Medium: https://medium.com/@zallesov
+- Schedule a call: https://calendly.com/zallesov
+- Location: Malaga, Spain / Berlin, Germany (remote available)
