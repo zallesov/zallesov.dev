@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Img from "./Img";
 
 type Props = {
@@ -15,10 +16,21 @@ export const Header = ({
   lastName,
   photoPath,
 }: Props) => {
+  const [isHonkReady, setIsHonkReady] = useState(false);
   const quote =
     quotes?.length && quotes.length > 0
       ? quotes[firstName.length % quotes.length]
       : undefined;
+
+  useEffect(() => {
+    if (!("fonts" in document)) {
+      return;
+    }
+
+    document.fonts.load('400 1em "Honk"').then(() => {
+      setIsHonkReady(true);
+    });
+  }, []);
 
   return (
     <div className="container max-w-screen-xl mx-auto px-4">
@@ -36,7 +48,13 @@ export const Header = ({
           </div>
         </div>
 
-        <h1 className="font-honk text-white text-9xl uppercase mb-8">
+        <h1
+          className="font-honk text-white text-9xl uppercase mb-8"
+          style={{
+            opacity: isHonkReady ? 1 : 0,
+            transition: "opacity 0.3s ease-in",
+          }}
+        >
           {firstName} {lastName}
         </h1>
 
