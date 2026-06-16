@@ -52,7 +52,7 @@
     }
   ],
   "id": "zallesov.dev",
-  "pdf": "/ALEKSANDR_ZALESOV-2026-no-contacts.pdf",
+  "pdf": "/ALEKSANDR_ZALESOV-CV-06.2026.pdf",
   "lastName": "Zall",
   "portfolioQuote": "I brought together some highlights from the most recent project I participated in. Of course, I cannot take full credit. It goes to my team.",
   "portfolios": [
@@ -171,8 +171,8 @@
   "sideProjects": [
     {
       "name": "2Meters",
-      "title": "Partime CTO",
-      "preambule": "2meters is a SaaS solution to manage customer queues and appointments on-site. In meters, I am a founding CTO. Together with a team of friends, we've built a service that is now used on 5 continents. We have raised a seed investment round that allowed us to hire a team of engineers to build the product. Even being involved in the project part-time, I ",
+      "title": "Part-time CTO",
+      "preambule": "2meters is a SaaS solution to manage customer queues and appointments on-site. In 2meters, I am a founding CTO. Together with a team of friends, we've built a service that is now used on 5 continents. We have raised a seed investment round that allowed us to hire a team of engineers to build the product. Even being involved in the project part-time, I kept a close eye on architecture decisions and team execution.",
       "postambule": "As a result, the service is used by thousands of users daily and generates stable revenue.",
       "highlights": [
         "Built an independent team of developers who can act without micromanagement.",
@@ -191,7 +191,7 @@
     {
       "name": "Snubes",
       "title": "Principal Software Engineer",
-      "preambule": "Snubes provides services to assess and track the performance of call centers' individual agents and projects overall using AI. I've inherited the team with no coding standards or principles. We had to let go of most of the people, keeping only the motivated ones. After setting up the essential agile processes and best practices (CI/CD, code review, git-flow, monitoring), we could deliver noticeable results. Together with my team, we've",
+      "preambule": "Snubes provides services to assess and track the performance of call centers' individual agents and projects overall using AI. I've inherited the team with no coding standards or principles. We had to let go of most of the people, keeping only the motivated ones. After setting up the essential agile processes and best practices (CI/CD, code review, git-flow, monitoring), we could deliver noticeable results. Together with my team, we've shipped the following:",
       "highlights": [
         "Set up a phone call transcription pipeline using a modified version of OpenAI’s Whisper model (WhisperX)",
         "Developed another pipeline to analyze transcription produced by Whisper to categorize, flag, and act on them",
@@ -280,7 +280,7 @@
         {
           "name": "Beeboard",
           "title": "Head of Engineering",
-          "preambule": "Beeboard is project management software product specializing on Lean Development methodology (aka PEP). I inherited a functioning team but with no clear technical vision. I've ",
+          "preambule": "Beeboard is project management software product specializing on Lean Development methodology (aka PEP). I inherited a functioning team but with no clear technical vision. I've since driven the following changes:",
           "highlights": [
             "Adjusted team agile processes",
             "Developed a technical vision and roadmap",
@@ -288,7 +288,7 @@
             "Set up a CI/CD pipeline and deployment processes",
             "Promoted learning culture within the team",
             "Introduced monitoring and alerting systems",
-            "Improved database performace"
+            "Improved database performance"
           ],
           "stack": "Stack: Azure Cloud, Typescript, Terraform and Hashicorp Stack, Vue3",
           "urls": [
@@ -307,7 +307,7 @@
         {
           "name": "Zapp",
           "title": "Software Developer Manager",
-          "preambule": "Zapp is a grocery delivery service at that time operating in UK, Netherlands and France. I was managing a team of varying size up to 6 people. We had our fingerprints in every codebase in the company. Starting from the consumer app ending with ops infrastructure terraform code. My team and I ",
+          "preambule": "Zapp is a grocery delivery service at that time operating in UK, Netherlands and France. I was managing a team of varying size up to 6 people. We had our fingerprints in every codebase in the company. Starting from the consumer app ending with ops infrastructure terraform code. My team and I shipped the following:",
           "highlights": [
             "Developed an internal tool for warehouse and city managers called Zappboard. It aggregated data from every other system and presented it in an actionable way",
             "Contributed to the last mile delivery app Zephyr. It showed the state of the order and rider's fleet on the map. And it was also deeply integrated with the Zappboard",
@@ -333,7 +333,7 @@
       "projects": [
         {
           "title": "Senior Software Engineer",
-          "preambule": "MOIA is a company under the Volkswagen umbrella. The main challenge there was to optimize supply for the demand to match a particular van to a particular order and also re-distribute vans across the city to decrease waiting time. I have",
+          "preambule": "MOIA is a company under the Volkswagen umbrella. The main challenge there was to optimize supply for the demand to match a particular van to a particular order and also re-distribute vans across the city to decrease waiting time. I have contributed to the following:",
           "highlights": [
             "Built a real-time simulation service that simulated the vans' behavior based on real-life demand data",
             "Contributed to a step-by-step simulation service. This service could simulate a week of real-life fleet behavior which allowed us to assess different ride-sharing algorithms",
@@ -361,7 +361,7 @@
           ],
           "stack": "Stack: AWS, Scala, ZIO, Kafka",
           "urls": [
-            "https://zalando.de "
+            "https://zalando.de"
           ]
         }
       ]
@@ -370,13 +370,13 @@
       "startDate": "Feb 2013",
       "endDate": "Jul 2017",
       "city": "Berlin",
-      "company": "Soundcloud",
+      "company": "SoundCloud",
       "projects": [
         {
           "title": "Software Engineer",
-          "preambule": "In my almost 5 years in soundcloud I probably got the biggest skill boost in my career as I was working shoulder to shoulder with the most talented people from around the world. I've also learned how a healthy and pleasant work environment can look like. Some highlights from those years are",
+          "preambule": "In my almost 5 years in SoundCloud I probably got the biggest skill boost in my career as I was working shoulder to shoulder with the most talented people from around the world. I've also learned how a healthy and pleasant work environment can look like. Some highlights from those years are",
           "highlights": [
-            "I am the man behind the canonical soundcloud audio player on the web",
+            "I am the man behind the canonical SoundCloud audio player on the web",
             "I've also contributed to mobile audio players",
             "In the copyright protection team, I developed a pipeline that identified and automatically took down any upload that infringed someone's copyright",
             "I've learned scala Functional Programming techniques"
@@ -398,7 +398,7 @@
           "title": "Software Engineer",
           "preambule": "YaTV is a pioneer TV streaming platform in Russia. I was responsible for the development of everything streaming related.",
           "highlights": [
-            "I've developped a video player",
+            "I've developed a video player",
             "Streaming studio for content creators",
             "Streaming backend to work with multiple CDNs"
           ],

@@ -3,7 +3,7 @@
 import { useCallback, useId, type MouseEvent } from "react";
 import ClickableImage from "./ClickableImage";
 
-type Props = { images?: string[] };
+type Props = { images?: string[]; title: string };
 
 function scrollSlideIntoView(btnId: string) {
   const el = document.getElementById(btnId);
@@ -14,7 +14,7 @@ function scrollSlideIntoView(btnId: string) {
   });
 }
 
-export const Carusel = ({ images }: Props) => {
+export const Carusel = ({ images, title }: Props) => {
   const rid = useId().replace(/:/g, "");
   const caruselId = `carusel-${rid}`;
   const n = images?.length || 2;
@@ -50,7 +50,14 @@ export const Carusel = ({ images }: Props) => {
       <div className="container carousel carousel-center lg:space-x-4 lg:p-4 lg:mx-4 w-full bg-none items-center overflow-x-auto scroll-smooth">
         {images?.map((image, i) => {
           const btnId = `${caruselId}-btn-${i}`;
-          return <ClickableImage key={image} src={image} id={btnId} />;
+          return (
+            <ClickableImage
+              key={image}
+              src={image}
+              id={btnId}
+              alt={`${title} screenshot ${i + 1}`}
+            />
+          );
         })}
       </div>
       <button

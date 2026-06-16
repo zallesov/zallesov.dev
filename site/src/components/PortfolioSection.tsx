@@ -23,7 +23,7 @@ export const PortfoliosSection = ({ portfolios, portfolioQuote }: Props) => {
 
             <p className="font-normal text-white text-sm md:text-base">{parse(portfolio.text)}</p>
           </div>
-          <Carusel images={portfolio.images} />
+          <Carusel images={portfolio.images} title={portfolio.title} />
         </div>)
       )}
     </div>

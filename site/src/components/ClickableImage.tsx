@@ -6,6 +6,7 @@ import Img from "./Img";
 type Props = {
   src: string;
   id: string;
+  alt: string;
 };
 
 function imageSrc(src: string, variant: "thumb" | "full"): string {
@@ -16,7 +17,7 @@ function imageSrc(src: string, variant: "thumb" | "full"): string {
   return `${prefix}${src}`;
 }
 
-export default function ClickableImage({ src, id }: Props) {
+export default function ClickableImage({ src, id, alt }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const modalId = `modal-${id}`;
   const btnId = id;
@@ -35,8 +36,10 @@ export default function ClickableImage({ src, id }: Props) {
       >
         <Img
           src={imageSrc(src, "thumb")}
-          alt=""
+          alt={alt}
           className="object-scale-down max-h-[150px] px-1"
+          loading="lazy"
+          decoding="async"
         />
       </button>
       <dialog
@@ -49,7 +52,7 @@ export default function ClickableImage({ src, id }: Props) {
             {isOpen && (
               <Img
                 src={imageSrc(src, "full")}
-                alt=""
+                alt={alt}
                 className="object-fill max-w-full max-h-full"
                 loading="lazy"
                 decoding="async"
