@@ -4,11 +4,15 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
 }
 
 const {
-  title = "Zall.DEV",
-  description = "Zall's personal website",
+  title = "Alex Zall — Senior AI/Cloud Engineer",
+  description = "Senior AI and Cloud engineer with 15+ years experience. Consulting in LLM systems, agentic pipelines, GCP/AWS architecture, and distributed systems.",
+  ogImage = "https://zall.dev/photos/ava1-460.webp",
+  canonicalUrl = "https://zall.dev/",
 } = Astro.props;
 ---
 
@@ -17,8 +21,100 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
+
+    <!-- Primary meta -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph (LinkedIn, Facebook, Slack) -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="460" />
+    <meta property="og:image:height" content="460" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Alex" />
+    <meta property="profile:last_name" content="Zall" />
+    <meta property="profile:username" content="zallesov" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://zall.dev/#person",
+      "name": "Alex Zalesov",
+      "alternateName": "Alex Zall",
+      "url": "https://zall.dev",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://zall.dev/photos/ava1-460.webp",
+        "width": 460,
+        "height": 460
+      },
+      "jobTitle": "Senior AI/Cloud Engineer",
+      "description": "Senior AI and Cloud engineer with 15+ years experience specialising in LLM systems, agentic pipelines, and cloud-native architecture.",
+      "sameAs": [
+        "https://www.linkedin.com/in/zallesov",
+        "https://medium.com/@zallesov",
+        "https://github.com/zallesov"
+      ],
+      "knowsAbout": [
+        "Large Language Models",
+        "Agentic Systems",
+        "Google Cloud Platform",
+        "Amazon Web Services",
+        "LangGraph",
+        "LangChain",
+        "TypeScript",
+        "Python",
+        "Scala",
+        "Kubernetes",
+        "Terraform"
+      ],
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Novosibirsk State Technical University"
+      },
+      "homeLocation": {
+        "@type": "Place",
+        "name": "Malaga, Spain"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://zall.dev/#website",
+      "url": "https://zall.dev",
+      "name": "Zall.DEV",
+      "description": "Portfolio and consulting site of Alex Zalesov — Senior AI/Cloud Engineer",
+      "publisher": { "@id": "https://zall.dev/#person" },
+      "inLanguage": "en-US"
+    }
+  ]
+}
+    </script>
+
+    <!-- Font -->
+    <link
+      rel="preload"
+      href="/fonts/Honk-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="16x16" href="/favico_16x16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favico_32x32.png" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favico_48x48.png" />
