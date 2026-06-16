@@ -10,7 +10,7 @@ export const PortfoliosSection = ({ portfolios, portfolioQuote }: Props) => {
 
     <div className="flex flex-col justify-between">
       <div className="mb-10 lg:mb-0">
-        <h1 className="font-medium text-white text-3xl md:text-4xl mb-5">Portfolio</h1>
+        <h2 className="font-medium text-white text-3xl md:text-4xl mb-5">Portfolio</h2>
 
         <p className="font-normal text-white text-xs md:text-base">{portfolioQuote || ""}</p>
       </div>
@@ -18,7 +18,7 @@ export const PortfoliosSection = ({ portfolios, portfolioQuote }: Props) => {
       {portfolios?.sort((a, b) => a.index - b.index)?.map((portfolio) => (
         <div key={portfolio.title} className="my-10 p-4 space-y-12 bg-black border border-solid border-1 border-white" >
           <div className="flex lg:space-x-6 flex-col lg:flex-row">
-            <h1 className="font-normal text-white text-3xl md:text-4xl break-words min-w-fit">{parse(portfolio.title)}</h1>
+            <h3 className="font-normal text-white text-3xl md:text-4xl break-words min-w-fit">{parse(portfolio.title)}</h3>
 
 
             <p className="font-normal text-white text-sm md:text-base">{parse(portfolio.text)}</p>

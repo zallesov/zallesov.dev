@@ -9,7 +9,7 @@ export const SideProjectsSection = ({ projects, quote }: Props) => {
 
   return <div className="container max-w-screen-xl mx-auto px-4">
 
-    <h1 className="font-large text-white text-3xl md:text-4xl mb-5">Other Projects</h1>
+    <h2 className="font-large text-white text-3xl md:text-4xl mb-5">Other Projects</h2>
 
     {quote && <p className="font-normal text-white text-xs md:text-base mb-7">{quote}</p>}
 

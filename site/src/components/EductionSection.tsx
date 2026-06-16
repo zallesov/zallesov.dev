@@ -9,7 +9,7 @@ export const EducationSection = ({ educations, quote }: Props) => {
 
   return <div className="container max-w-screen-xl mx-auto px-4 w-full">
 
-    <h1 className="font-medium text-white text-3xl md:text-4xl mb-5">Education</h1>
+    <h2 className="font-medium text-white text-3xl md:text-4xl mb-5">Education</h2>
 
     {quote && <p className="font-normal text-white text-xs md:text-base mb-7">{quote}</p>}
 

@@ -8,7 +8,7 @@ export const ArticlesSection = ({ articles }: Props) => {
 
   return <div className="container max-w-screen-xl mx-auto px-4 w-full">
 
-    <h1 className="font-medium text-white text-3xl md:text-4xl mb-5">Articles</h1>
+    <h2 className="font-medium text-white text-3xl md:text-4xl mb-5">Articles</h2>
 
     <div className="gap-6">
       {articles?.map((article: Article) => (
