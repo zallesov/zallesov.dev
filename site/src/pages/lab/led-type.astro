@@ -1,0 +1,151 @@
+---
+// Specimen: which bitmap fonts fit the LED matrix, at the hero's lamp pitch,
+// plus off-the-shelf dot-matrix / pixel web fonts for the rest of the site.
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+import "@fontsource-variable/doto/full.css";
+import "@fontsource-variable/handjet/full.css";
+import "@fontsource-variable/bitcount-grid-double/full.css";
+import "@fontsource/tiny5";
+import "@fontsource-variable/pixelify-sans";
+import Layout from "../../layouts/Layout.astro";
+import HeroSpace, { type LedTextSpec } from "../../components/hero/HeroSpace";
+
+const SAMPLES: { id: string; font: "3x5" | "5x7"; scale: number; text: string; note: string }[] = [
+  { id: "s1", font: "3x5", scale: 1, text: "AGENT SWARM ONLINE · 12 TASKS · 98% PASS", note: "3×5 · 1 lamp per pixel · caps 25px" },
+  { id: "s2", font: "5x7", scale: 1, text: "BACKLOG > ORCHESTRATOR > REVIEW > CI", note: "5×7 · 1 lamp per pixel · caps 35px" },
+  { id: "s3", font: "3x5", scale: 2, text: "20 YEARS SHIPPING SOFTWARE", note: "3×5 · 2×2 lamps · caps 50px" },
+  { id: "s4", font: "5x7", scale: 2, text: "HOW I WORK", note: "5×7 · 2×2 lamps · caps 70px" },
+];
+const texts: LedTextSpec[] = SAMPLES.map((s) => ({ target: `#${s.id}`, text: s.text, font: s.font, scale: s.scale }));
+
+interface WebFont {
+  name: string;
+  family: string;
+  kind: string;
+  /** Named variants: CSS font-variation-settings / weight. */
+  variants: { label: string; style: string }[];
+}
+
+const WEB_FONTS: WebFont[] = [
+  {
+    name: "Doto",
+    family: "'Doto Variable'",
+    kind: "dot matrix · 6×10 grid · axes: weight, roundness",
+    variants: [
+      { label: "round dots · wght 700", style: "font-weight:700;font-variation-settings:'ROND' 100" },
+      { label: "square dots · wght 700", style: "font-weight:700;font-variation-settings:'ROND' 0" },
+      { label: "fine dots · wght 300", style: "font-weight:300;font-variation-settings:'ROND' 100" },
+    ],
+  },
+  {
+    name: "Handjet",
+    family: "'Handjet Variable'",
+    kind: "element-based · axes: element shape, grid, weight",
+    variants: [
+      { label: "ELSH 2 · circles", style: "font-weight:500;font-variation-settings:'ELSH' 2, 'ELGR' 1" },
+      { label: "ELSH 0 · squares", style: "font-weight:500;font-variation-settings:'ELSH' 0, 'ELGR' 1" },
+      { label: "ELSH 2 · ELGR 2 · dense grid", style: "font-weight:300;font-variation-settings:'ELSH' 2, 'ELGR' 2" },
+    ],
+  },
+  {
+    name: "Bitcount Grid Double",
+    family: "'Bitcount Grid Double Variable'",
+    kind: "variable pixel font · axes: element shape, expansion, weight, cursive, slant",
+    variants: [
+      { label: "ELSH 100 · round", style: "font-weight:400;font-variation-settings:'ELSH' 100" },
+      { label: "ELSH 0 · square", style: "font-weight:400;font-variation-settings:'ELSH' 0" },
+      { label: "ELSH 100 · ELXP 100 · expanded", style: "font-weight:500;font-variation-settings:'ELSH' 100, 'ELXP' 100" },
+    ],
+  },
+  {
+    name: "Departure Mono",
+    family: "'Departure Mono'",
+    kind: "monospaced pixel · terminal / labels",
+    variants: [{ label: "regular", style: "" }],
+  },
+  {
+    name: "Cozette",
+    family: "'Cozette'",
+    kind: "terminal bitmap (used on shugaev.vercel.app)",
+    variants: [{ label: "regular", style: "" }],
+  },
+  {
+    name: "Tiny5",
+    family: "'Tiny5'",
+    kind: "5-pixel-tall pixel font",
+    variants: [{ label: "regular", style: "" }],
+  },
+  {
+    name: "Pixelify Sans",
+    family: "'Pixelify Sans Variable'",
+    kind: "soft pixel sans",
+    variants: [
+      { label: "wght 400", style: "font-weight:400" },
+      { label: "wght 700", style: "font-weight:700" },
+    ],
+  },
+];
+---
+
+<Layout title="LED type — lab" canonicalUrl="https://zall.dev/lab/led-type">
+  <div class="bg-[#140a18] font-body text-white">
+    <!-- 1. our own bitmap fonts, drawn into the lamp grid -->
+    <section class="relative isolate overflow-hidden">
+      <div class="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 py-12">
+        <p class="font-mono text-xs uppercase tracking-widest text-white/50">
+          1 · our bitmap fonts on the LED matrix · lamp pitch 5px · try <code>?led=3</code> or <code>?led=4</code>
+        </p>
+        {SAMPLES.map((s) => (
+          <div class="flex flex-col gap-3">
+            <p class="font-mono text-[11px] uppercase tracking-widest text-white/40">{s.note}</p>
+            <div id={s.id} class="w-full" aria-label={s.text}></div>
+          </div>
+        ))}
+      </div>
+      <HeroSpace client:only="react" texts={texts} />
+    </section>
+
+    <!-- 2. web fonts for the rest of the site -->
+    <section class="border-t border-white/10">
+      <div class="mx-auto flex w-full max-w-6xl flex-col px-4 py-12">
+        <p class="font-mono text-xs uppercase tracking-widest text-white/50">2 · dot-matrix and pixel web fonts</p>
+        {WEB_FONTS.map((f) => (
+          <article class="flex flex-col gap-6 border-b border-white/10 py-10">
+            <header class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+              <h2 class="text-xl font-bold">{f.name}</h2>
+              <span class="font-mono text-xs text-white/50">{f.kind}</span>
+            </header>
+            {f.variants.map((v) => (
+              <div class="flex flex-col gap-3" style={`font-family:${f.family};${v.style}`}>
+                <p class="font-mono text-[11px] uppercase tracking-widest text-white/35" style="font-family:'JetBrains Mono Variable',monospace;font-variation-settings:normal;font-weight:400">
+                  {v.label}
+                </p>
+                <p class="text-6xl leading-none text-[#F97316] sm:text-7xl">20 · 7 · 4 · NOW</p>
+                <p class="text-3xl leading-tight sm:text-4xl">How I work — Autonomous Agent Team</p>
+                <p class="text-base leading-snug text-white/70">[ 02 / WHO ] · Backlog → Orchestrator → Dev agents · Opus → Review · Codex → CI → Production</p>
+                <p class="text-sm text-white/50">Aug 2024 — present · GCP, GPUs, LangGraph, TypeScript · 98% pass rate</p>
+              </div>
+            ))}
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  body {
+    background: #140a18;
+  }
+  @font-face {
+    font-family: "Departure Mono";
+    src: url("/fonts/lab/DepartureMono-Regular.woff2") format("woff2");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Cozette";
+    src: url("/fonts/lab/CozetteVector.woff2") format("woff2");
+    font-display: swap;
+  }
+</style>

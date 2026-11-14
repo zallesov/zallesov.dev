@@ -1,0 +1,14 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ToolboxCubes from "../../components/toolbox/ToolboxCubes";
+import AsciiPortrait from "../../components/portrait/AsciiPortrait";
+---
+
+<Layout title="Toolbox — lab" canonicalUrl="https://zall.dev/lab/toolbox">
+  <main class="mx-auto flex w-full max-w-6xl flex-col gap-10 px-4 py-10">
+    <section class="mx-auto w-full max-w-xl">
+      <AsciiPortrait client:only="react" />
+    </section>
+    <ToolboxCubes client:only="react" />
+  </main>
+</Layout>

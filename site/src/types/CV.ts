@@ -31,6 +31,7 @@ export const CV = z.object({
   calendly: z.string().optional(),
   linkedin: z.string().optional(),
   github: z.string().optional(),
+  telegram: z.string().optional(),
   skills: z.array(z.string()).optional(),
 });
 

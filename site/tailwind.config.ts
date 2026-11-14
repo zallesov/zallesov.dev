@@ -15,6 +15,10 @@ const config: Config = {
       },
       fontFamily: {
         honk: ['Honk', 'system-ui', 'sans-serif'],
+        dots: ['"Doto Variable"', 'ui-monospace', 'monospace'],
+        display: ['"Black Ops One"', 'system-ui', 'sans-serif'],
+        body: ['"Inter Variable"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono Variable"', 'ui-monospace', 'Menlo', 'monospace'],
       },
       fontSize: {
         sm: '0.6rem',
