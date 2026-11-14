@@ -1,21 +1,19 @@
 ---
 interface Props {
   id: string;
-  index: string;
+  /** Section name; rendered as the section's <h2>, styled as a small "[ label ]" tag. */
   label: string;
-  title?: string;
   /** Render without the card frame (for full-bleed blocks). */
   bare?: boolean;
 }
-const { id, index, label, title, bare = false } = Astro.props;
+const { id, label, bare = false } = Astro.props;
 ---
 
-<section id={id} class="scroll-mt-20">
+<section id={id} class="scroll-mt-20" aria-labelledby={`${id}-title`}>
   <div class:list={[!bare && "rounded-3xl bg-[#140a18] p-5 ring-1 ring-white/10 sm:p-8"]}>
-    <p class="font-mono text-xs uppercase tracking-widest text-white/40">
-      [ {index} / {label} ]
-    </p>
-    {title && <h2 class="mt-3 font-display text-3xl font-bold text-white sm:text-5xl">{title}</h2>}
+    <h2 id={`${id}-title`} class="font-mono text-xs font-normal uppercase tracking-widest text-white/40">
+      <span aria-hidden="true">[ </span>{label}<span aria-hidden="true"> ]</span>
+    </h2>
     <div class="mt-6"><slot /></div>
   </div>
 </section>

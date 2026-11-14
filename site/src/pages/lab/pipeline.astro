@@ -1,0 +1,16 @@
+---
+// Lab: the "Development Pipeline" animation on its own, for working on the scene.
+import "@fontsource-variable/doto/full.css";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+import Layout from "../../layouts/Layout.astro";
+import PipelinePreview from "../../components/approach/PipelinePreview";
+---
+
+<Layout title="Development Pipeline — lab" canonicalUrl="https://zall.dev/lab/pipeline">
+  <main class="min-h-screen bg-[#0d0710]">
+    <div id="stage" class="mx-auto max-w-[1280px]">
+      <PipelinePreview client:only="react" />
+    </div>
+  </main>
+</Layout>

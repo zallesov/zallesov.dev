@@ -1,0 +1,61 @@
+{
+  "voice": "nPczCjzI2devNBz1zQrb",
+  "model": "eleven_multilingual_v2",
+  "lines": [
+    {
+      "id": "01",
+      "text": "It starts with a conversation. I talk the problem through with AI, out loud, until every corner of it is clear.",
+      "seconds": 6.22
+    },
+    {
+      "id": "02",
+      "text": "That conversation becomes tickets. And every ticket is assigned to Nafanya. Yes, I give my agents names.",
+      "seconds": 7.06
+    },
+    {
+      "id": "03",
+      "text": "Nafanya is my orchestrator. It reads the tickets, makes a plan, and hands the work to three developer agents.",
+      "seconds": 6.92
+    },
+    {
+      "id": "04",
+      "text": "Kuzya, Bublik and Pelmen get to work. In parallel.",
+      "seconds": 3.81
+    },
+    {
+      "id": "05",
+      "text": "When a developer is stuck, it asks the orchestrator. Most answers come straight back. But if the decision is mine, Nafanya texts me. I answer, and the work goes on.",
+      "seconds": 11.52
+    },
+    {
+      "id": "06",
+      "text": "Every agent can look things up in the project docs. So they don't guess.",
+      "seconds": 4.37
+    },
+    {
+      "id": "07",
+      "text": "When the code is ready, a different model reviews it. A second pair of eyes that thinks differently.",
+      "seconds": 5.02
+    },
+    {
+      "id": "08",
+      "text": "Then CI. If a test fails, the developer fixes it and tries again. Until everything is green.",
+      "seconds": 6.83
+    },
+    {
+      "id": "09",
+      "text": "The pull request is merged and goes to staging.",
+      "seconds": 2.83
+    },
+    {
+      "id": "10",
+      "text": "In the morning I wake up, make coffee, and test what was built overnight.",
+      "seconds": 3.9
+    },
+    {
+      "id": "11",
+      "text": "And what the agents learned goes back into the docs. So tomorrow, they start smarter.",
+      "seconds": 4.69
+    }
+  ]
+}

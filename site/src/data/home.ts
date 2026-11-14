@@ -1,4 +1,5 @@
 import type { TyperSpec } from "../components/hero/HeroSpace";
+import { PIPELINE_STEPS } from "../components/approach/pipelineSteps";
 
 // Content for the new home page blocks. Career, articles and links still come from zall.dev.json.
 
@@ -75,21 +76,18 @@ export interface Approach {
   /** Nodes attached to the side of the flow. */
   side?: string[];
   points: string[];
+  /** Numbered steps, synced with the animation: `at` is the frame a step starts on. */
+  steps?: { at: number; text: string }[];
 }
 
 export const APPROACHES: Approach[] = [
   {
-    id: "agent-team",
-    title: "Autonomous Agent Team",
-    summary:
-      "Tickets go in, production code comes out. An orchestrator hands work to developer agents, a different model reviews it, CI decides.",
-    flow: ["Backlog", "Orchestrator", "Dev agents · Opus", "Review · Codex", "CI", "Production"],
-    side: ["Oracle · Fable ⇄ project knowledge base", "Me ⇄ voice · ChatGPT → backlog", "Me ⇄ chat ⇄ Orchestrator"],
-    points: [
-      "Independent review by a second model catches what the author model misses.",
-      "An oracle agent answers questions from the project knowledge base.",
-      "Always online: I steer by voice and chat, the system keeps working.",
-    ],
+    id: "dev-pipeline",
+    title: "Development Pipeline",
+    summary: "Tickets go in, reviewed code lands on staging. I make the decisions, the agents do the rest.",
+    flow: [],
+    points: [],
+    steps: PIPELINE_STEPS,
   },
   {
     id: "agentic-systems",

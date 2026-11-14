@@ -24,6 +24,8 @@ export default defineConfig({
         "three/examples/jsm/geometries/RoundedBoxGeometry.js",
         "@react-three/fiber",
         "@react-three/rapier",
+        "remotion",
+        "@remotion/player",
       ],
     },
     plugins: [
