@@ -6,5 +6,13 @@ service cloud.firestore {
     	allow read: if true;
       allow write: if false;
     }
+
+    // "Don't push" button on the home page: anyone may bump the counter, but only by exactly one
+    match /counters/dont-push {
+      allow create: if request.resource.data.keys().hasOnly(['count'])
+        && request.resource.data.count == 1;
+      allow update: if request.resource.data.keys().hasOnly(['count'])
+        && request.resource.data.count == resource.data.count + 1;
+    }
   }
 }

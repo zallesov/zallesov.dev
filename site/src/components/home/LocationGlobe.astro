@@ -1,0 +1,83 @@
+---
+// Static dotted globe with the two places I live and work.
+// Land dots come from src/data/globe-dots.json (scripts/globe-dots.mjs); the orthographic
+// projection is done here at build time, so the page ships a plain SVG and no JS.
+import dots from "../../data/globe-dots.json";
+
+const PLACES = [
+  { name: "Málaga", country: "Spain", lon: -4.42, lat: 36.72 },
+  { name: "Berlin", country: "Germany", lon: 13.4, lat: 52.52 },
+];
+
+// where the globe looks: a bit west and south of Europe, so both cities sit in its upper half
+const CENTER = { lon: 2, lat: 28 };
+const R = 300;
+const rad = Math.PI / 180;
+const sinC = Math.sin(CENTER.lat * rad);
+const cosC = Math.cos(CENTER.lat * rad);
+
+// orthographic projection; null when the point is on the far side
+const project = (lon: number, lat: number) => {
+  const l = (lon - CENTER.lon) * rad;
+  const p = lat * rad;
+  const cosc = sinC * Math.sin(p) + cosC * Math.cos(p) * Math.cos(l);
+  if (cosc < 0.05) return null;
+  return {
+    x: R + R * Math.cos(p) * Math.sin(l),
+    y: R - R * (cosC * Math.sin(p) - sinC * Math.cos(p) * Math.cos(l)),
+    depth: cosc,
+  };
+};
+
+const land: NonNullable<ReturnType<typeof project>>[] = [];
+for (let i = 0; i < dots.length; i += 2) {
+  const pt = project(dots[i], dots[i + 1]);
+  if (pt) land.push(pt);
+}
+// dots are drawn as round-capped zero-length strokes, grouped into a few depth tiers, so the whole
+// globe is a handful of <path>s instead of thousands of <circle>s
+const TIERS = 5;
+const tiers = Array.from({ length: TIERS }, (_, t) => {
+  const depth = (t + 0.5) / TIERS;
+  const pts = land.filter((d) => Math.min(TIERS - 1, Math.floor(d.depth * TIERS)) === t);
+  return {
+    d: pts.map((d) => `M${Math.round(d.x)} ${Math.round(d.y)}h0`).join(""),
+    width: (2.2 + depth * 2.6).toFixed(1),
+    opacity: (0.15 + depth * 0.45).toFixed(2),
+  };
+});
+const marks = PLACES.map((p) => ({ ...p, ...project(p.lon, p.lat)! }));
+const f = (n: number) => n.toFixed(1);
+---
+
+<section
+  aria-labelledby="location-title"
+  class="relative isolate overflow-hidden rounded-3xl bg-[#140a18] p-5 ring-1 ring-white/10 sm:p-10"
+>
+  <svg
+    viewBox={`0 0 ${R * 2} ${R * 2}`}
+    aria-hidden="true"
+    class="pointer-events-none absolute -right-44 top-1/2 -z-10 h-[150%] w-auto -translate-y-[38%] opacity-40 sm:-right-10 sm:opacity-90"
+  >
+    <circle cx={R} cy={R} r={R - 1} fill="none" stroke="white" stroke-opacity="0.12" />
+    {tiers.map((t) => (
+      <path d={t.d} stroke="white" stroke-opacity={t.opacity} stroke-width={t.width} stroke-linecap="round" />
+    ))}
+    {marks.map((m) => (
+      <g>
+        <circle cx={f(m.x)} cy={f(m.y)} r="12" fill="#F97316" fill-opacity="0.25" />
+        <circle cx={f(m.x)} cy={f(m.y)} r="5" fill="#F97316" />
+      </g>
+    ))}
+  </svg>
+
+  <div class="relative flex min-h-48 flex-col justify-center gap-3 sm:min-h-56">
+    <h2 id="location-title" class="font-mono text-xs font-normal uppercase tracking-widest text-white/40"><span aria-hidden="true">[ </span>Location<span aria-hidden="true"> ]</span></h2>
+    {PLACES.map((p) => (
+      <p class="font-dots text-2xl leading-tight sm:text-4xl">{p.name}, {p.country}</p>
+    ))}
+    <p class="mt-1 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-white/60">
+      <span class="h-2 w-2 rounded-full bg-[#F97316]"></span>Remote · open to work
+    </p>
+  </div>
+</section>

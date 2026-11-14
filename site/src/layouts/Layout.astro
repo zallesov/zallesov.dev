@@ -6,13 +6,19 @@ interface Props {
   description?: string;
   ogImage?: string;
   canonicalUrl?: string;
+  /** Keep the page out of search results (lab and preview pages). */
+  noindex?: boolean;
+  /** "cube": the orange LED cube (lab pages). Default: the regular favicon. */
+  favicon?: "default" | "cube";
 }
 
 const {
-  title = "Alex Zall — Senior AI/Cloud Engineer",
-  description = "Senior AI and Cloud engineer with 15+ years experience. Consulting in LLM systems, agentic pipelines, GCP/AWS architecture, and distributed systems.",
-  ogImage = "https://zall.dev/photos/ava1-460.webp",
+  title = "Alex Zall — AI Engineer",
+  description = "AI engineer with 15+ years in software. Agentic systems in production, agent swarms, evals and business automation.",
+  ogImage = "https://zall.dev/og.png",
   canonicalUrl = "https://zall.dev/",
+  noindex = false,
+  favicon = "default",
 } = Astro.props;
 ---
 
@@ -26,25 +32,34 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="author" content="Alex Zalesov" />
+    <meta name="theme-color" content="#0d0710" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable summary" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph (LinkedIn, Facebook, Slack) -->
     <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="zall.dev" />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:width" content="460" />
-    <meta property="og:image:height" content="460" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Alex Zall — Agents manager. Humans decide, agents deliver." />
     <meta property="og:locale" content="en_US" />
     <meta property="profile:first_name" content="Alex" />
     <meta property="profile:last_name" content="Zall" />
     <meta property="profile:username" content="zallesov" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Alex Zall — Agents manager. Humans decide, agents deliver." />
 
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
@@ -63,25 +78,34 @@ const {
         "width": 460,
         "height": 460
       },
-      "jobTitle": "Senior AI/Cloud Engineer",
-      "description": "Senior AI and Cloud engineer with 15+ years experience specialising in LLM systems, agentic pipelines, and cloud-native architecture.",
+      "jobTitle": "AI Engineer",
+      "description": "AI engineer and tech lead with 15+ years in software (SoundCloud, Zalando, MOIA/Volkswagen, Peec AI). Builds agentic systems in production, runs swarms of coding agents, sets up evals and automates business processes with agents.",
       "sameAs": [
         "https://www.linkedin.com/in/zallesov",
-        "https://medium.com/@zallesov",
-        "https://github.com/zallesov"
+        "https://github.com/zallesov",
+        "https://t.me/zallesov",
+        "https://medium.com/@zallesov"
       ],
       "knowsAbout": [
-        "Large Language Models",
-        "Agentic Systems",
-        "Google Cloud Platform",
-        "Amazon Web Services",
+        "AI agents",
+        "Agentic systems",
+        "Multi-agent orchestration",
+        "Coding agents",
+        "LLM evals",
+        "LLM observability",
+        "Business process automation",
+        "Generative engine optimization",
         "LangGraph",
-        "LangChain",
+        "LangSmith",
+        "Evalite",
+        "ElevenLabs voice agents",
         "TypeScript",
         "Python",
         "Scala",
-        "Kubernetes",
-        "Terraform"
+        "Google Cloud Platform",
+        "Amazon Web Services",
+        "Cloudflare",
+        "Distributed systems"
       ],
       "alumniOf": {
         "@type": "CollegeOrUniversity",
@@ -97,28 +121,43 @@ const {
       "@id": "https://zall.dev/#website",
       "url": "https://zall.dev",
       "name": "Zall.DEV",
-      "description": "Portfolio and consulting site of Alex Zalesov — Senior AI/Cloud Engineer",
+      "description": "Site of Alex Zalesov (Alex Zall), AI engineer: agentic systems, agent swarms, evals and business automation.",
       "publisher": { "@id": "https://zall.dev/#person" },
       "inLanguage": "en-US"
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://zall.dev/#profile",
+      "url": "https://zall.dev/",
+      "name": "Alex Zall — AI Engineer",
+      "isPartOf": { "@id": "https://zall.dev/#website" },
+      "mainEntity": { "@id": "https://zall.dev/#person" },
+      "primaryImageOfPage": "https://zall.dev/og.png"
     }
   ]
 }
     </script>
 
-    <!-- Font -->
-    <link
-      rel="preload"
-      href="/fonts/Honk-Regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-
     <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/favico_16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favico_32x32.png" />
-    <link rel="icon" type="image/png" sizes="48x48" href="/favico_48x48.png" />
-    <link rel="icon" type="image/png" sizes="64x64" href="/favico_64x64.png" />
+    {favicon === "cube" ? (
+      <>
+        <link rel="icon" type="image/svg+xml" href="/cube/cube.svg" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/cube/cube-16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/cube/cube-32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/cube/cube-48.png" />
+        <link rel="icon" type="image/png" sizes="64x64" href="/cube/cube-64.png" />
+        <link rel="apple-touch-icon" href="/cube/cube-180.png" />
+        <!-- spinning: only some browsers (Firefox) animate tab icons; the others show its first frame, the same cube -->
+        <link rel="icon" type="image/gif" sizes="32x32" href="/cube/cube-spin.gif" />
+      </>
+    ) : (
+      <>
+        <link rel="icon" type="image/png" sizes="16x16" href="/favico_16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favico_32x32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="/favico_48x48.png" />
+        <link rel="icon" type="image/png" sizes="64x64" href="/favico_64x64.png" />
+      </>
+    )}
   </head>
   <body>
     <slot />

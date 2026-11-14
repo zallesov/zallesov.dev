@@ -1,0 +1,33 @@
+---
+// A spinning cube in the browser tab. Browsers do not animate GIF favicons (only Firefox does),
+// so the tab icon is redrawn every 100 ms and swapped in as a data URL: works in Chrome, Firefox, Edge.
+// Without JavaScript the static icons from the layout stay.
+---
+
+<script>
+  import { CUBE_ROWS, drawCube, type RGB } from "../led/ledCanvas";
+
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const SIZE = 64; // device px; the browser scales it down to the tab
+    const ORANGE: RGB = [249, 115, 22];
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = SIZE;
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      // one icon link of ours replaces the static ones, so the browser has nothing else to choose from
+      document.querySelectorAll('link[rel="icon"]').forEach((l) => l.remove());
+      const link = document.createElement("link");
+      link.rel = "icon";
+      link.type = "image/png";
+      document.head.appendChild(link);
+      const pitch = SIZE / CUBE_ROWS;
+      const tick = () => {
+        ctx.clearRect(0, 0, SIZE, SIZE);
+        drawCube(ctx, performance.now(), pitch, ORANGE, 0.58);
+        link.href = canvas.toDataURL("image/png");
+      };
+      tick();
+      setInterval(tick, 100);
+    }
+  }
+</script>

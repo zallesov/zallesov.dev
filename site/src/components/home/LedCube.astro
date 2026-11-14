@@ -1,0 +1,25 @@
+---
+// The header cube as a still picture, in any colour (default: the site pink).
+interface Props {
+  /** Lamp colour, #rrggbb. */
+  color?: string;
+  /** Lamp pitch in css px; the cube is 14 lamps tall. */
+  pitch?: number;
+  class?: string;
+}
+const { color = "#FFDDFF", pitch = 2.5, class: className } = Astro.props;
+---
+
+<canvas class:list={["led-cube block shrink-0", className]} data-color={color} data-pitch={pitch} aria-hidden="true"></canvas>
+
+<script>
+  import { CUBE_ROWS, drawCube, runLedCanvas, type RGB } from "../led/ledCanvas";
+
+  document.querySelectorAll<HTMLCanvasElement>("canvas.led-cube").forEach((canvas) => {
+    const hex = (canvas.dataset.color ?? "#FFDDFF").replace("#", "");
+    const color = [0, 2, 4].map((k) => parseInt(hex.slice(k, k + 2), 16)) as RGB;
+    const pitch = Number(canvas.dataset.pitch) || 2.5;
+    // a still cube (no animation); pass `true` as the last argument to let it spin
+    runLedCanvas(canvas, CUBE_ROWS, CUBE_ROWS, pitch, (ctx, time) => drawCube(ctx, time, pitch, color), false);
+  });
+</script>

@@ -12,7 +12,9 @@ export default defineConfig({
     // an earlier bundling pass can mix old and new files, load Rapier twice, and the cubes
     // crash on start. Bundle the 3D packages in one pass, in a cache folder no browser has
     // seen, and never let the browser cache them.
-    cacheDir: "node_modules/.vite-site-2",
+    // Only `astro dev` uses this folder: `astro check` and `astro build` start their own Vite
+    // and would rewrite the running dev server's bundles under it (two Reacts, hooks crash).
+    cacheDir: process.argv.includes("dev") ? "node_modules/.vite-site-2" : "node_modules/.vite-tools",
     optimizeDeps: {
       include: [
         "react",

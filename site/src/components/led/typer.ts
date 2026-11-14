@@ -110,12 +110,27 @@ export function runTyper(
           await sleep(base + Math.random() * (step.fast ? 20 : 70), sig);
         }
       } else if ("del" in step || "back" in step) {
-        const n = "del" in step ? step.del : step.back;
-        for (let i = 0; i < n; i++) {
-          apply(s, "del" in step ? { del: 1 } : { back: 1 });
+        // like shift+← from the word's end: the highlight grows right to left, then one keypress wipes it
+        const text = s.lines[s.line];
+        const end = "del" in step ? Math.min(s.caret + step.del, text.length) : s.caret;
+        const start = Math.max(0, end - ("del" in step ? step.del : step.back));
+        s.caret = end;
+        out();
+        await sleep(90, sig);
+        s.caretOn = false; // the block caret would hide the first highlighted letter
+        for (let c = end - 1; c >= start; c--) {
+          s.caret = c;
+          s.sel = [c, end];
           out();
-          await sleep(38 + Math.random() * 25, sig);
+          await sleep(45 + Math.random() * 30, sig);
         }
+        await sleep(260, sig);
+        s.lines[s.line] = text.slice(0, start) + text.slice(end);
+        s.caret = start;
+        s.sel = null;
+        s.caretOn = true;
+        out();
+        await sleep(120, sig);
       } else if ("blink" in step) {
         await blink(step.blink);
       } else if ("selectAll" in step) {

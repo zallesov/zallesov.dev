@@ -1,15 +1,22 @@
-// Generates the narration for the "Development Pipeline" animation with ElevenLabs.
-//   ELEVENLABS_API_KEY=... node scripts/voiceover.mjs [id ...]
-// Reads src/components/approach/voiceover.json, writes public/audio/pipeline/<id>.mp3
+// Generates the narration for the "How I work" animations with ElevenLabs.
+//   ELEVENLABS_API_KEY=... node scripts/voiceover.mjs <pipeline|automation> [id ...]
+// Reads the scene's JSON in src/components/approach/, writes public/audio/<scene>/<id>.mp3
 // and stores each line's length (seconds) back into the JSON; the scene stretches to fit.
 import { readFileSync, writeFileSync } from "node:fs";
 
+const SCENES = {
+  pipeline: "voiceover.json",
+  automation: "automation-voiceover.json",
+  evals: "evals-voiceover.json",
+};
+
 const key = process.env.ELEVENLABS_API_KEY;
 if (!key) throw new Error("ELEVENLABS_API_KEY is not set");
-const file = new URL("../src/components/approach/voiceover.json", import.meta.url);
-const out = new URL("../public/audio/pipeline/", import.meta.url);
+const [scene, ...only] = process.argv.slice(2);
+if (!SCENES[scene]) throw new Error(`usage: voiceover.mjs <${Object.keys(SCENES).join("|")}> [id ...]`);
+const file = new URL(`../src/components/approach/${SCENES[scene]}`, import.meta.url);
+const out = new URL(`../public/audio/${scene}/`, import.meta.url);
 const spec = JSON.parse(readFileSync(file, "utf8"));
-const only = process.argv.slice(2);
 
 for (const [i, line] of spec.lines.entries()) {
   if (only.length && !only.includes(line.id)) continue;

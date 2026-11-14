@@ -10,19 +10,9 @@ import {
   type CategoryId,
   type Tool,
 } from "../../data/toolbox";
-import { Pusher, Walls, makeLabelMaskMaterial, makeLabelTexture, pop, type FaceSpec } from "../cubes/engine";
-import PostFX, { type FxMode } from "./PostFX";
+import { Pusher, Walls, makeLabelTexture, pop, type FaceSpec } from "../cubes/engine";
 
 const BG = "#140a18";
-const FX_MODES: { id: FxMode; label: string }[] = [
-  { id: "crt", label: "CRT" },
-  { id: "led", label: "LED" },
-  { id: "ascii", label: "ASCII" },
-  { id: "glitch", label: "Glitch" },
-  { id: "lens", label: "Lens" },
-  { id: "dither", label: "Dither" },
-  { id: "off", label: "Off" },
-];
 
 const CAT_BY_ID = Object.fromEntries(CATEGORIES.map((c) => [c.id, c])) as Record<
   CategoryId,
@@ -30,7 +20,7 @@ const CAT_BY_ID = Object.fromEntries(CATEGORIES.map((c) => [c.id, c])) as Record
 >;
 
 const DEPTH = 2.6; // half-depth of the "box" the cubes live in
-const SIZE_BY_WEIGHT = [1.45, 1.8, 2.2];
+const SIZE_BY_WEIGHT = [1.45, 1.85, 2.6];
 
 const faceOf = (tool: Tool): FaceSpec => ({
   text: tool.name,
@@ -60,7 +50,7 @@ function Cubes({ bodies, order, onHover }: CubesProps) {
   // cube scale follows the canvas width so phones get smaller cubes
   // (narrow/portrait screens get relatively bigger cubes so labels stay legible)
   const narrow = viewport.width < viewport.height;
-  const unit = THREE.MathUtils.clamp(viewport.width / (narrow ? 15 : 30), 0.5, 1.1);
+  const unit = THREE.MathUtils.clamp(viewport.width / (narrow ? 14 : 25), 0.5, 1.3);
 
   const geometries = useMemo(
     () =>
@@ -81,20 +71,14 @@ function Cubes({ bodies, order, onHover }: CubesProps) {
     [order],
   );
 
-  const labelMaterials = useMemo(
-    () => order.map((tool) => makeLabelMaskMaterial(makeLabelTexture(faceOf(tool), true))),
-    [order],
-  );
-
   useEffect(
     () => () => {
-      labelMaterials.forEach((m) => m.uniforms.map.value.dispose());
-      [...materials, ...labelMaterials].forEach((m) => {
-        if ("map" in m) (m as THREE.MeshStandardMaterial).map?.dispose();
+      materials.forEach((m) => {
+        m.map?.dispose();
         m.dispose();
       });
     },
-    [materials, labelMaterials],
+    [materials],
   );
   useEffect(() => () => geometries.forEach((g) => g.dispose()), [geometries]);
 
@@ -137,7 +121,6 @@ function Cubes({ bodies, order, onHover }: CubesProps) {
           <mesh
             geometry={geometries[(tool.weight ?? 1) - 1]}
             material={materials[i]}
-            userData={{ labelMaterial: labelMaterials[i] }}
             onPointerOver={(e) => {
               e.stopPropagation();
               document.body.style.cursor = "pointer";
@@ -167,10 +150,6 @@ export default function ToolboxCubes() {
   const [inView, setInView] = useState(true);
   const [round, setRound] = useState(0);
   const [hovered, setHovered] = useState<Tool | null>(null);
-  const [fx, setFx] = useState<FxMode>(() => {
-    const q = new URLSearchParams(window.location.search).get("fx") as FxMode | null;
-    return q && FX_MODES.some((m) => m.id === q) ? q : "crt";
-  });
 
   const order = useMemo(() => shuffle(TOOLS), [round]);
 
@@ -247,33 +226,11 @@ export default function ToolboxCubes() {
               <Cubes key={round} bodies={bodies} order={order} onHover={setHovered} />
             </Physics>
           </Suspense>
-          <PostFX
-            mode={fx}
-            pointerInside={pointerInside}
-            background={BG}
-            isIdle={() =>
-              !pointerInside.current && bodies.current.every((b) => !b || b.isSleeping())
-            }
-          />
         </Canvas>
       </div>
 
-      <div className="absolute bottom-4 right-4 z-20 flex gap-1 rounded-full bg-black/40 p-1 backdrop-blur">
-        {FX_MODES.map((m) => (
-          <button
-            key={m.id}
-            type="button"
-            onClick={() => setFx(m.id)}
-            className={`rounded-full px-2.5 py-1 text-xs transition ${
-              fx === m.id ? "bg-[#FFDDFF] text-[#1C0E21]" : "text-[#FFDDFF]/70 hover:text-[#FFDDFF]"
-            }`}
-          >
-            {m.label}
-          </button>
-        ))}
-      </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-14 z-10 flex justify-center p-4 sm:bottom-0">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex justify-center p-4">
         <div
           className="rounded-full bg-black/40 px-4 py-1.5 text-sm text-[#FFDDFF] backdrop-blur transition-opacity"
           style={{ opacity: hovered ? 1 : 0 }}

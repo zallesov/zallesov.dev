@@ -1,4 +1,6 @@
+# Search engines and AI assistants are welcome. A plain-text summary for LLMs: https://zall.dev/llms.txt
 User-agent: *
 Allow: /
+Disallow: /lab/
 
 Sitemap: https://zall.dev/sitemap-index.xml

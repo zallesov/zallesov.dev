@@ -1,0 +1,40 @@
+<!doctype html>
+<!-- Source of public/og.png (link preview in Telegram, LinkedIn, Slack...). Regenerate with:
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu --hide-scrollbars \
+    --window-size=1200,630 --screenshot=public/og.png scripts/og-image.html -->
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: Doto; src: url("../node_modules/@fontsource-variable/doto/files/doto-latin-full-normal.woff2"); font-weight: 100 900; }
+  @font-face { font-family: Mono; src: url("../node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2"); font-weight: 100 800; }
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden; color: #FFDDFF;
+    background: #140a18;
+    background-image: radial-gradient(rgba(255,255,255,0.07) 1.6px, transparent 1.8px);
+    background-size: 14px 14px;
+    font-family: Mono, monospace;
+    display: flex; flex-direction: column; justify-content: space-between; padding: 64px 72px;
+  }
+  .top { display: flex; align-items: center; justify-content: space-between; }
+  .site { font-size: 26px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.6; }
+  .cube { width: 120px; height: 120px; }
+  .lead { font-family: Doto; font-weight: 700; font-variation-settings: "ROND" 100; font-size: 56px; opacity: 0.8; }
+  h1 { font-family: Doto; font-weight: 800; font-variation-settings: "ROND" 100; font-size: 128px; line-height: 1; margin-top: 4px; }
+  .tag { margin-top: 28px; font-size: 30px; letter-spacing: 0.08em; color: #F97316; }
+  .tag::before { content: "> "; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <span class="site">zall.dev · Alex Zall</span>
+    <img class="cube" src="../public/cube/cube.svg" alt="" />
+  </div>
+  <div>
+    <p class="lead">I'M</p>
+    <h1>AGENTS MANAGER</h1>
+    <p class="tag">HUMANS DECIDE. AGENTS DELIVER.</p>
+  </div>
+</body>
+</html>

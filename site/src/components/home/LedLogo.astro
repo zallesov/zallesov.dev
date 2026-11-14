@@ -1,0 +1,43 @@
+---
+// Header logo: a spinning orange cube and the name, both lamps of one LED grid.
+// The text for search engines and screen readers is the sr-only span; the canvas is decoration.
+---
+
+<span class="logo-wrap flex min-w-0 items-center">
+  <canvas class="led-logo block h-auto max-w-full shrink" aria-hidden="true"></canvas>
+  <span class="sr-only">Alex Zall</span>
+</span>
+
+<script>
+  import { FONT_3X5, forEachPixel, textWidth } from "../led/font5x7";
+  import { CUBE_ROWS, drawCube, lamp, runLedCanvas, type RGB } from "../led/ledCanvas";
+
+  // the name font: FONT_5X7 (7 lamps tall) or FONT_3X5 (5 lamps tall); same lamp grid as the cube
+  const NAME_FONT = FONT_3X5;
+  const PITCH = 3; // css px per lamp
+  const ROWS = CUBE_ROWS;
+  const GAP = 3; // empty lamp columns between the cube and the name
+  const PINK: RGB = [255, 221, 255];
+  const ORANGE: RGB = [249, 115, 22]; // #F97316
+  const TEXT_TOP = (ROWS - NAME_FONT.h) / 2 - 0.5; // vertical centre of the lit cube window
+
+  // the name: "ALEX" in pink, "ZALL" in orange, a clear gap between
+  const WORDS: { text: string; color: RGB; col: number }[] = [];
+  {
+    let col = ROWS + GAP;
+    for (const [text, color] of [["Alex", PINK], ["Zall", ORANGE]] as [string, RGB][]) {
+      WORDS.push({ text, color, col });
+      col += textWidth(text, NAME_FONT) + NAME_FONT.space + 1;
+    }
+  }
+  const COLS = WORDS[1].col + textWidth(WORDS[1].text, NAME_FONT);
+  const LAMPS: { col: number; row: number; color: RGB }[] = [];
+  for (const w of WORDS) forEachPixel(w.text, (x, y) => LAMPS.push({ col: w.col + x, row: TEXT_TOP + y, color: w.color }), NAME_FONT);
+
+  document.querySelectorAll<HTMLCanvasElement>("canvas.led-logo").forEach((canvas) => {
+    runLedCanvas(canvas, COLS, ROWS, PITCH, (ctx, time) => {
+      drawCube(ctx, time, PITCH, ORANGE);
+      for (const p of LAMPS) lamp(ctx, p.col, p.row, PITCH, p.color);
+    });
+  });
+</script>

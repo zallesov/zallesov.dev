@@ -14,9 +14,7 @@ const config: Config = {
           'linear-gradient(180deg, #202030 0%, #1C0E21 100%)',
       },
       fontFamily: {
-        honk: ['Honk', 'system-ui', 'sans-serif'],
         dots: ['"Doto Variable"', 'ui-monospace', 'monospace'],
-        display: ['"Black Ops One"', 'system-ui', 'sans-serif'],
         body: ['"Inter Variable"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono Variable"', 'ui-monospace', 'Menlo', 'monospace'],
       },

@@ -275,10 +275,11 @@ const fragmentShader = /* glsl */ `
       col = sceneAt(uv);
     }
 
-    // shared finishing: film grain + vignette
+    // shared finishing: film grain (not on the LED panel) + vignette
     vec2 vc = uv - 0.5;
     col *= 1.0 - 0.45 * dot(vc, vc);
-    col += (hash(gl_FragCoord.xy + fract(uTime) * 100.0) - 0.5) * 0.018;
+    // no grain on the LED panel: it speckles every lamp and gap, and real lamps are clean
+    if (uMode != 4) col += (hash(gl_FragCoord.xy + fract(uTime) * 100.0) - 0.5) * 0.018;
 
     gl_FragColor = vec4(col, 1.0);
     #include <colorspace_fragment>

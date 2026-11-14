@@ -1,0 +1,51 @@
+{
+  "voice": "nPczCjzI2devNBz1zQrb",
+  "model": "eleven_multilingual_v2",
+  "lines": [
+    {
+      "id": "01",
+      "text": "In my setup, agents do real, everyday work.",
+      "seconds": 3.2
+    },
+    {
+      "id": "02",
+      "text": "Some answer users in the support chat.",
+      "seconds": 2.42
+    },
+    {
+      "id": "03",
+      "text": "Another one sums up what users ask for most.",
+      "seconds": 3.16
+    },
+    {
+      "id": "04",
+      "text": "One knows what was shipped, and updates the knowledge base.",
+      "seconds": 2.97
+    },
+    {
+      "id": "05",
+      "text": "Another reads the meeting notes, and puts everything there too.",
+      "seconds": 3.62
+    },
+    {
+      "id": "06",
+      "text": "Some jobs watch the competitors. Others watch the logs.",
+      "seconds": 3.76
+    },
+    {
+      "id": "07",
+      "text": "It's a swarm. And all of it runs through one orchestrator.",
+      "seconds": 3.58
+    },
+    {
+      "id": "08",
+      "text": "And me? I only look at the summaries and the charts.",
+      "seconds": 3.44
+    },
+    {
+      "id": "09",
+      "text": "Many agents. One orchestrator.",
+      "seconds": 2
+    }
+  ]
+}

@@ -1,5 +1,9 @@
 import type { TyperSpec } from "../components/hero/HeroSpace";
-import { PIPELINE_STEPS } from "../components/approach/pipelineSteps";
+import { PIPELINE, PIPELINE_STEPS } from "../components/approach/pipelineSteps";
+import { AUTOMATION, AUTOMATION_STEPS } from "../components/approach/automationSteps";
+import { EVALS, EVALS_STEPS } from "../components/approach/evalsSteps";
+
+const seconds = (m: { durationInFrames: number; fps: number }) => Math.round(m.durationInFrames / m.fps);
 
 // Content for the new home page blocks. Career, articles and links still come from zall.dev.json.
 
@@ -47,7 +51,7 @@ export const HERO_TYPER: TyperSpec & { final: string } = {
 /** Shown next to the portrait: what to come to me for, one punchy line each. `live` = what I'm doing right now. */
 export const FOCUS: { title: string; line: string; live?: boolean }[] = [
   { title: "Agentic systems", line: "Agents in production, not in demos." },
-  { title: "Agent swarms", line: "Orchestrating teams of agents for development and business tasks.", live: true },
+  { title: "Agent swarms", line: "Orchestrating teams of agents for development and business tasks." },
   { title: "AI transformation", line: "Teaching teams how to use AI in day-to-day tasks." },
   { title: "Business automation", line: "If you do it twice, it has to be automated." },
   { title: "Content pipelines", line: "AI content that looks professional and slick." },
@@ -78,19 +82,25 @@ export interface Approach {
   points: string[];
   /** Numbered steps, synced with the animation: `at` is the frame a step starts on. */
   steps?: { at: number; text: string }[];
+  /** The animation: Play button label and length. Set together with `steps`. */
+  film?: { label: string; seconds: number };
+  /** Not shown on the page yet (work in progress). */
+  hidden?: boolean;
 }
 
 export const APPROACHES: Approach[] = [
   {
     id: "dev-pipeline",
     title: "Development Pipeline",
-    summary: "Tickets go in, reviewed code lands on staging. I make the decisions, the agents do the rest.",
+    summary: "I make the decisions, the agents deliver, I review.",
     flow: [],
     points: [],
     steps: PIPELINE_STEPS,
+    film: { label: "Play the pipeline", seconds: seconds(PIPELINE) },
   },
   {
     id: "agentic-systems",
+    hidden: true,
     title: "Agentic Systems",
     summary:
       "Production multi-agent systems with clear roles. Example: a call helper with a wizard, a scheduler and a swarm of workers.",
@@ -104,25 +114,20 @@ export const APPROACHES: Approach[] = [
   {
     id: "evals",
     title: "Agentic Evals",
-    summary: "I don't trust prompts by eye. Every prompt and model change is measured against a fixed set of cases.",
-    flow: ["Dataset", "Prompt v1…vN", "Models", "Scores", "Decision"],
-    points: [
-      "Prompt regressions are caught before release, not by users.",
-      "Models are compared on quality, speed and cost per run.",
-      "The cheapest model that passes wins.",
-    ],
+    summary: "Evals are tests for agents. If you don't measure it, you can't improve it.",
+    flow: [],
+    points: [],
+    steps: EVALS_STEPS,
+    film: { label: "Play the evals", seconds: seconds(EVALS) },
   },
   {
     id: "automation",
     title: "Business Automation",
-    summary:
-      "Agents that do the routine nobody wants. Example: a daily crawl of provider docs that turns changes into new catalogue offerings.",
-    flow: ["Daily schedule", "Agents read provider docs · MCP · APIs", "Diff with imported base", "New offerings"],
-    points: [
-      "Runs every day without a person in the loop.",
-      "Only real changes become new entries.",
-      "If a job needs doing twice, it gets automated.",
-    ],
+    summary: "A swarm of agents runs the routine. I only look at the summaries.",
+    flow: [],
+    points: [],
+    steps: AUTOMATION_STEPS,
+    film: { label: "Play the automation", seconds: seconds(AUTOMATION) },
   },
 ];
 

@@ -1,0 +1,51 @@
+{
+  "voice": "nPczCjzI2devNBz1zQrb",
+  "model": "eleven_multilingual_v2",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Agents need tests. Evals are tests for agents.",
+      "seconds": 3.44
+    },
+    {
+      "id": "02",
+      "text": "I turn real conversations into a dataset of cases.",
+      "seconds": 3.53
+    },
+    {
+      "id": "03",
+      "text": "Every case is scored: is it right, is it grounded, did it call the right tool?",
+      "seconds": 4.69
+    },
+    {
+      "id": "04",
+      "text": "Then I run the same cases on different models and prompts.",
+      "seconds": 3.44
+    },
+    {
+      "id": "05",
+      "text": "And with different sets of tools.",
+      "seconds": 1.53
+    },
+    {
+      "id": "06",
+      "text": "A prompt change breaks something? The evals catch it before users do.",
+      "seconds": 4.27
+    },
+    {
+      "id": "07",
+      "text": "In production, LangSmith keeps scoring real traffic.",
+      "seconds": 3.25
+    },
+    {
+      "id": "08",
+      "text": "The cheapest model that passes wins.",
+      "seconds": 2.55
+    },
+    {
+      "id": "09",
+      "text": "If you don't measure it, you can't improve it.",
+      "seconds": 2.37
+    }
+  ]
+}
