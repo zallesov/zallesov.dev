@@ -99,7 +99,7 @@ function useCubes(): Spec[] {
 
 const GLOW = new THREE.Color("#FF8A2A");
 const BEAM_COLOR = new THREE.Color("#FFD9A8");
-const BEAMS = 10; // pooled beam meshes
+const BEAMS = 40; // pooled beam meshes (a clicked cascade can have many in flight)
 const CHAIN = {
   firstDelay: 1.5, // s after load before the first chain
   gapMin: 2, // s between chains
@@ -110,6 +110,15 @@ const CHAIN = {
   fade: 0.35, // s for a beam to fade after arrival
   cool: 0.7, // s for a cube's glow to die down after firing
   maxHops: 7,
+};
+
+// clicking a cube sets off a cascade: it fires at its nearest neighbours, each of them fires on
+const CASCADE = {
+  first: 3, // beams from the clicked cube
+  next: 2, // beams from every cube it hits
+  waves: 5, // how far it spreads
+  delay: 0.22, // s between a hit and that cube firing on
+  reach: 0.9, // max screen distance to a neighbour (NDC, x scaled by aspect)
 };
 
 interface Beam {
@@ -194,7 +203,7 @@ function Cubes({ animate }: { animate: boolean }) {
   // fixed set of lights whose intensity we animate; never added/removed, so shaders don't recompile
   const beamLights = useRef<(THREE.PointLight | null)[]>([]);
   const chargeLight = useRef<THREE.PointLight>(null);
-  const { camera, size } = useThree();
+  const { camera, size, gl } = useThree();
 
   const geometry = useMemo(() => new RoundedBoxGeometry(1, 1, 1, 3, 0.12), []);
   const beamGeometry = useMemo(() => new THREE.CylinderGeometry(1, 1, 1, 6, 1, true), []);
@@ -240,6 +249,8 @@ function Cubes({ animate }: { animate: boolean }) {
   );
 
   const simTime = useRef(0);
+  // clicked cascades: cubes due to fire, and every cube already in the current cascade
+  const cascade = useRef({ due: [] as { cube: number; at: number; wave: number }[], visited: new Set<number>() });
   const chain = useRef<ChainState>({
     nextAt: CHAIN.firstDelay,
     cur: -1,
@@ -295,6 +306,47 @@ function Cubes({ animate }: { animate: boolean }) {
     tmp.v.copy(m.position).project(camera);
     return Math.abs(tmp.v.x) < 0.85 && Math.abs(tmp.v.y) < 0.85 && tmp.v.z < 1;
   };
+
+  // click (or tap) on a cube: raycast from the camera, start a cascade from the cube hit
+  useEffect(() => {
+    if (!animate) return;
+    const ray = new THREE.Raycaster();
+    const ndc = new THREE.Vector2();
+    const hero = gl.domElement.closest("section");
+    const cubeAt = (e: PointerEvent) => {
+      if ((e.target as Element | null)?.closest?.("a,button,input,textarea")) return -1;
+      const r = gl.domElement.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) return -1;
+      ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+      ray.setFromCamera(ndc, camera);
+      const meshes = refs.current.filter((m): m is THREE.Mesh => !!m);
+      const hit = ray.intersectObjects(meshes, false)[0];
+      return hit ? refs.current.indexOf(hit.object as THREE.Mesh) : -1;
+    };
+    const onDown = (e: PointerEvent) => {
+      const i = cubeAt(e);
+      if (i < 0) return;
+      const cas = cascade.current;
+      if (!cas.due.length) cas.visited.clear(); // a fresh cascade; a click mid-cascade joins it
+      cas.visited.add(i);
+      cas.due.push({ cube: i, at: simTime.current, wave: 0 });
+      // the clicked cube jolts back a little
+      const kb = knock[i];
+      kb.vel.add(new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, -0.6).multiplyScalar(KNOCK.speed));
+      kb.spin.addScalar((Math.random() - 0.5) * KNOCK.spin);
+    };
+    // the cursor says the cubes are clickable
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType === "mouse" && hero) hero.style.cursor = cubeAt(e) >= 0 ? "pointer" : "";
+    };
+    window.addEventListener("pointerdown", onDown);
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("pointermove", onMove);
+      if (hero) hero.style.cursor = "";
+    };
+  }, [animate, camera, gl, knock]);
 
   useFrame((_, delta) => {
     if (!animate) return;
@@ -422,6 +474,34 @@ function Cubes({ animate }: { animate: boolean }) {
       }
     }
     if (ch.cur >= 0 && t >= ch.chargeStart + ch.chargeDur) fire(ch.cur);
+
+    // ---- clicked cascades: every due cube fires at its nearest untouched neighbours ----
+    const cas = cascade.current;
+    if (cas.due.length) {
+      const now = cas.due.filter((d) => d.at <= t);
+      cas.due = cas.due.filter((d) => d.at > t);
+      for (const { cube: from, wave } of now) {
+        ch.firedAt.set(from, t);
+        const p0 = new THREE.Vector2();
+        if (!screenOf(from, p0)) continue;
+        const p = new THREE.Vector2();
+        const near = cubes
+          .map((_, k) => k)
+          .filter((k) => !cas.visited.has(k) && onScreen(k) && screenOf(k, p))
+          .map((k) => ({ k, d: screenOf(k, p)!.distanceTo(p0) }))
+          .filter((n) => n.d < CASCADE.reach)
+          .sort((a, b) => a.d - b.d)
+          .slice(0, wave === 0 ? CASCADE.first : CASCADE.next);
+        const src = posOf(from)!.clone();
+        for (const { k } of near) {
+          cas.visited.add(k);
+          ch.beams.push({ from: src.clone(), to: k, exit: new THREE.Vector3(), start: t });
+          if (ch.beams.length > BEAMS) ch.beams.shift();
+          ch.hits.push({ cube: k, at: t + CHAIN.travel, dir: posOf(k)!.clone().sub(src).normalize() });
+          if (wave + 1 < CASCADE.waves) cas.due.push({ cube: k, at: t + CHAIN.travel + CASCADE.delay, wave: wave + 1 });
+        }
+      }
+    }
 
     // ---- knock-back: apply arrived hits, then integrate ----
     ch.hits = ch.hits.filter((h) => {
