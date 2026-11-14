@@ -98,6 +98,7 @@ const links = [
       num.textContent = v.toLocaleString("en-US").replace(/,/g, " ");
       count.lastChild!.textContent = v === 1 ? " time" : " times";
       count.classList.remove("opacity-0");
+      root!.dataset.pushTotal = String(v); // the footer pours this many cubes
     };
     fetch(DOC)
       .then((r) => (r.ok ? r.json() : null))
@@ -107,6 +108,14 @@ const links = [
     button.addEventListener("pointerenter", () => (hot = true));
     button.addEventListener("pointerleave", () => (hot = false));
     sparkle(glitter, () => hot);
+    // the footer came into view: the pile drops out of the plate into it
+    root.addEventListener("push:open", () => {
+      cubes?.openFloor();
+      // the pile falls out; if it is small, top it up with a rain through the plate,
+      // up to one cube per push ever made (capped for speed)
+      let left = Math.min(n || 40, innerWidth < 640 ? 35 : 70) - (cubes?.count() ?? 0);
+      const t = setInterval(() => (left-- > 0 ? cubes?.drop() : clearInterval(t)), 45);
+    });
 
     button.addEventListener("click", () => {
       // the links keep their space while invisible, so the button does not jump when they appear

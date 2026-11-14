@@ -239,6 +239,7 @@ function Cubes({ animate }: { animate: boolean }) {
     [geometry, beamGeometry, materials, beamMaterials],
   );
 
+  const simTime = useRef(0);
   const chain = useRef<ChainState>({
     nextAt: CHAIN.firstDelay,
     cur: -1,
@@ -295,10 +296,12 @@ function Cubes({ animate }: { animate: boolean }) {
     return Math.abs(tmp.v.x) < 0.85 && Math.abs(tmp.v.y) < 0.85 && tmp.v.z < 1;
   };
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (!animate) return;
-    const t = state.clock.elapsedTime;
+    // own clock, not state.clock: R3F resets that one to 0 whenever the frameloop changes (the hero
+    // pauses off screen), and beams/charges stamped with the old time then hang on screen for minutes
     const dt = Math.min(delta, 0.1);
+    const t = (simTime.current += dt);
     const ch = chain.current;
 
     // ---- chain logic ----

@@ -8,6 +8,7 @@ import LedLogo from "../components/home/LedLogo.astro";
 import LedCube from "../components/home/LedCube.astro";
 import LocationGlobe from "../components/home/LocationGlobe.astro";
 import ContactPush from "../components/home/ContactPush.astro";
+import CubeFooter from "../components/home/CubeFooter.astro";
 import FaviconSpin from "../components/home/FaviconSpin.astro";
 import ToolboxWordHunt from "../components/toolbox/ToolboxWordHunt";
 import HeroSpace from "../components/hero/HeroSpace";
@@ -120,7 +121,7 @@ const edu = cv.educations?.[0];
       />
     </section>
 
-    <main class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pb-10 pt-6">
+    <main class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 pt-6">
       <!-- 02 EXPERTISE: portrait + the list (the nav "Expertise" points here) -->
       <section id="expertise" class="grid scroll-mt-20 gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         <AsciiPortrait client:only="react" mode="led" className="md:aspect-auto md:h-full md:min-h-[420px]" />
@@ -256,12 +257,15 @@ const edu = cv.educations?.[0];
         <ToolboxWordHunt client:only="react" />
       </section>
 
-      <!-- 09 CONTACT: "Don't push" counter; the contact buttons appear once it's pushed -->
-      <ContactPush calendly={cv.calendly} linkedin={cv.linkedin} telegram={cv.telegram} github={cv.github} pdf={cv.pdf} />
-
-      <!-- 10 LOCATION -->
+      <!-- 09 LOCATION -->
       <LocationGlobe />
+
+      <!-- 10 CONTACT: "Don't push" counter; the contact buttons appear once it's pushed -->
+      <ContactPush calendly={cv.calendly} linkedin={cv.linkedin} telegram={cv.telegram} github={cv.github} pdf={cv.pdf} />
     </main>
+
+    <!-- 11 FOOTER: starts right at the contact plate's bottom edge, so falling cubes never vanish in a gap -->
+    <CubeFooter />
 
   </div>
 </Layout>

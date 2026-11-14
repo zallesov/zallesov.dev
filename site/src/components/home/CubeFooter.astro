@@ -1,0 +1,58 @@
+---
+// Bottomless footer under the contact plate: when it comes into view the plate's floor opens and
+// the cubes (one per "Don't push" ever pressed, capped) rain through the plate and out of its
+// bottom into here, then keep falling while you scroll, for a few screens, until the real ground.
+// Logic in src/components/led/ledCubeFall.ts.
+const year = new Date().getFullYear();
+---
+
+<footer data-fall-root class="relative h-[660svh]" aria-label="Footer">
+  <!-- the screen-sized window into the fall -->
+  <div class="sticky top-0 h-[100svh] overflow-hidden">
+    <canvas data-fall-cubes class="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true"></canvas>
+    <p data-fall-meter class="absolute left-4 top-20 font-mono opacity-0 transition-opacity text-xs uppercase tracking-widest text-white/40" aria-hidden="true">
+      ↓ <span data-fall-depth>0</span> m
+    </p>
+  </div>
+  <!-- the ground: the last screen; the text sits high, the pile lies under it -->
+  <div class="pointer-events-none absolute inset-x-0 bottom-0 flex h-[100svh] flex-col items-center gap-6 px-4 pt-[22svh] text-center">
+    <p class="font-dots text-3xl font-bold text-white sm:text-5xl" style="font-weight: 900">You hit the bottom.</p>
+    <p class="font-mono text-xs uppercase tracking-widest text-white/60">Still don't push.</p>
+    <a href="#top" class="pointer-events-auto rounded-full border border-white/20 px-5 py-3 font-mono text-xs uppercase tracking-widest text-white/80 transition hover:border-white/60">↑ Back to top</a>
+    <p class="font-mono text-[11px] uppercase tracking-widest text-white/30">© {year} Alex Zall · zall.dev</p>
+  </div>
+</footer>
+
+<script>
+  import { cubeFall } from "../led/ledCubeFall";
+
+  const root = document.querySelector<HTMLElement>("[data-fall-root]");
+  const plate = document.querySelector<HTMLElement>("[data-push-root]");
+  if (root) {
+    const fall = cubeFall(root, root.querySelector<HTMLCanvasElement>("[data-fall-cubes]")!);
+    // the depth meter: the whole fall is "1 km"
+    const meter = root.querySelector<HTMLElement>("[data-fall-depth]")!;
+    const onScroll = () => {
+      const d = Math.max(0, -root.getBoundingClientRect().top) / Math.max(1, root.offsetHeight - innerHeight);
+      meter.textContent = String(Math.round(Math.min(1, d) * 1000));
+      meter.parentElement!.classList.toggle("opacity-0", d <= 0); // only once the fall has begun
+    };
+    addEventListener("scroll", onScroll, { passive: true });
+    // load the engine a bit early, so the first cube that falls out lands right away
+    new IntersectionObserver(([e], io) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      fall?.prepare();
+    }, { rootMargin: "800px" }).observe(root);
+    // the pile stays in the contact plate for a while: its floor opens only once you have
+    // scrolled about two thirds of a screen past it (the footer top crosses a third of the screen)
+    new IntersectionObserver(
+      ([e], io) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        plate?.dispatchEvent(new CustomEvent("push:open"));
+      },
+      { rootMargin: "0px 0px -66% 0px" },
+    ).observe(root);
+  }
+</script>

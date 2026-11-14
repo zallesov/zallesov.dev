@@ -372,6 +372,8 @@ export default function PostFX({
 
   useFrame((state, delta) => {
     const now = state.clock.elapsedTime;
+    // R3F restarts the clock at 0 when the frameloop changes (canvas scrolled out and back)
+    if (now < lastRender.current) lastRender.current = now - 1;
     if (isIdle?.() && now - lastRender.current < 1 / idleFps) return;
     delta = Math.min(now - lastRender.current, 0.1);
     lastRender.current = now;

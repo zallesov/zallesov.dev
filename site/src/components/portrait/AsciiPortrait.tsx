@@ -173,6 +173,8 @@ function PortraitPlane({
     const s = sim.current;
     const p = pointer.current;
     const now = state.clock.elapsedTime;
+    // R3F restarts the clock at 0 when the frameloop changes (canvas scrolled out and back)
+    if (now < lastRender.current) lastRender.current = now - 1;
 
     const moving = Math.hypot(s.px, s.py) > 0.0015 || Math.hypot(s.vx, s.vy) > 0.01;
     // idle (intro done, nothing stretched, no cursor): ~15 fps is plenty for the shimmer

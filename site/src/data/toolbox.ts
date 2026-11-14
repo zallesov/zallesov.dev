@@ -97,7 +97,6 @@ export const TOOLS: Tool[] = [
   { name: "Remotion", cat: "media", weight: 2 },
   { name: "Three.js", cat: "media" },
   { name: "React Three Fiber", cat: "media" },
-  { name: "Rapier", cat: "media" },
   { name: "Motion", cat: "media" },
   { name: "ElevenLabs", cat: "media" },
   { name: "FFmpeg", cat: "media" },

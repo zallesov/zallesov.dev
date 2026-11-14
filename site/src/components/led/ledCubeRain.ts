@@ -10,7 +10,7 @@ import { lamp, type RGB } from "./ledCanvas";
 
 type Rapier = typeof import("@dimforge/rapier3d-compat");
 type World = InstanceType<Rapier["World"]>;
-type Body = ReturnType<World["createRigidBody"]>;
+export type Body = ReturnType<World["createRigidBody"]>;
 
 const DARK: RGB = [28, 14, 33];
 const ORANGE: RGB = [249, 115, 22];
@@ -21,8 +21,90 @@ const LIGHT = (() => {
 })();
 const MAX_CUBES = 160;
 
+/** document event: a cube left the contact plate through its open floor. detail: FallingCube */
+export const FALL_OUT = "cubes:fall-out";
+/** A cube in flight between two canvases, in client px (y down), px/s and the body's rotation. */
+export interface FallingCube {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  half: number;
+  rotation: { x: number; y: number; z: number; w: number };
+  angvel: { x: number; y: number; z: number };
+}
+
+/** Lamp colour for a face lit `l` (0.45 dark side … 1 facing the light). */
+export type Shade = (l: number) => RGB;
+// on the orange plate the cubes are dark: the lit face is the darkest, the shadow side leans to orange
+const ON_ORANGE: Shade = (l) => ORANGE.map((v, k) => Math.round(v + (DARK[k] - v) * l)) as RGB;
+
+/** Lamp grid in cube units: `top` is the world y of the top edge of lamp row 0. */
+export interface LedView {
+  cols: number;
+  rows: number;
+  unit: number;
+  pitch: number;
+  top: number;
+}
+
+/**
+ * Draws physics cubes into an LED grid: a ray straight into the scene through every lamp,
+ * lit by face. The context must already be translated to lamp (0, 0).
+ */
+export function drawLedCubes(
+  ctx: CanvasRenderingContext2D,
+  cubes: { body: Body; half: number }[],
+  { cols, rows, unit, pitch, top }: LedView,
+  shade: Shade,
+) {
+  for (const { body, half } of cubes) {
+    const t = body.translation();
+    const reach = half * 1.75; // > half-diagonal of the cube
+    const r0 = Math.max(0, Math.floor((top - t.y - reach) * unit));
+    const r1 = Math.min(rows - 1, Math.ceil((top - t.y + reach) * unit));
+    if (r0 > r1) continue; // off screen
+    const c0 = Math.max(0, Math.floor((t.x - reach) * unit));
+    const c1 = Math.min(cols - 1, Math.ceil((t.x + reach) * unit));
+    // rotation matrix body → world from the quaternion
+    const { x: qx, y: qy, z: qz, w: qw } = body.rotation();
+    const m = [
+      [1 - 2 * (qy * qy + qz * qz), 2 * (qx * qy - qz * qw), 2 * (qx * qz + qy * qw)],
+      [2 * (qx * qy + qz * qw), 1 - 2 * (qx * qx + qz * qz), 2 * (qy * qz - qx * qw)],
+      [2 * (qx * qz - qy * qw), 2 * (qy * qz + qx * qw), 1 - 2 * (qx * qx + qy * qy)],
+    ];
+    // view ray (0,0,1) in body space is the third row of m
+    const d = [m[2][0], m[2][1], m[2][2]];
+    for (let row = r0; row <= r1; row++) {
+      const py = top - (row + 0.5) / unit - t.y;
+      for (let col = c0; col <= c1; col++) {
+        const px = (col + 0.5) / unit - t.x;
+        // ray origin in body space: m^T * (px, py, -10)
+        const o = [
+          m[0][0] * px + m[1][0] * py + m[2][0] * -10,
+          m[0][1] * px + m[1][1] * py + m[2][1] * -10,
+          m[0][2] * px + m[1][2] * py + m[2][2] * -10,
+        ];
+        let tmin = -Infinity, tmax = Infinity, axis = 0, sign = 1;
+        for (let a = 0; a < 3; a++) {
+          const t1 = (-half - o[a]) / d[a];
+          const t2 = (half - o[a]) / d[a];
+          const near = Math.min(t1, t2), far = Math.max(t1, t2);
+          if (near > tmin) { tmin = near; axis = a; sign = d[a] > 0 ? -1 : 1; }
+          tmax = Math.min(tmax, far);
+        }
+        if (tmin > tmax) continue;
+        // face normal in world space: column `axis` of m
+        const diffuse = Math.max(0, sign * (m[0][axis] * LIGHT[0] + m[1][axis] * LIGHT[1] + m[2][axis] * LIGHT[2]));
+        // a few steps like real LEDs
+        lamp(ctx, col, row, pitch, shade(Math.max(0.45, Math.round((0.36 + 0.64 * diffuse) * 6) / 6)));
+      }
+    }
+  }
+}
+
 let rapier: Promise<Rapier> | null = null;
-const loadRapier = () =>
+export const loadRapier = () =>
   (rapier ??= import("@dimforge/rapier3d-compat").then(async (R) => {
     await R.init();
     return R;
@@ -41,6 +123,7 @@ export function cubeRain(canvas: HTMLCanvasElement, area: HTMLElement) {
   let mouse: { x: number; y: number } | null = null; // pointer in cube units, null when outside
   const cubes: { body: Body; half: number }[] = [];
   let pending = 0; // pushes that came before the engine loaded
+  let open = false; // the floor is gone: the pile falls out of the plate (into the footer)
 
   // grid: pitch px between lamps, `unit` lamps per cube unit
   let pitch = 7, unit = 8, cols = 0, rows = 0, ox = 0, w = 0, h = 0;
@@ -54,7 +137,7 @@ export function cubeRain(canvas: HTMLCanvasElement, area: HTMLElement) {
     walls = world.createRigidBody(R.RigidBodyDesc.fixed());
     const box = (x: number, y: number, hx: number, hy: number) =>
       world!.createCollider(R!.ColliderDesc.cuboid(hx, hy, 5).setTranslation(x, y, 0).setFriction(0.8), walls!);
-    box(W / 2, -1, W, 1); // floor, its top at y = 0
+    if (!open) box(W / 2, -1, W, 1); // floor, its top at y = 0
     box(-1, H * 4, 1, H * 5); // left
     box(W + 1, H * 4, 1, H * 5); // right
     // cubes that ended up outside after a resize come back in
@@ -88,50 +171,7 @@ export function cubeRain(canvas: HTMLCanvasElement, area: HTMLElement) {
     ctx.save();
     // lamp rows count from the bottom edge, where the floor is
     ctx.translate(ox, h - rows * pitch);
-    for (const { body, half } of cubes) {
-      const t = body.translation();
-      const q = body.rotation();
-      // rotation matrix body → world from the quaternion
-      const { x: qx, y: qy, z: qz, w: qw } = q;
-      const m = [
-        [1 - 2 * (qy * qy + qz * qz), 2 * (qx * qy - qz * qw), 2 * (qx * qz + qy * qw)],
-        [2 * (qx * qy + qz * qw), 1 - 2 * (qx * qx + qz * qz), 2 * (qy * qz - qx * qw)],
-        [2 * (qx * qz - qy * qw), 2 * (qy * qz + qx * qw), 1 - 2 * (qx * qx + qy * qy)],
-      ];
-      // view ray (0,0,1) in body space is the third row of m
-      const d = [m[2][0], m[2][1], m[2][2]];
-      const reach = half * 1.75; // > half-diagonal of the cube
-      const c0 = Math.max(0, Math.floor((t.x - reach) * unit));
-      const c1 = Math.min(cols - 1, Math.ceil((t.x + reach) * unit));
-      const r0 = Math.max(0, Math.floor(rows - (t.y + reach) * unit));
-      const r1 = Math.min(rows - 1, Math.ceil(rows - (t.y - reach) * unit));
-      for (let row = r0; row <= r1; row++) {
-        const py = (rows - row - 0.5) / unit - t.y;
-        for (let col = c0; col <= c1; col++) {
-          const px = (col + 0.5) / unit - t.x;
-          // ray origin in body space: m^T * (px, py, -10)
-          const o = [
-            m[0][0] * px + m[1][0] * py + m[2][0] * -10,
-            m[0][1] * px + m[1][1] * py + m[2][1] * -10,
-            m[0][2] * px + m[1][2] * py + m[2][2] * -10,
-          ];
-          let tmin = -Infinity, tmax = Infinity, axis = 0, sign = 1;
-          for (let a = 0; a < 3; a++) {
-            const t1 = (-half - o[a]) / d[a];
-            const t2 = (half - o[a]) / d[a];
-            const near = Math.min(t1, t2), far = Math.max(t1, t2);
-            if (near > tmin) { tmin = near; axis = a; sign = d[a] > 0 ? -1 : 1; }
-            tmax = Math.min(tmax, far);
-          }
-          if (tmin > tmax) continue;
-          // face normal in world space: column `axis` of m
-          const diffuse = Math.max(0, sign * (m[0][axis] * LIGHT[0] + m[1][axis] * LIGHT[1] + m[2][axis] * LIGHT[2]));
-          // a few steps like real LEDs; the lit face is the darkest, the shadow side leans to orange
-          const l = Math.max(0.45, Math.round((0.36 + 0.64 * diffuse) * 6) / 6);
-          lamp(ctx, col, row, pitch, ORANGE.map((v, k) => Math.round(v + (DARK[k] - v) * l)) as RGB);
-        }
-      }
-    }
+    drawLedCubes(ctx, cubes, { cols, rows, unit, pitch, top: rows / unit }, ON_ORANGE);
     ctx.restore();
   };
 
@@ -139,6 +179,29 @@ export function cubeRain(canvas: HTMLCanvasElement, area: HTMLElement) {
   const loop = () => {
     pusher?.setNextKinematicTranslation(mouse ? { x: mouse.x, y: mouse.y, z: 0 } : { x: -50, y: -50, z: 0 });
     world!.step();
+    if (open) {
+      // fallen out of the bottom edge: handed over to the footer (ledCubeFall.ts) in screen pixels
+      const r = canvas.getBoundingClientRect();
+      const px = pitch * unit; // px per cube unit
+      for (let i = cubes.length - 1; i >= 0; i--) {
+        const { body, half } = cubes[i];
+        const t = body.translation();
+        if (t.y > -half) continue;
+        const v = body.linvel();
+        const detail: FallingCube = {
+          x: r.left + ox + t.x * px,
+          y: r.bottom - t.y * px,
+          vx: v.x * px,
+          vy: -v.y * px,
+          half: half * px,
+          rotation: body.rotation(),
+          angvel: body.angvel(),
+        };
+        document.dispatchEvent(new CustomEvent(FALL_OUT, { detail }));
+        world!.removeRigidBody(body);
+        cubes.splice(i, 1);
+      }
+    }
     draw();
     // keep stepping while the pointer is over the plate, so it can shove the pile
     raf = awake() || mouse ? requestAnimationFrame(loop) : 0;
@@ -230,6 +293,16 @@ export function cubeRain(canvas: HTMLCanvasElement, area: HTMLElement) {
   ).observe(canvas);
 
   return {
+    /** Cubes in the plate now (and still to come once the engine loads). */
+    count: () => cubes.length + pending,
+    /** Opens the floor: the pile drops out of the bottom of the plate. */
+    openFloor() {
+      if (open) return;
+      open = true;
+      buildWalls();
+      for (const c of cubes) c.body.wakeUp();
+      wake();
+    },
     drop() {
       if (world) spawn();
       else {

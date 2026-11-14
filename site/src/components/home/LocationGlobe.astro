@@ -1,7 +1,9 @@
 ---
-// Static dotted globe with the two places I live and work.
+// Dotted globe with the two places I live and work, and you can break it: the pointer knocks
+// dots off, they fall to the bottom of the block, and a line of text blames you for it.
 // Land dots come from src/data/globe-dots.json (scripts/globe-dots.mjs); the orthographic
-// projection is done here at build time, so the page ships a plain SVG and no JS.
+// projection is done here at build time, so the page ships a plain SVG (the no-JS version);
+// the script reads the dots back out of it and redraws the globe on a canvas (globeBreak.ts).
 import dots from "../../data/globe-dots.json";
 
 const PLACES = [
@@ -51,10 +53,13 @@ const f = (n: number) => n.toFixed(1);
 ---
 
 <section
+  data-globe-root
   aria-labelledby="location-title"
-  class="relative isolate overflow-hidden rounded-3xl bg-[#140a18] p-5 ring-1 ring-white/10 sm:p-10"
+  class="relative isolate touch-pan-y overflow-hidden rounded-3xl bg-[#140a18] p-5 ring-1 ring-white/10 sm:p-10"
 >
+  <canvas data-globe-canvas class="pointer-events-none absolute -z-10" aria-hidden="true"></canvas>
   <svg
+    data-globe-svg
     viewBox={`0 0 ${R * 2} ${R * 2}`}
     aria-hidden="true"
     class="pointer-events-none absolute -right-44 top-1/2 -z-10 h-[150%] w-auto -translate-y-[38%] opacity-40 sm:-right-10 sm:opacity-90"
@@ -64,7 +69,7 @@ const f = (n: number) => n.toFixed(1);
       <path d={t.d} stroke="white" stroke-opacity={t.opacity} stroke-width={t.width} stroke-linecap="round" />
     ))}
     {marks.map((m) => (
-      <g>
+      <g data-city={m.name}>
         <circle cx={f(m.x)} cy={f(m.y)} r="12" fill="#F97316" fill-opacity="0.25" />
         <circle cx={f(m.x)} cy={f(m.y)} r="5" fill="#F97316" />
       </g>
@@ -79,5 +84,19 @@ const f = (n: number) => n.toFixed(1);
     <p class="mt-1 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-white/60">
       <span class="h-2 w-2 rounded-full bg-[#F97316]"></span>Remote · open to work
     </p>
+    <!-- filled in once you start breaking the globe -->
+    <p data-globe-blame class="min-h-[1.5em] max-w-sm font-mono text-xs text-[#F97316] transition-opacity" aria-live="polite"></p>
+    <button
+      type="button"
+      data-globe-glue
+      class="invisible self-start rounded-full border border-white/20 px-4 py-2 font-mono text-xs uppercase tracking-widest text-white/80 transition hover:border-white/60"
+    >Glue it back</button>
   </div>
 </section>
+
+<script>
+  import { globeBreak } from "./globeBreak";
+
+  const root = document.querySelector<HTMLElement>("[data-globe-root]");
+  if (root) globeBreak(root);
+</script>
