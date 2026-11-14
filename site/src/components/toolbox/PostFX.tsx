@@ -2,6 +2,10 @@ import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
+// Dev only: this module holds live WebGL/animation state that React Fast Refresh can't hot-swap
+// cleanly (it left frozen beams and a lost LED layer). Reload the whole page instead.
+if (import.meta.hot) import.meta.hot.accept(() => window.location.reload());
+
 export interface LedTextBitmap {
   texture: THREE.Texture;
   cols: number;
@@ -67,6 +71,7 @@ const fragmentShader = /* glsl */ `
   uniform float uTextOn;
   uniform float uTextReveal; // 0..1, sweeps the text in from the left
   uniform vec3  uTextColor;
+  uniform vec3  uSelColor;   // selection highlight
   uniform sampler2D tAscii;
   uniform sampler2D tLabels; // white-on-black text mask of the cube labels
   varying vec2 vUv;
@@ -200,22 +205,31 @@ const fragmentShader = /* glsl */ `
 
       // text written straight into the lamp grid: one texel per lamp, so it always lands on lamps
       if (uTextOn > 0.5) {
+        // one texel per lamp: R = text, G = selection, B = cursor
         vec2 tuv = (id + 0.5) / uTextGrid;
-        float t = texture2D(tText, tuv).r * step(tuv.x, 1.0) * step(tuv.y, 1.0);
-        float head = mix(uTextSpan.x - 2.0, uTextSpan.y + 2.0, uTextReveal);
-        t *= step(id.x, head);
+        float inside = step(tuv.x, 1.0) * step(tuv.y, 1.0);
+        vec4 tx = texture2D(tText, tuv) * inside;
+        float head = uTextReveal >= 1.0 ? 1e6 : mix(uTextSpan.x - 2.0, uTextSpan.y + 2.0, uTextReveal);
+        float shown = step(id.x, head);
+        float t = tx.r * shown;
+        float hl = max(tx.g, tx.b) * shown;
         // the freshly written column flickers brighter, like a sign being drawn
         float hot = (1.0 - smoothstep(0.0, 3.0, head - id.x)) * (1.0 - step(1.0, uTextReveal));
         vec3 tc = uTextColor * (1.35 + 0.8 * hot);
-        // switch off a one-lamp ring around the letters so they read over any scene colour
+        vec3 hc = tx.g > 0.5 ? uSelColor * 1.3 : uTextColor * 1.4;
+        // switch off a one-lamp ring around everything lit, so it reads over any scene colour
         float ring = 0.0;
         for (int dx = -1; dx <= 1; dx++)
-          for (int dy = -1; dy <= 1; dy++)
-            ring = max(ring, texture2D(tText, (id + vec2(float(dx), float(dy)) + 0.5) / uTextGrid).r
-                             * step(id.x + float(dx), head));
-        ring *= 1.0 - t;
-        col = mix(col, mix(uBg * 0.7, uBg * 1.6 + 0.008, dotMask), ring);
-        col = mix(col, tc, dotMask * t) + uTextColor * glow * t * 1.4;
+          for (int dy = -1; dy <= 1; dy++) {
+            vec4 n = texture2D(tText, (id + vec2(float(dx), float(dy)) + 0.5) / uTextGrid);
+            ring = max(ring, max(n.r, max(n.g, n.b)) * step(id.x + float(dx), head));
+          }
+        vec3 offLamp = mix(uBg * 0.7, uBg * 1.6 + 0.008, dotMask);
+        col = mix(col, offLamp, ring * (1.0 - max(t, hl)));
+        // text lamps; under a highlight the letters are cut out of the bar instead (inverted)
+        col = mix(col, tc, dotMask * t * (1.0 - hl)) + uTextColor * glow * t * (1.0 - hl) * 1.4;
+        col = mix(col, hc, dotMask * hl * (1.0 - t)) + hc * glow * hl * (1.0 - t);
+        col = mix(col, offLamp, t * hl);
       }
 
     } else if (uMode == 5) {
@@ -327,6 +341,7 @@ export default function PostFX({
         uTextOn: { value: 0 },
         uTextReveal: { value: 0 },
         uTextColor: { value: new THREE.Color("#F97316") },
+        uSelColor: { value: new THREE.Color("#F97316") },
         tAscii: { value: makeAsciiAtlas() },
         tLabels: { value: labelTarget.texture },
       },

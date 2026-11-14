@@ -10,9 +10,15 @@ import HeroSpace from "../../components/hero/HeroSpace";
 import AsciiPortrait from "../../components/portrait/AsciiPortrait";
 import cvJson from "../../zall.dev.json";
 import { CV } from "../../types/CV";
-import { APPROACHES, EXPERTISE, LOGOS, PUNCHLINES, ROLE_LINE } from "../../data/home";
+import { APPROACHES, EXPERTISE, FOCUS, HERO_TAGLINES, HERO_TYPER, LOGOS } from "../../data/home";
 
 const cv = CV.parse(cvJson);
+
+// company logos as inline SVG, so they take the text colour and its hover state
+const logoFiles = import.meta.glob<string>("../../assets/logos/*.svg", { query: "?raw", import: "default", eager: true });
+const logoSvg = (id: string) => logoFiles[`../../assets/logos/${id}.svg`];
+// square marks are drawn taller than wordmarks so both look the same weight
+const LOGO_MARKS = new Set(["soundcloud", "zalando", "volkswagen"]);
 
 const NAV = [
   { href: "#approach", label: "Approach" },
@@ -59,10 +65,15 @@ const edu = cv.educations?.[0];
     <!-- 01 HERO: full-bleed 3D space of spinning cubes on an LED matrix; the role line is written into the lamps -->
     <section id="hero" class="relative isolate flex min-h-[calc((100svh-3.5rem)*0.8)] overflow-hidden border-b border-white/10 bg-[#140a18]">
       <div class="relative z-10 mx-auto flex w-full max-w-6xl flex-col justify-end gap-8 px-4 py-10 sm:py-16">
-        <h1 class="sr-only">Alex Zall</h1>
+        <h1 class="sr-only">Alex Zall — {HERO_TYPER.final}</h1>
+        <!-- typed into the LED matrix at these boxes -->
+        <div class="flex flex-col gap-1" aria-hidden="true">
+          <div id="hero-lead" class="pointer-events-none w-full"></div>
+          <div id="hero-title" class="pointer-events-none w-full"></div>
+        </div>
         <!-- drawn into the LED matrix at this box; the plain text stays for search, screen readers and no-WebGL -->
-        <div id="hero-role" class="pointer-events-none w-full max-w-4xl">
-          <p class="hero-role-text max-w-xl text-lg text-white/80 sm:text-2xl">{ROLE_LINE}</p>
+        <div id="hero-role" class="pointer-events-none w-full">
+          <p class="hero-role-text max-w-xl text-lg text-white/80 sm:text-2xl">{HERO_TAGLINES[0]}</p>
         </div>
         <div class="flex flex-wrap gap-2 font-mono text-xs uppercase tracking-widest sm:gap-3">
           <a class="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-[#F97316] px-4 py-3 font-bold text-[#1C0E21] transition hover:brightness-110 sm:px-5" href={cv.calendly}><svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Book a call</a>
@@ -73,26 +84,26 @@ const edu = cv.educations?.[0];
       <HeroSpace
         client:only="react"
         textColor="#FFDDFF"
-        texts={[{ target: "#hero-role", text: ROLE_LINE.toUpperCase(), font: "5x7", narrowFont: "3x5", scale: 1, wrap: true }]}
+        typer={HERO_TYPER}
       />
     </section>
 
     <main class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-6">
-      <!-- 02 ABOUT: portrait + punchlines -->
+      <!-- 02 ABOUT: portrait + expertise -->
       <section id="about" class="grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-        <AsciiPortrait client:only="react" />
+        <AsciiPortrait client:only="react" mode="led" className="md:aspect-auto md:h-full md:min-h-[420px]" />
         <div class="flex flex-col rounded-3xl bg-[#140a18] p-5 ring-1 ring-white/10 sm:p-8">
-          <p class="font-mono text-xs uppercase tracking-widest text-white/40">[ 02 / who ]</p>
+          <p class="font-mono text-xs uppercase tracking-widest text-white/40">[ expertise ]</p>
           <ul class="mt-4 flex flex-1 flex-col justify-center divide-y divide-white/10">
-            {PUNCHLINES.map((p) => (
-              <li class="flex items-baseline gap-4 py-4">
-                <span class:list={["w-24 shrink-0 font-display text-4xl font-bold tabular-nums sm:w-44 sm:text-6xl", p.live ? "text-[#F97316]" : "text-white"]}>
-                  {p.value}
+            {FOCUS.map((f, i) => (
+              <!-- number in its own column, so title and line share one exact left edge -->
+              <li class="grid grid-cols-[auto_1fr] items-baseline gap-x-3 gap-y-1 py-3">
+                <span class="font-mono text-xs text-[#F97316]">0{i + 1}</span>
+                <span class="flex items-center gap-3">
+                  <span class:list={["font-dots text-xl leading-tight lg:text-[1.35rem]", f.live ? "text-[#F97316]" : "text-white"]}>{f.title}</span>
+                  {f.live && <span class="inline-block h-2 w-2 shrink-0 rounded-full bg-[#22C55E]" title="right now" />}
                 </span>
-                <span class="text-base text-white/70 sm:text-xl">
-                  {p.unit && <span class="text-white/40">{p.unit} </span>}{p.label}
-                  {p.live && <span class="ml-2 inline-block h-2 w-2 rounded-full bg-[#22C55E] align-middle" />}
-                </span>
+                <span class="col-start-2 font-mono text-xs leading-snug text-white/50">{f.line}</span>
               </li>
             ))}
           </ul>
@@ -102,7 +113,16 @@ const edu = cv.educations?.[0];
       <!-- 03 LOGOS: text wordmarks now, monochrome SVG marquee later -->
       <section aria-label="Companies" class="rounded-3xl bg-[#140a18] px-5 py-6 ring-1 ring-white/10 sm:px-8">
         <ul class="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 text-base font-bold tracking-tight text-white/40 sm:text-lg">
-          {LOGOS.map((l) => <li>{l}</li>)}
+          {LOGOS.map((l) => (
+            <li>
+              <a href={l.url} target="_blank" rel="noopener" aria-label={l.name} class="flex items-center gap-2.5 transition hover:text-white">
+                {l.logos.map((id) => (
+                  <span class:list={["[&>svg]:block [&>svg]:w-auto", LOGO_MARKS.has(id) ? "[&>svg]:h-[1.6em]" : "[&>svg]:h-[1.15em]"]} set:html={logoSvg(id)} />
+                ))}
+                {l.kind !== "wordmark" && <span>{l.name}</span>}
+              </a>
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -227,6 +247,7 @@ const edu = cv.educations?.[0];
 </Layout>
 
 <style is:global>
+
   html {
     scroll-behavior: smooth;
   }

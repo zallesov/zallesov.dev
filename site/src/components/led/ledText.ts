@@ -16,7 +16,7 @@ function heightOf(lines: string[], font: LedFont, scale: number, pitch: number) 
 }
 
 /** Greedy word wrap so that no line is wider than `maxCols` font pixels. */
-function wrap(text: string, maxCols: number, font: LedFont): string[] {
+export function wrap(text: string, maxCols: number, font: LedFont): string[] {
   const lines: string[] = [];
   for (const para of text.split("\n")) {
     let line = "";
@@ -71,52 +71,64 @@ export interface PlacedLedText {
   top: number;
 }
 
+/** Channels of the lamp bitmap. */
+export const CH = { text: 0, select: 1, cursor: 2 } as const;
+
 /**
- * Rasterises text blocks into a bitmap with one texel per lamp of a grid
- * covering `gridW × gridH` CSS px, so every font pixel lands exactly on
- * `scale × scale` lamps.
+ * One texel per lamp of a grid covering `gridW × gridH` CSS px.
+ * RGBA: R = text, G = selection highlight, B = cursor. Rows run bottom-up, like gl_FragCoord.
  */
-export function makeLedTextBitmap(
-  blocks: PlacedLedText[],
-  opts: { gridW: number; gridH: number; pitch: number },
-): LedTextBitmap {
-  const { gridW, gridH, pitch } = opts;
+export interface LedGrid extends LedTextBitmap {
+  data: Uint8Array;
+}
+
+export function createLedGrid(gridW: number, gridH: number, pitch: number): LedGrid {
   const cols = Math.ceil(gridW / pitch);
   const rows = Math.ceil(gridH / pitch);
-  const data = new Uint8Array(cols * rows);
-  let firstCol = cols;
-  let lastCol = 0;
-
-  for (const { layout, left, top } of blocks) {
-    const { font, scale: s } = layout;
-    const col0 = Math.round(left / pitch);
-    const row0 = Math.round(top / pitch);
-    layout.lines.forEach((line, li) => {
-      const lineTop = row0 + li * (font.h + font.leading) * s;
-      forEachPixel(
-        line,
-        (x, y) => {
-          for (let i = 0; i < s; i++)
-            for (let j = 0; j < s; j++) {
-              const c = col0 + x * s + i;
-              const rTop = lineTop + y * s + j;
-              if (c < 0 || c >= cols || rTop < 0 || rTop >= rows) continue;
-              // texture rows run bottom-up, like gl_FragCoord
-              data[(rows - 1 - rTop) * cols + c] = 255;
-              firstCol = Math.min(firstCol, c);
-              lastCol = Math.max(lastCol, c);
-            }
-        },
-        font,
-      );
-    });
-  }
-
-  const texture = new THREE.DataTexture(data, cols, rows, THREE.RedFormat, THREE.UnsignedByteType);
-  texture.unpackAlignment = 1; // rows are `cols` bytes long, not padded to 4
+  const data = new Uint8Array(cols * rows * 4);
+  for (let k = 3; k < data.length; k += 4) data[k] = 255;
+  const texture = new THREE.DataTexture(data, cols, rows, THREE.RGBAFormat, THREE.UnsignedByteType);
   texture.magFilter = THREE.NearestFilter;
   texture.minFilter = THREE.NearestFilter;
   texture.generateMipmaps = false;
   texture.needsUpdate = true;
-  return { texture, cols, rows, firstCol, lastCol };
+  return { texture, data, cols, rows, firstCol: cols, lastCol: 0 };
+}
+
+/** Lights a rectangle of lamps (top-left origin, in lamps) on one channel. */
+export function fillLamps(g: LedGrid, col: number, rowTop: number, w: number, h: number, ch: number) {
+  for (let i = 0; i < w; i++)
+    for (let j = 0; j < h; j++) {
+      const c = col + i;
+      const r = rowTop + j;
+      if (c < 0 || c >= g.cols || r < 0 || r >= g.rows) continue;
+      g.data[((g.rows - 1 - r) * g.cols + c) * 4 + ch] = 255;
+      g.firstCol = Math.min(g.firstCol, c);
+      g.lastCol = Math.max(g.lastCol, c);
+    }
+}
+
+/** Draws one line of text; every font pixel becomes `scale × scale` lamps. */
+export function drawLedLine(g: LedGrid, text: string, font: LedFont, scale: number, col0: number, rowTop: number, ch: number = CH.text) {
+  forEachPixel(text, (x, y) => fillLamps(g, col0 + x * scale, rowTop + y * scale, scale, scale, ch), font);
+}
+
+/** Column (in font pixels) where character `k` of `text` starts. */
+export function charStart(text: string, k: number, font: LedFont): number {
+  return k <= 0 ? 0 : textWidth(text.slice(0, k), font) + font.tracking;
+}
+
+/** Rasterises static text blocks into a new grid. */
+export function makeLedTextBitmap(
+  blocks: PlacedLedText[],
+  opts: { gridW: number; gridH: number; pitch: number },
+): LedGrid {
+  const g = createLedGrid(opts.gridW, opts.gridH, opts.pitch);
+  for (const { layout, left, top } of blocks) {
+    const { font, scale: s } = layout;
+    const col0 = Math.round(left / opts.pitch);
+    const row0 = Math.round(top / opts.pitch);
+    layout.lines.forEach((line, li) => drawLedLine(g, line, font, s, col0, row0 + li * (font.h + font.leading) * s));
+  }
+  return g;
 }

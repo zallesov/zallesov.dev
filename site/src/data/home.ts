@@ -1,23 +1,69 @@
+import type { TyperSpec } from "../components/hero/HeroSpace";
+
 // Content for the new home page blocks. Career, articles and links still come from zall.dev.json.
 
-export const ROLE_LINE = "AI engineer. I build agentic systems and the teams of agents that ship them.";
-
-export const PUNCHLINES = [
-  { value: "20", unit: "years", label: "shipping software" },
-  { value: "7", unit: "years", label: "leading teams" },
-  { value: "4", unit: "years", label: "building agentic systems" },
-  { value: "Now", unit: "", label: "orchestrating agent swarms", live: true },
+/** One of these is typed under the title, picked at random on every load. */
+export const HERO_TAGLINES = [
+  "HUMANS DECIDE. AGENTS DELIVER.",
+  "YOU SLEEP. THEY SHIP.",
+  "> AGENTS ONLINE. WHAT ARE WE BUILDING?",
 ];
 
-export const LOGOS = [
-  "SoundCloud",
-  "Zalando",
-  "MOIA · Volkswagen",
-  "Zapp",
-  "Peec.ai",
-  "Beeboard",
-  "Mult.dev",
-  "2Meters",
+/**
+ * Hero title that types itself. Line 0 is the small lead-in above, line 1 the big title.
+ * software (thinks, erases) → AI engineer → agents engineer → agents manager.
+ */
+export const HERO_TYPER: TyperSpec & { final: string } = {
+  lines: [
+    { target: "#hero-lead", widest: "I'M", size: "small" },
+    { target: "#hero-title", widest: "AGENTS ENGINEER", size: "large" },
+    { target: "#hero-role", widest: "> AGENTS ONLINE. WHAT ARE WE BUILDING?", size: "small", candidates: HERO_TAGLINES },
+  ],
+  /** line 2 gets a random tagline once the title is done */
+  outro: { line: 2 },
+  script: [
+    { line: 0 },
+    { type: "I'M", fast: true },
+    { wait: 250 },
+    { line: 1 },
+    { type: "SOFTWARE" },
+    { blink: 2 }, // thinking...
+    { back: 8 }, // "SOFTWARE"
+    { type: "AI ENGINEER" },
+    { blink: 2 },
+    { caret: "start" },
+    { del: 2 }, // "AI"
+    { type: "AGENTS" },
+    { blink: 2 },
+    { caret: "end" },
+    { back: 8 }, // "ENGINEER"
+    { type: "MANAGER" },
+  ],
+  /** What the title says once typed; for search engines and screen readers. */
+  final: "Agents manager",
+};
+
+/** Shown next to the portrait: what to come to me for, one punchy line each. `live` = what I'm doing right now. */
+export const FOCUS: { title: string; line: string; live?: boolean }[] = [
+  { title: "Agentic systems", line: "Agents in production, not in demos." },
+  { title: "Agent swarms", line: "Orchestrating teams of agents for development and business tasks.", live: true },
+  { title: "AI transformation", line: "Teaching teams how to use AI in day-to-day tasks." },
+  { title: "Business automation", line: "If you do it twice, it has to be automated." },
+  { title: "Content pipelines", line: "AI content that looks professional and slick." },
+  { title: "Evals / Agentic monitoring", line: "If you can't measure it, you can't improve it." },
+  { title: "Highload", line: "Good old software development in the cloud." },
+];
+
+/**
+ * Companies row. `logos` are files in src/assets/logos, shown side by side. With kind "icon"
+ * the name is printed next to the mark; "wordmark" logos already spell the name.
+ */
+export const LOGOS: { name: string; url: string; logos: string[]; kind: "icon" | "wordmark" }[] = [
+  { name: "SoundCloud", url: "https://soundcloud.com", logos: ["soundcloud"], kind: "icon" },
+  { name: "Zalando", url: "https://zalando.de", logos: ["zalando"], kind: "icon" },
+  { name: "MOIA, a Volkswagen company", url: "https://www.moia.io/en", logos: ["volkswagen", "moia"], kind: "wordmark" },
+  { name: "Zapp", url: "https://justzapp.com", logos: ["zapp"], kind: "wordmark" },
+  { name: "Peec AI", url: "https://peec.ai", logos: ["peec"], kind: "wordmark" },
 ];
 
 export interface Approach {

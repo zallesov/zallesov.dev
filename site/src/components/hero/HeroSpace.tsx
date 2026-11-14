@@ -3,8 +3,24 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import PostFX, { type FxMode, type LedTextBitmap } from "../toolbox/PostFX";
-import { fixedLedText, layoutLedText, makeLedTextBitmap, type PlacedLedText } from "../led/ledText";
-import type { LedFontId } from "../led/font5x7";
+import {
+  CH,
+  charStart,
+  drawLedLine,
+  fillLamps,
+  fixedLedText,
+  layoutLedText,
+  makeLedTextBitmap,
+  wrap,
+  type LedGrid,
+  type PlacedLedText,
+} from "../led/ledText";
+import { LED_FONTS, textWidth, type LedFont, type LedFontId } from "../led/font5x7";
+import { runTyper, type TyperState, type TyperStep } from "../led/typer";
+
+// Dev only: this module holds live WebGL/animation state that React Fast Refresh can't hot-swap
+// cleanly (it left frozen beams and a lost LED layer). Reload the whole page instead.
+if (import.meta.hot) import.meta.hot.accept(() => window.location.reload());
 
 const BG = "#140a18";
 const ORANGE = "#F97316";
@@ -111,7 +127,10 @@ const KNOCK = {
   speed: 1.1, // units/s given to a cube of size 1 (smaller cubes fly further)
   spin: 1.4, // rad/s of extra spin
   damping: 1.1, // 1/s, how fast the push dies out
-  home: 0.03, // 1/s², a very weak pull back to the cube's place so nothing drifts away for good
+  home: 0.35, // 1/s², pull back to the cube's place: hits must not pile up and carry cubes away
+  maxOffset: 2.2, // units a cube may be pushed from its place at most
+  depth: 0.2, // share of the push along the view axis: cubes mostly move across the screen, not at the camera
+  nearest: 5, // a small cube never comes closer to the camera than this (the big one keeps its own place)
   recoil: 1.3, // the cube that starts a chain kicks back this much harder than a hit
 };
 
@@ -292,6 +311,7 @@ function Cubes({ animate }: { animate: boolean }) {
       const kb = knock[from];
       const mass = Math.max(0.6, c.size);
       const dir = posOf(from)!.clone().sub(toward).normalize();
+      dir.z *= KNOCK.depth;
       kb.vel.addScaledVector(dir, (KNOCK.speed * KNOCK.recoil) / mass);
       kb.spin.x += ((Math.random() - 0.5) * KNOCK.spin) / mass;
       kb.spin.y += ((Math.random() - 0.5) * KNOCK.spin) / mass;
@@ -406,7 +426,9 @@ function Cubes({ animate }: { animate: boolean }) {
       const c = cubes[h.cube];
       const kb = knock[h.cube];
       const mass = Math.max(0.6, c.size); // the big cube barely moves
-      kb.vel.addScaledVector(h.dir, KNOCK.speed / mass);
+      tmp.v.copy(h.dir);
+      tmp.v.z *= KNOCK.depth;
+      kb.vel.addScaledVector(tmp.v, KNOCK.speed / mass);
       kb.spin.set(
         kb.spin.x + (Math.random() - 0.5) * KNOCK.spin / mass,
         kb.spin.y + (Math.random() - 0.5) * KNOCK.spin / mass,
@@ -418,6 +440,10 @@ function Cubes({ animate }: { animate: boolean }) {
     knock.forEach((kb) => {
       kb.vel.addScaledVector(kb.offset, -KNOCK.home * dt);
       kb.offset.addScaledVector(kb.vel, dt);
+      if (kb.offset.length() > KNOCK.maxOffset) {
+        kb.offset.setLength(KNOCK.maxOffset);
+        kb.vel.multiplyScalar(0.5);
+      }
       kb.vel.multiplyScalar(damp);
       kb.spin.multiplyScalar(damp);
     });
@@ -433,7 +459,8 @@ function Cubes({ animate }: { animate: boolean }) {
       let x = c.position[0] + kb.offset.x;
       // slow drift up and down, out of phase per cube
       let y = c.position[1] + kb.offset.y + Math.sin(t * 0.35 + i * 1.7) * 0.12 * (1 + c.size);
-      let z = c.position[2] + kb.offset.z;
+      // never let a cube come at the camera: up close it would fill the screen and beams would turn into slabs
+      let z = Math.min(c.position[2] + kb.offset.z, i === 0 ? c.position[2] : camera.position.z - KNOCK.nearest);
 
       let glow = 0;
       if (i === ch.cur && t >= ch.chargeStart) glow = Math.pow((t - ch.chargeStart) / ch.chargeDur, 2);
@@ -481,7 +508,7 @@ function Cubes({ animate }: { animate: boolean }) {
       }
       // keep a roughly constant on-screen thickness at any depth
       const mid = tmp.v.copy(tmp.a).add(tmp.b).multiplyScalar(0.5);
-      const radius = 0.009 * (camera.position.z - mid.z);
+      const radius = 0.009 * Math.max(1, camera.position.z - mid.z);
       mesh.visible = true;
       mesh.position.copy(mid);
       mesh.quaternion.setFromUnitVectors(tmp.up, tmp.b.sub(tmp.a).normalize());
@@ -566,6 +593,24 @@ function Cubes({ animate }: { animate: boolean }) {
   );
 }
 
+export interface TyperLineSpec {
+  /** CSS selector of the element whose box the line occupies (sized by the scene). */
+  target: string;
+  /** The longest text this line ever shows; sizes the font so it always fits. */
+  widest: string;
+  /** "large" picks the biggest font that fits; "small" stays at body size. */
+  size: "small" | "large";
+  /** Every text this line may show. Makes the line word-wrap, and sizes its box for the tallest one. */
+  candidates?: string[];
+}
+
+export interface TyperSpec {
+  lines: TyperLineSpec[];
+  script: TyperStep[];
+  /** After the script, type one of this line's `candidates`, picked at random on every load. */
+  outro?: { line: number };
+}
+
 export interface LedTextSpec {
   /** CSS selector of the element whose box the text occupies. */
   target: string;
@@ -589,8 +634,11 @@ export default function HeroSpace({
   fx = "led",
   ledPitch = LED_PITCH,
   texts,
+  typer,
   textColor = "#F97316",
 }: {
+  /** A line that types itself (caret, deletes, select-all) in the LED matrix. */
+  typer?: TyperSpec;
   textColor?: string;
   fx?: FxMode;
   ledPitch?: number;
@@ -609,12 +657,78 @@ export default function HeroSpace({
   const [animate] = useState(() => !window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const [ledText, setLedText] = useState<LedTextBitmap | null>(null);
 
+  // ---- typed lines: where each sits on the grid, and the latest typing state ----
+  const typerLayout = useRef<{
+    grid: LedGrid;
+    base: Uint8Array;
+    lines: { col0: number; row0: number; font: LedFont; scale: number; maxCols?: number }[];
+  } | null>(null);
+  const typerState = useRef<TyperState | null>(null);
+
+  /** Redraws the typed lines on top of the static text. */
+  const paintTyper = () => {
+    const L = typerLayout.current;
+    const st = typerState.current;
+    if (!L || !st) return;
+    const g = L.grid;
+    g.data.set(L.base);
+    L.lines.forEach(({ col0, row0, font, scale: s, maxCols }, li) => {
+      const text = st.lines[li] ?? "";
+      if (maxCols) {
+        // word-wrapped line: only ever typed at its end, so the caret sits after the last row
+        const rows = wrap(text, maxCols, font);
+        const pitchRows = (font.h + font.leading) * s;
+        rows.forEach((row, r) => drawLedLine(g, row, font, s, col0, row0 + r * pitchRows, CH.text));
+        if (li === st.line && st.caretOn) {
+          const last = rows[rows.length - 1] ?? "";
+          const cx = last ? textWidth(last, font) + font.tracking : 0;
+          fillLamps(g, col0 + cx * s, row0 + (rows.length - 1) * pitchRows, font.w * s, font.h * s, CH.cursor);
+        }
+        return;
+      }
+      drawLedLine(g, text, font, s, col0, row0, CH.text);
+      if (li !== st.line) return;
+      if (st.sel && st.sel[1] > st.sel[0]) {
+        const x0 = charStart(text, st.sel[0], font);
+        const x1 = textWidth(text.slice(0, st.sel[1]), font);
+        fillLamps(g, col0 + (x0 - 1) * s, row0 - s, (x1 - x0 + 2) * s, (font.h + 2) * s, CH.select);
+      }
+      if (st.caretOn) {
+        const cx =
+          st.caret < text.length ? charStart(text, st.caret, font) : text ? textWidth(text, font) + font.tracking : 0;
+        fillLamps(g, col0 + cx * s, row0, font.w * s, font.h * s, CH.cursor);
+      }
+    });
+    g.texture.needsUpdate = true;
+  };
+
+  const typerKey = JSON.stringify(typer ?? null);
+  useEffect(() => {
+    const spec: TyperSpec | null = JSON.parse(typerKey);
+    if (!spec || tuning.fx !== "led") return;
+    const script = [...spec.script];
+    const options = spec.outro ? (spec.lines[spec.outro.line]?.candidates ?? []) : [];
+    if (spec.outro && options.length) {
+      const pick = options[Math.floor(Math.random() * options.length)];
+      script.push({ blink: 1 }, { line: spec.outro.line }, { type: pick });
+    }
+    return runTyper(
+      script,
+      (st) => {
+        typerState.current = st;
+        paintTyper();
+      },
+      { startDelay: 900, reducedMotion: !animate },
+    );
+  }, [typerKey, tuning, animate]);
+
   // lay the text out on the lamp grid wherever the target elements sit in the page
   const textsKey = JSON.stringify(texts ?? []);
   useEffect(() => {
     const el = root.current;
     const specs: LedTextSpec[] = JSON.parse(textsKey);
-    if (!el || !specs.length || tuning.fx !== "led") return;
+    const typerSpec: TyperSpec | null = JSON.parse(typerKey);
+    if (!el || (!specs.length && !typerSpec) || tuning.fx !== "led") return;
     const pitch = tuning.pitch;
     let current: LedTextBitmap | null = null;
     const build = () => {
@@ -627,6 +741,31 @@ export default function HeroSpace({
           : layoutLedText(t.text, width, pitch);
       });
       layouts.forEach((l, k) => targets[k] && (targets[k]!.style.height = `${l.height}px`));
+      // typed lines: pick each line's font, size its box (room above/below for the highlight)
+      const typerLines = (typerSpec?.lines ?? []).map((line) => {
+        const el2 = document.querySelector<HTMLElement>(line.target);
+        if (!el2) return null;
+        const width = el2.getBoundingClientRect().width;
+        const options: [LedFontId, number][] =
+          line.size === "large" ? [["5x7", 2], ["5x7", 1], ["3x5", 1]] : [["5x7", 1], ["3x5", 1]];
+        const fits = ([f, sc]: [LedFontId, number]) => textWidth(line.widest, LED_FONTS[f]) * sc * pitch <= width;
+        // on phones the small line follows the static text and drops to 3×5
+        const [fontId, scale] =
+          line.size === "small" && width < 640
+            ? (["3x5", 1] as [LedFontId, number])
+            : line.candidates?.length
+              ? options[0] // wraps instead of shrinking
+              : (options.find(fits) ?? ["3x5", 1]);
+        const font = LED_FONTS[fontId];
+        if (line.candidates?.length) {
+          const maxCols = Math.floor(width / (pitch * scale));
+          const rows = Math.max(...line.candidates.map((c) => wrap(c, maxCols, font).length));
+          el2.style.height = `${(rows * font.h + (rows - 1) * font.leading + 2) * scale * pitch}px`;
+          return { el: el2, font, scale, widest: line.widest, maxCols };
+        }
+        el2.style.height = `${(font.h + 2) * scale * pitch}px`;
+        return { el: el2, font, scale, widest: line.widest, maxCols: undefined };
+      });
       // reading rects after the height changes forces the new layout first
       const box = el.getBoundingClientRect();
       const blocks: PlacedLedText[] = [];
@@ -636,6 +775,22 @@ export default function HeroSpace({
         blocks.push({ layout: layouts[k], left: r.left - box.left, top: r.top - box.top });
       });
       const next = makeLedTextBitmap(blocks, { gridW: box.width, gridH: box.height, pitch });
+
+      typerLayout.current = null;
+      if (typerLines.length) {
+        const lines = typerLines.map((t) => {
+          if (!t) return { col0: -1e4, row0: -1e4, font: LED_FONTS["3x5"], scale: 1 };
+          const r = t.el.getBoundingClientRect();
+          const col0 = Math.round((r.left - box.left) / pitch);
+          const row0 = Math.round((r.top - box.top) / pitch) + t.scale;
+          next.firstCol = Math.min(next.firstCol, col0);
+          next.lastCol = Math.max(next.lastCol, col0 + (t.maxCols ?? textWidth(t.widest, t.font)) * t.scale);
+          return { col0, row0, font: t.font, scale: t.scale, maxCols: t.maxCols };
+        });
+        typerLayout.current = { grid: next, base: next.data.slice(), lines };
+        paintTyper();
+      }
+
       current?.texture.dispose();
       current = next;
       setLedText(next);
@@ -648,7 +803,7 @@ export default function HeroSpace({
       ro.disconnect();
       current?.texture.dispose();
     };
-  }, [textsKey, tuning]);
+  }, [textsKey, typerKey, tuning]);
 
   useEffect(() => {
     const el = root.current;

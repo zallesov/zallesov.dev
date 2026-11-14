@@ -23,7 +23,8 @@ const fragmentShader = /* glsl */ `
   uniform vec2  uPull;       // uv offset the grabbed point is dragged by
   uniform float uTime;
   uniform float uIntro;      // 0..1 decode-in progress
-  uniform float uCell;       // css px per character
+  uniform float uCell;       // css px per character / per lamp
+  uniform int   uMode;       // 0 = ASCII, 1 = LED matrix
   uniform vec3  uBg;
   varying vec2 vUv;
   #define ASCII_N ${ASCII_RAMP.length}.0
@@ -60,6 +61,27 @@ const fragmentShader = /* glsl */ `
     vec3 c = texture2D(tPhoto, cover(cuv, uPhotoAspect)).rgb;
     float lum = pow(dot(c, vec3(0.299, 0.587, 0.114)), 1.0 / 2.2);
     lum = smoothstep(0.16, 0.85, lum);               // crush the dark backdrop to blank
+
+    if (uMode == 1) {
+      // ---- LED matrix: one round lamp per cell, same look as the hero screen ----
+      float h = hash(id);
+      float on = step(h, uIntro);                    // lamps switch on in random order
+      float flick = 1.0 - 0.5 * step(0.998, hash(id + floor(uTime * 8.0))); // rare dim flicker
+      // brightness in a few steps like real LEDs; hue kept
+      float l = max(c.r, max(c.g, c.b));
+      vec3 q = l > 0.001 ? c * (floor(l * 8.0 + 0.5) / 8.0) / l : vec3(0.0);
+      float m = smoothstep(0.02, 0.18, lum);         // backdrop -> switched-off lamps
+      float d = length(fract(gl_FragCoord.xy / cell) - 0.5);
+      float aa = 1.0 / cell;
+      float dotMask = 1.0 - smoothstep(0.36 - aa, 0.36 + aa, d);
+      float glow = exp(-d * d * 9.0) * 0.3;
+      vec3 unlit = uBg * 1.6 + 0.008;
+      vec3 lit = max(q * 1.3 * m * on * flick, unlit);
+      vec3 col = mix(uBg * 0.7, lit, dotMask) + q * glow * m * on;
+      gl_FragColor = vec4(col, 1.0);
+      #include <colorspace_fragment>
+      return;
+    }
     float idx = floor(clamp(lum, 0.0, 0.999) * ASCII_N);
 
     // decode-in: cells resolve from random glyphs, plus a little idle shimmer
@@ -79,6 +101,8 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
+export type PortraitMode = "ascii" | "led";
+
 export interface PointerState {
   x: number; // 0..1, uv space (y up)
   y: number;
@@ -93,10 +117,12 @@ const DAMPING = 8; // well under critical (≈26) → jelly wobble on release
 function PortraitPlane({
   src,
   cell,
+  mode,
   pointer,
 }: {
   src: string;
   cell: number;
+  mode: PortraitMode;
   pointer: React.MutableRefObject<PointerState>;
 }) {
   const photo = useLoader(THREE.TextureLoader, src);
@@ -122,10 +148,11 @@ function PortraitPlane({
         uTime: { value: 0 },
         uIntro: { value: 0 },
         uCell: { value: cell },
+        uMode: { value: mode === "led" ? 1 : 0 },
         uBg: { value: new THREE.Color(BG) },
       },
     });
-  }, [photo, cell]);
+  }, [photo, cell, mode]);
 
   useEffect(() => {
     const dpr = gl.getPixelRatio();
@@ -221,12 +248,15 @@ function PortraitPlane({
  */
 export default function AsciiPortrait({
   src = "/photos/ava1-1000.jpg",
-  cell = 9,
+  cell,
+  mode = "ascii",
   alt = "Portrait of Alex Zall",
   className = "",
 }: {
   src?: string;
+  /** CSS px per character (ASCII) or per lamp (LED). Defaults: 9 / 5. */
   cell?: number;
+  mode?: PortraitMode;
   alt?: string;
   className?: string;
 }) {
@@ -285,7 +315,7 @@ export default function AsciiPortrait({
         style={{ pointerEvents: "none" }}
       >
         <Suspense fallback={null}>
-          <PortraitPlane src={src} cell={cell} pointer={pointer} />
+          <PortraitPlane src={src} cell={cell ?? (mode === "led" ? 5 : 9)} mode={mode} pointer={pointer} />
         </Suspense>
       </Canvas>
     </div>
