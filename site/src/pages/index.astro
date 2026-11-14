@@ -61,6 +61,7 @@ const now = CAREER_NOW.projects.map((p) => ({
   highlights: p.highlights,
   stack: p.stack,
   side: false,
+  url: p.url,
 }));
 const eras = [
   { id: "now", label: "Now", open: true, items: now },
@@ -228,6 +229,11 @@ const edu = cv.educations?.[0];
                       )}
                     </div>
                     {c.stack && <p class="mt-3 font-mono text-xs text-white/40">{c.stack}</p>}
+                    {"url" in c && c.url && (
+                      <a href={c.url} target="_blank" rel="noopener" class="mt-3 inline-flex items-center gap-1.5 font-mono text-[13px] text-[#F97316] transition hover:text-white sm:text-[14px]">
+                        {c.url.replace(/^https?:\/\//, "")}<span aria-hidden="true">↗</span>
+                      </a>
+                    )}
                   </div>
                 </details>
               ))}
