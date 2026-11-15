@@ -226,10 +226,10 @@
   "employments": [
     {
       "startDate": "Aug 2024",
-      "endDate": "present",
+      "endDate": "Mar 2026",
       "city": "Remote",
       "company": "Mult.dev",
-      "text": "Chief Everything Officer",
+      "text": "Lead Engineer",
       "projects": [
         {
           "name": "Mult.dev",
@@ -272,7 +272,7 @@
     },
     {
       "startDate": "Dec 2023",
-      "endDate": "Present",
+      "endDate": "Jun 2024",
       "city": "Berlin",
       "company": "Beeboard",
       "text": "Beeboard is saas project and process management solution",

@@ -48,6 +48,12 @@ export const CAREER_ERAS: { id: CareerEra; label: string }[] = [
 ];
 
 // CV entries (company or side-project name) that belong to the LLM era; everything else is "pre-ai"
-const LLM_ERA = new Set(["Peec.ai", "Snubes", "Super-real"]);
+const LLM_ERA = new Set(["Mult.dev", "Peec.ai", "Beeboard", "Snubes", "Super-real"]);
 
 export const careerEra = (name: string): CareerEra => (LLM_ERA.has(name) ? "llm" : "pre-ai");
+
+// Jobs held in more than one stretch: the periods shown instead of the CV's single start and end.
+// (Mult.dev: before and after Peec.ai.)
+export const CAREER_PERIODS: Record<string, string[]> = {
+  "Mult.dev": ["Sep 2025 — Mar 2026", "Aug 2024 — Dec 2024"],
+};

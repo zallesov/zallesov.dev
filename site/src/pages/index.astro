@@ -17,7 +17,7 @@ import AsciiPortrait from "../components/portrait/AsciiPortrait";
 import cvJson from "../zall.dev.json";
 import { CV } from "../types/CV";
 import { APPROACHES, EXPERIMENTS, FOCUS, HERO_TAGLINES, HERO_TYPER, LOGOS } from "../data/home";
-import { CAREER_ERAS, CAREER_NOW, careerEra } from "../data/career";
+import { CAREER_ERAS, CAREER_NOW, CAREER_PERIODS, careerEra } from "../data/career";
 
 const cv = CV.parse(cvJson);
 
@@ -37,7 +37,7 @@ const NAV = [
 // role = short `text` if present, otherwise the first project's title
 // current jobs are replaced by CAREER_NOW, so anything still "present" in the CV is left out
 const career = (cv.employments ?? []).filter((e) => !/present/i.test(e.endDate ?? "")).map((e) => ({
-  period: `${e.startDate} — ${e.endDate}`,
+  period: (CAREER_PERIODS[e.company] ?? [`${e.startDate} — ${e.endDate}`]).join("\n"),
   company: e.company,
   role: e.text && e.text.length < 40 ? e.text : (e.projects[0]?.title ?? ""),
   about: e.text && e.text.length >= 40 ? e.text : e.projects[0]?.preambule,
@@ -45,15 +45,7 @@ const career = (cv.employments ?? []).filter((e) => !/present/i.test(e.endDate ?
   stack: e.projects.map((p) => p.stack).filter(Boolean).join(" · "),
   side: false,
 }));
-const side = (cv.sideProjects ?? []).map((p) => ({
-  period: "",
-  company: p.name ?? "",
-  role: p.title ?? "",
-  about: p.preambule,
-  highlights: p.highlights ?? [],
-  stack: p.stack ?? "",
-  side: true,
-}));
+// side projects (cv.sideProjects) are hidden from the page for now
 const now = CAREER_NOW.projects.map((p) => ({
   period: "now · freelance",
   company: p.name,
@@ -69,7 +61,7 @@ const eras = [
   ...CAREER_ERAS.map((era) => ({
     ...era,
     open: false,
-    items: [...career, ...side].filter((c) => careerEra(c.company) === era.id),
+    items: career.filter((c) => careerEra(c.company) === era.id),
   })),
 ];
 const edu = cv.educations?.[0];
@@ -213,7 +205,7 @@ const edu = cv.educations?.[0];
                 <details class="group" open={era.open} data-blah-item>
                   <summary class="flex cursor-pointer list-none flex-wrap items-baseline gap-x-4 gap-y-1 py-4 [&::-webkit-details-marker]:hidden">
                     <span class="w-full shrink-0 font-mono text-xs text-white/40 sm:w-44">
-                      {c.side ? <span class="rounded bg-white/10 px-1.5 py-0.5 uppercase tracking-widest">side</span> : c.period}
+                      {c.side ? <span class="rounded bg-white/10 px-1.5 py-0.5 uppercase tracking-widest">side</span> : <span class="whitespace-pre-line">{c.period}</span>}
                     </span>
                     <h4 class="text-base font-bold sm:text-lg">{c.company}</h4>
                     <span class="font-mono text-[13px] text-white/60 sm:text-[14px]">{c.role}</span>
