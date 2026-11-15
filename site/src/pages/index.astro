@@ -16,7 +16,7 @@ import ApproachAnimation from "../components/approach/ApproachAnimation";
 import AsciiPortrait from "../components/portrait/AsciiPortrait";
 import cvJson from "../zall.dev.json";
 import { CV } from "../types/CV";
-import { APPROACHES, FOCUS, HERO_TAGLINES, HERO_TYPER, LOGOS } from "../data/home";
+import { APPROACHES, EXPERIMENTS, FOCUS, HERO_TAGLINES, HERO_TYPER, LOGOS } from "../data/home";
 import { CAREER_ERAS, CAREER_NOW, careerEra } from "../data/career";
 
 const cv = CV.parse(cvJson);
@@ -256,6 +256,26 @@ const edu = cv.educations?.[0];
       <section id="toolbox" class="scroll-mt-20">
         <ToolboxWordHunt client:only="react" />
       </section>
+
+      <!-- 08 EXPERIMENTS: side projects made for fun; each card is one link -->
+      <Block id="experiments" label="Experiments">
+        <ul class="grid gap-4 sm:grid-cols-2">
+          {EXPERIMENTS.map((x) => (
+            <li>
+              <a href={x.url} target="_blank" rel="noopener" class="group flex h-full items-stretch gap-4 rounded-2xl bg-white/[0.03] p-3 ring-1 ring-white/10 transition hover:bg-white/[0.06] hover:ring-[#F97316]/60 sm:gap-5 sm:p-4">
+                <img src={x.image} alt="" width="448" height="448" loading="lazy" decoding="async" class="h-24 w-24 shrink-0 rounded-xl object-cover ring-1 ring-white/10 sm:h-32 sm:w-32" style={x.image.endsWith(".png") ? "image-rendering: pixelated" : undefined} />
+                <div class="flex min-w-0 flex-col justify-between gap-3 py-1">
+                  <h3 class="font-mono text-[13px] font-normal leading-snug text-white/90 sm:text-[15px]">{x.hook}</h3>
+                  <p class="flex flex-col gap-1 font-mono text-[11px] uppercase tracking-widest sm:text-xs">
+                    <span class="text-[#F97316]">{x.name}</span>
+                    <span class="truncate text-white/40 transition group-hover:text-white/80">{x.url.replace(/^https?:\/\//, "").replace(/\/$/, "")} ↗</span>
+                  </p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Block>
 
       <!-- 09 LOCATION -->
       <LocationGlobe />

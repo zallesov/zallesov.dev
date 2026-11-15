@@ -187,3 +187,9 @@ export const EXPERTISE = [
     ],
   },
 ];
+
+/** Side experiments: a square picture, the question as the hook, the name and address under it. */
+export const EXPERIMENTS: { name: string; url: string; hook: string; image: string }[] = [
+  { name: "Pride Prep", url: "https://pride.zall.dev", hook: "Planning to attend Pride this year? You'll need a look.", image: "/experiments/pride-prep.jpg" },
+  { name: "Prince of Persia with AK47", url: "https://prince.zall.dev", hook: "Are you old enough to remember it?", image: "/experiments/princejs.png" },
+];
