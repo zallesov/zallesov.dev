@@ -6,12 +6,12 @@ export const CAREER_NOW: {
   lead: string;
   projects: { name: string; url: string; role: string; about: string; highlights: string[]; stack: string }[];
 } = {
-  lead: "Right now I work freelance on two products. On both I own the whole technical side: architecture, agents, infrastructure and delivery.",
+  lead: "Right now I build two AI products of my own. On both I own the whole technical side: architecture, agents, infrastructure and delivery.",
   projects: [
     {
       name: "RedDeck",
       url: "https://reddeck.ai",
-      role: "Tech lead · freelance",
+      role: "Tech lead · own product",
       about:
         "A node-based cockpit for AI video production. Commercials, series and film go from brief to final cut on one board: generation, review and montage side by side.",
       highlights: [
@@ -25,7 +25,7 @@ export const CAREER_NOW: {
     {
       name: "Call Helper",
       url: "https://call-helper.eu",
-      role: "Tech lead · freelance",
+      role: "Tech lead · own product",
       about:
         "An AI assistant that makes phone calls for you. You write the task in your language; it calls doctors, landlords and local businesses across Europe in theirs, and reports back with a comparison.",
       highlights: [
@@ -53,7 +53,4 @@ const LLM_ERA = new Set(["Mult.dev", "Peec.ai", "Beeboard", "Snubes", "Super-rea
 export const careerEra = (name: string): CareerEra => (LLM_ERA.has(name) ? "llm" : "pre-ai");
 
 // Jobs held in more than one stretch: the periods shown instead of the CV's single start and end.
-// (Mult.dev: before and after Peec.ai.)
-export const CAREER_PERIODS: Record<string, string[]> = {
-  "Mult.dev": ["Sep 2025 — Mar 2026", "Aug 2024 — Dec 2024"],
-};
+export const CAREER_PERIODS: Record<string, string[]> = {};

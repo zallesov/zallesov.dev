@@ -225,7 +225,7 @@
   ],
   "employments": [
     {
-      "startDate": "Aug 2024",
+      "startDate": "Oct 2025",
       "endDate": "Mar 2026",
       "city": "Remote",
       "company": "Mult.dev",
@@ -249,7 +249,7 @@
     },
     {
       "startDate": "Jan 2025",
-      "endDate": "Aug 2025",
+      "endDate": "Oct 2025",
       "city": "Berlin",
       "company": "Peec.ai",
       "text": "Principal AI Engineer",
@@ -298,15 +298,15 @@
       ]
     },
     {
-      "startDate": "Sep 2021",
-      "endDate": "Sep 2023",
+      "startDate": "Jun 2021",
+      "endDate": "Dec 2023",
       "city": "Berlin / London",
       "company": "Quickcommerce LTD / Orcrist GmbH",
       "text": "Quickcommerce is a company behind Zapp. Part of the team including me later separated to Orcrist GmbH but continues to work with Zapp as well as other projects.",
       "projects": [
         {
           "name": "Zapp",
-          "title": "Software Developer Manager",
+          "title": "Engineering Manager",
           "preambule": "Zapp is a grocery delivery service at that time operating in UK, Netherlands and France. I was managing a team of varying size up to 6 people. We had our fingerprints in every codebase in the company. Starting from the consumer app ending with ops infrastructure terraform code. My team and I shipped the following:",
           "highlights": [
             "Developed an internal tool for warehouse and city managers called Zappboard. It aggregated data from every other system and presented it in an actionable way",
@@ -327,7 +327,7 @@
     },
     {
       "startDate": "Mar 2019",
-      "endDate": "Aug 2021",
+      "endDate": "Jun 2021",
       "city": "Berlin / Hamburg",
       "company": "MOIA (Volkswagen)",
       "projects": [
