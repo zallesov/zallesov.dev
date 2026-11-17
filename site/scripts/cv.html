@@ -4,7 +4,13 @@
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --no-pdf-header-footer \
       --print-to-pdf=out.pdf "file://$PWD/scripts/cv.html?email=...&phone=..."
   email and phone are optional and come only from the URL, so they never live in the repo.
-  The header picture (cv-hero.jpg) is a still frame of the hero cube space on zall.dev. -->
+  The header picture (cv-hero.jpg) is a still frame of the hero cube space on zall.dev.
+  ATS-parse rules (verified with OpenResume / pdf.js, 2026-11-16; check: scripts/openresume_check.sh <file>):
+  - no CSS letter-spacing anywhere (spaced letters break the name and the section headings);
+  - one line per role: <h3>Company<span class="title"> Job title</span></h3><span class="when">Location · MM.YYYY – MM.YYYY</span>;
+    company and title must stay separate spans (different weights), no dash between them; keep titles short (≤5 words, a title keyword);
+  - every role is its own .job entry (no "Also:" lines); education uses the same head line (school + degree, then years);
+  - Languages/Interests live in Skills; always render with ?email=&phone= so contacts are in the PDF. -->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -23,14 +29,14 @@
     height: 36mm; padding: 0 12mm; color: #fff; display: flex; flex-direction: column; justify-content: center;
     background: #140a18 url("cv-hero.jpg") right center / cover no-repeat;
   }
-  h1 { font-family: Doto; font-weight: 900; font-variation-settings: "ROND" 100; font-size: 31pt; line-height: 1; letter-spacing: 0.02em; }
-  .aka { font-size: 8pt; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 2mm; }
-  .role { margin-top: 2.6mm; font-size: 10pt; font-weight: 700; color: #f97316; letter-spacing: 0.02em; }
-  .contact { margin-top: 2.6mm; font-size: 7.6pt; color: rgba(255,255,255,0.82); max-width: 128mm; }
+  h1 { font-family: Doto; font-weight: 900; font-variation-settings: "ROND" 100; font-size: 31pt; line-height: 1; }
+  .aka { font-size: 8pt; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 2mm; }
+  .role { margin-top: 2.6mm; font-size: 10pt; font-weight: 700; color: #f97316; }
+  .contact { margin-top: 2.6mm; font-size: 7.6pt; color: rgba(255,255,255,0.82); max-width: 175mm; }
 
   main { padding: 4.2mm 12mm 0; }
   h2 {
-    font-size: 7.6pt; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: #f97316;
+    font-size: 7.6pt; font-weight: 800; text-transform: uppercase; color: #f97316;
     margin: 2.8mm 0 1.2mm; padding-bottom: 0.8mm; border-bottom: 0.3mm solid #1c0e21;
   }
   h2:first-child { margin-top: 0; }
@@ -39,6 +45,7 @@
   .head { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
   h3 { font-size: 8.6pt; font-weight: 800; }
   .when { white-space: nowrap; color: #5b4a61; }
+  .title { font-weight: 600; color: #f97316; margin-left: 2.4mm; }
   .about { color: #3d2c44; }
   ul { list-style: none; }
   li { padding-left: 3.2mm; text-indent: -3.2mm; }
@@ -55,10 +62,10 @@
   <p class="role">AI / Software Engineer · Product Manager · Team Lead</p>
   <p class="contact">
     Malaga, Spain / Berlin, Germany · Remote<span id="private"></span><br />
-    <a href="https://zall.dev">zall.dev</a> ·
-    <a href="https://www.linkedin.com/in/zallesov">linkedin.com/in/zallesov</a> ·
-    <a href="https://github.com/zallesov">github.com/zallesov</a> ·
-    <a href="https://t.me/zallesov">t.me/zallesov</a>
+    <a href="https://zall.dev">https://zall.dev</a> ·
+    <a href="https://www.linkedin.com/in/zallesov">https://linkedin.com/in/zallesov</a> ·
+    <a href="https://github.com/zallesov">https://github.com/zallesov</a> ·
+    <a href="https://t.me/zallesov">https://t.me/zallesov</a>
   </p>
 </header>
 
@@ -69,18 +76,18 @@
   <h2>Experience</h2>
 
   <div class="job">
-    <div class="head"><h3>Tech Lead, AI Engineer (freelance) — Call Helper, RedDeck</h3><span class="when">Remote · 2025 – Present</span></div>
+    <div class="head"><h3>Call Helper, RedDeck (own products)<span class="title"> Tech Lead, AI Engineer</span></h3><span class="when">Remote · 11.2025 – Present</span></div>
     <ul>
-      <li>Own the whole technical side of two AI products. <b>Call Helper</b> (call-helper.eu), an AI assistant that makes phone calls for users across Europe: two LangGraph agents, a wizard that turns a chat into a call plan and an event-driven orchestrator that runs calls and retries.</li>
+      <li>Own the whole technical side of two AI products. <b>Call Helper</b> (<a href="https://call-helper.eu">https://call-helper.eu</a>), an AI assistant that makes phone calls for users across Europe: two LangGraph agents, a wizard that turns a chat into a call plan and an event-driven orchestrator that runs calls and retries.</li>
       <li>Real phone calls through ElevenLabs voice agents over SIP in 21 languages; scheduling on Cloud Tasks, live state in Firestore, billing by the second.</li>
       <li>Prompts and models are checked with Evalite evals, every run is traced in LangSmith; landing page optimised for SEO and GEO, AI search mentions tracked with Peec AI.</li>
-      <li><b>RedDeck</b> (reddeck.ai), a node-based board for AI video production: one catalogue of image and video models (fal, Runway, Higgsfield, ByteDance), long generation jobs in Cloudflare Workflows, results in R2.</li>
+      <li><b>RedDeck</b> (<a href="https://reddeck.ai">https://reddeck.ai</a>), a node-based board for AI video production: one catalogue of image and video models (fal, Runway, Higgsfield, ByteDance), long generation jobs in Cloudflare Workflows, results in R2.</li>
     </ul>
     <p class="stack">Stack: TypeScript, Next.js, LangGraph, LangSmith, ElevenLabs, Firebase, Cloud Tasks, Supabase, Cloudflare, Evalite</p>
   </div>
 
   <div class="job">
-    <div class="head"><h3>Lead Engineer — Mult.dev</h3><span class="when">Remote · 08.2024 – 03.2026</span></div>
+    <div class="head"><h3>Mult.dev<span class="title"> Lead Engineer</span></h3><span class="when">Remote · 10.2025 – 03.2026</span></div>
     <ul>
       <li>Ran product and engineering of an animated travel map video service: priorities from user feedback, full-stack development, DevOps and the video rendering pipeline.</li>
       <li>Engineered an autoscaling GPU cluster on GCP for video rendering, cutting processing costs by about 40%.</li>
@@ -91,7 +98,7 @@
   </div>
 
   <div class="job">
-    <div class="head"><h3>Principal AI Engineer — Peec.ai</h3><span class="when">Berlin · 01.2025 – 08.2025</span></div>
+    <div class="head"><h3>Peec.ai<span class="title"> Principal AI Engineer</span></h3><span class="when">Berlin · 01.2025 – 10.2025</span></div>
     <ul>
       <li>Built core infrastructure of an AI search analytics startup: a system that intercepts and analyses ChatGPT response streams in real time.</li>
       <li>Built an engine that categorises AI responses, giving enterprise clients analytics on LLM behaviour.</li>
@@ -101,7 +108,7 @@
   </div>
 
   <div class="job">
-    <div class="head"><h3>Engineering Manager, Team Lead — Zapp (Quickcommerce Ltd)</h3><span class="when">London / Berlin · 06.2021 – 12.2023</span></div>
+    <div class="head"><h3>Zapp (Quickcommerce Ltd)<span class="title"> Engineering Manager, Team Lead</span></h3><span class="when">London / Berlin · 06.2021 – 12.2023</span></div>
     <ul>
       <li>Managed a team of up to 6 engineers working across every codebase of a grocery delivery service in the UK, Netherlands and France, from the consumer app to Terraform.</li>
       <li>Led development of business-critical internal tools for store and city operations and last-mile delivery; integrated Uber Eats and Deliveroo storefronts.</li>
@@ -111,34 +118,34 @@
   </div>
 
   <div class="job">
-    <div class="head"><h3>Software Engineer, AI / Computer Vision — Zalando</h3><span class="when">Berlin · 11.2017 – 08.2018</span></div>
+    <div class="head"><h3>Zalando<span class="title"> Senior Software Engineer</span></h3><span class="when">Berlin · 11.2017 – 08.2018</span></div>
     <ul>
       <li>Built an AI product image labelling service and an image verification service that checks format and compliance at catalogue scale. Stack: Scala, ZIO, Kafka, AWS.</li>
     </ul>
   </div>
 
   <div class="job">
-    <div class="head"><h3>Software Engineer — SoundCloud</h3><span class="when">Berlin · 02.2013 – 07.2017</span></div>
+    <div class="head"><h3>SoundCloud<span class="title"> Software Engineer</span></h3><span class="when">Berlin · 02.2013 – 07.2017</span></div>
     <ul>
       <li>Main developer of the canonical SoundCloud web audio player; contributed to the mobile players.</li>
       <li>Built a copyright protection pipeline that detects and takes down infringing uploads automatically. Stack: Scala, Java, JavaScript, Cassandra, Kafka, AWS, Kubernetes.</li>
     </ul>
   </div>
 
-  <div class="job">
-    <p><b>Also:</b> Head of Engineering, Beeboard (Berlin, 12.2023 – 06.2024) · Senior Software Engineer, MOIA / Volkswagen (Berlin, 03.2019 – 06.2021) · Founding CTO, part-time, 2Meters (queue management SaaS used on 5 continents).</p>
-  </div>
+  <div class="job"><div class="head"><h3>Beeboard<span class="title"> Head of Engineering</span></h3><span class="when">Berlin · 12.2023 – 06.2024</span></div></div>
+  <div class="job"><div class="head"><h3>MOIA / Volkswagen<span class="title"> Senior Software Engineer</span></h3><span class="when">Berlin · 03.2019 – 06.2021</span></div></div>
+  <div class="job"><div class="head"><h3>2Meters<span class="title"> CTO (founding, part-time)</span></h3><span class="when">queue management SaaS used on 5 continents</span></div></div>
 
   <h2>Skills</h2>
   <p><b>AI and agents:</b> LangGraph, LangChain, LangSmith, evals (Evalite), voice agents (ElevenLabs), RAG, Claude Code</p>
   <p><b>Software systems:</b> TypeScript, Node.js, Python, Scala, React, Next.js, PostgreSQL, Firestore, Redis, Kafka</p>
   <p><b>Cloud and DevOps:</b> Google Cloud, AWS, Azure, Cloudflare, Firebase, Docker, Kubernetes, Terraform, CI/CD</p>
   <p><b>Leadership and product:</b> team leadership, hiring and mentoring, product management, roadmap, system design, Agile</p>
-
-  <h2>Education</h2>
-  <p><b>Master, Mathematics and Computer Science</b> — Novosibirsk State Technical University, 2003 – 2008</p>
   <p><b>Languages:</b> English (fluent), German (advanced), Russian (native)</p>
   <p><b>Interests:</b> digital marketing, GEO (generative engine optimisation), AI-generated content</p>
+
+  <h2>Education</h2>
+  <div class="head"><h3>Novosibirsk State Technical University<span class="title"> Master, Mathematics and Computer Science</span></h3><span class="when">2003 – 2008</span></div>
 </main>
 
 <script>
